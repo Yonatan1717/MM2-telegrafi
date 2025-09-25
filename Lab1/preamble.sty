@@ -51,6 +51,7 @@
 % --- Kollisjon \qty mellom physics og siunitx ---
 \usepackage{letltxmacro}
 \AtBeginDocument{\LetLtxMacro\qty\SI} % robust for pdfLaTeX-kjerner
+\AtBeginDocument{\RenewCommandCopy\qty\SI} % robust for LuaLaTeX- og XeLaTeX-kjerner
 
 % --- Små justeringer ---
 \emergencystretch=1em
