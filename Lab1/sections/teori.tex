@@ -9,3 +9,64 @@ APA\cite{apaGuide} gir en god oversikt over hvordan dette også kan brukes
 \begin{equation}
 V = R \cdot I
 \end{equation}
+
+\subsection{Telegrafligningen}
+\begin{equation}
+u_{tt} + (\alpha + \beta) u_t + \alpha \beta u = c^2 u_{xx}.
+\end{equation}
+
+\subsection{Utledning av telegrafligningen}
+
+Vi modellerer en elektrisk kabel ved å betrakte et lite element med lengde $\Delta x$. Elementet beskrives ved fire parametre per lengdeenhet:  
+\begin{itemize}
+    \item Resistans $R$ [$\Omega$/m]  
+    \item Induktans $L$ [H/m]  
+    \item Kapasitans $C$ [F/m]  
+    \item Konduktans $G$ [S/m]  
+\end{itemize}
+
+Disse størrelsene representerer henholdsvis ohmsk tap, magnetisk energi, elektrisk lagring av ladning og lekkasje til jord.  
+
+\paragraph{Spenningslikning.}  
+La $u(x,t)$ være spenningen og $i(x,t)$ strømmen. Ifølge Kirchhoffs spenningslov er spenningsfallet langs et element
+\begin{equation}
+\frac{\partial u}{\partial x} = -R i - L \frac{\partial i}{\partial t}.
+\end{equation}
+
+\paragraph{Strømlikning.}  
+Ifølge Kirchhoffs strømlov lekker strøm ut gjennom konduktansen og kapasitoren:
+\begin{equation}
+\frac{\partial i}{\partial x} = -G u - C \frac{\partial u}{\partial t}.
+\end{equation}
+
+\paragraph{Kombinasjon.}  
+Vi deriverer spenningslikningen med hensyn på $x$ og setter inn uttrykket for $\partial i/\partial x$:
+\begin{align}
+\frac{\partial^2 u}{\partial x^2} 
+&= -R \frac{\partial i}{\partial x} - L \frac{\partial^2 i}{\partial t \partial x} \\
+&= R(G u + C u_t) + L(G u_t + C u_{tt}).
+\end{align}
+
+\paragraph{Omforming.}  
+Samler vi leddene får vi:
+\begin{equation}
+u_{xx} = (RC) u_t + (LC) u_{tt} + (RG) u + (LG) u_t.
+\end{equation}
+Dividerer vi med $LC$:
+\begin{equation}
+u_{tt} + \frac{R}{L} u_t + \frac{G}{C} u_t + \frac{RG}{LC} u = \frac{1}{LC} u_{xx}.
+\end{equation}
+
+\paragraph{Standardform.}  
+Vi definerer
+\begin{equation}
+\alpha = \frac{R}{2L}, \quad 
+\beta = \frac{G}{2C}, \quad 
+c = \frac{1}{\sqrt{LC}}.
+\end{equation}
+Dermed får vi den standardiserte telegrafligningen:
+\begin{equation}
+u_{tt} + (\alpha + \beta) u_t + \alpha \beta u = c^2 u_{xx}.
+\end{equation}
+
+Denne partielldifferensialligningen beskriver spenningen i kabelen, og et tilsvarende uttrykk kan utledes for strømmen.
