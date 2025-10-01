@@ -16,7 +16,22 @@ a_0 &= \frac{1}{T} \int_{0}^{T} f(t) \, dt \\
 a_n &= \frac{2}{T} \int_{0}^{T} f(t) \cos\left(\frac{2\pi n t}{T}\right) dt \\
 b_n &= \frac{2}{T} \int_{0}^{T} f(t) \sin\left(\frac{2\pi n t}{T}\right) dt
 \end{align*}
-
+I Komplekse form:
+\begin{equation}
+f(t) = \sum_{n=-\infty}^{\infty} c_n e^{i \frac{2\pi n t}{T}}, \quad \text{der} \quad c_n = \frac{1}{T} \int_{0}^{T} f(t) e^{-i \frac{2\pi n t}{T}} dt
+\end{equation}
+I dette prosjektet vil vi bruke Fourier-analyse for å dekomponere Ethernet-signaler i sine frekvenskomponenter, slik at vi kan studere hvordan hver komponent påvirkes av transmisjonslinjens egenskaper.
+Ved å gjennomføre målinger for forskjellige kabellengder, kan vi sammenligne de målte dataene med de teoretiske prediksjonene basert på Fourier-analyse og telegraflikningen.
+Vi får da overføringsfunksjonen for kabelen.
+\begin{equation}
+    H(f) = \frac{V_{out}(f)}{V_{in}(f)}
+\end{equation}
+Som beskriver hvordan signalet endres i frekvensdomenet når det passerer gjennom kabelen.
+Denne analysen hjelper oss å forstå hvordan ulike frekvenskomponenter dempes og forvrenges, noe som er avgjørende for å forklare begrensningen på kabelens lengde.
+Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen.
+\begin{equation}
+    f_{out}(t) = \sum_{n=-\infty}^{\infty} H\left(\frac{n}{T}\right) c_n e^{i \frac{2\pi n t}{T}}
+\end{equation}
 \subsection{Telegraflikningen og transmisjonslinjer}
 En transmisjonslinje kan beskrives ved fire per-enhet-lengde parametre:
 \begin{itemize}
@@ -33,7 +48,7 @@ der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabe
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
 Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Med Fourier-analyse kan signalet uttrykkes som en sum av slike frekvenskomponenter, og telegrafligningen gir oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
 
-\subsection{Utledning av telegraflikningen}
+\subsubsection{Utledning av telegraflikningen}
 Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$, og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
 \begin{figure}[h]
     \centering
@@ -71,16 +86,16 @@ der vi har definert:
 \end{equation}
 Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $R$, $L$, $C$, og $G$.
 
-\subsubsection{Metoder og praktisk relevans}
+\subsection{Metoder og praktisk relevans}
 
 (a) \textit{Fourierrekker:} Analytisk på $[0,L]$ (m/Dirichlet) for å vise $\alpha=\beta$-tilfellet.\\
 \dots
 \clearpage
-\subsubsection{Dispersjon}
+\subsection{Dispersjon}
 
 Dispersjon betyr at ulike frekvenskomponenter i en bølge forplanter seg med forskjellig fase- eller gruppehastighet. Dette fører til at pulser forvrenges ved lang forplantning. 
 \dots
 
-\subsubsection{Oppsummering og kobling til prosjektet}
+\subsection{Oppsummering og kobling til prosjektet}
 
 Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette er avgjørende for å forstå hvorfor det er en 100 m-grense for Ethernet-kabler. I det videre arbeidet skal vi først gjennomføre praktiske målinger, og deretter \textcolor{red}{numeriske simuleringer} (kanskje), slik at begge kan sammenlignes med de teoretiske resultatene for å se hvordan modellen stemmer med virkeligheten.
