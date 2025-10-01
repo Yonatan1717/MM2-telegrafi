@@ -1,11 +1,11 @@
 
 \section{Teori}
 
-    \textbf{Motivasjon og sammenheng:} For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, må vi bruke telegraflikningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap og dispersjon.
+    \textbf{Motivasjon og sammenheng:} For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, må vi bruke telegraflikningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap, dispersjon.
 
 \subsection{Fourierrekker}
 
-Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Vi bruker Fourier-rekker for endelige intervaller (Dirichlet/Neumann) og FFT for målt/simulert tidsserie, slik at vi kan hente ut overføringsfunksjonen $H(\omega)$, innsettingstap $IL(f)$ og gruppeforsinkelse $\tau_g(f)$.\\[1em]
+Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Vi bruker Fourier-rekker for endelige intervaller (Dirichlet/Neumann)\\[1em]
 En periodisk funksjon $f(t)$ med periode $T$ kan uttrykkes som en Fourier-rekke:
 \begin{equation}
 f(t) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right)
@@ -17,35 +17,59 @@ a_n &= \frac{2}{T} \int_{0}^{T} f(t) \cos\left(\frac{2\pi n t}{T}\right) dt \\
 b_n &= \frac{2}{T} \int_{0}^{T} f(t) \sin\left(\frac{2\pi n t}{T}\right) dt
 \end{align*}
 
-\clearpage
 \subsection{Telegraflikningen og transmisjonslinjer}
+En transmisjonslinje kan beskrives ved fire per-enhet-lengde parametre:
+\begin{itemize}
+    \item $R$ \, [$\Omega$/m] \,-- motstand (ledertap),
+    \item $L$ \, [H/m] \,-- induktans (magnetisk lagring),
+    \item $C$ \, [F/m] \,-- kapasitans (elektrisk lagring),
+    \item $G$ \, [S/m] \,-- ledningsevne (lekkasjetap).
+\end{itemize}
+Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligningen, som beskriver spenning og strøm som funksjon av både posisjon og tid langs kabelen. For spenningen $u(x,t)$ kan den skrives på formen:
+\begin{equation}
+    u_{tt} + (RG + LC)u_t + RG\,u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
+\end{equation}
+der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
+Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
+Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Med Fourier-analyse kan signalet uttrykkes som en sum av slike frekvenskomponenter, og telegrafligningen gir oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
 
-Telegraflikningen gir en matematisk modell for hvordan spenning og strøm forplanter seg i en transmisjonslinje, som for eksempel en Ethernet-kabel. Den tar hensyn til både resistive og reaktive elementer, og forklarer hvorfor signaler dempes og forvrenges over avstand og tid.
-Vi ser på et uendelig lite stykke av en transmisjonslinje som en elektrisk krets bestående av motstand $R dx$, induktans $L dx$, konduktans $G dx$ og kapasitans $C dx$, se Figur~\ref{fig:telegraflinje}.
-
+\subsection{Utledning av telegraflikningen}
+Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$, og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{Media/telegraflinje.png}
-    \caption{Elementært stykke av transmisjonslinje med parametrene $R$, $L$, $G$, og $C$.}
-    \label{fig:telegraflinje}
+    \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
+    \caption{Elementær segment av en transmisjonslinje med per-enhet-lengde parametere.}
+    \label{fig:transmission_line_segment}   
 \end{figure}
-
-\noindent Ved å bruke Kirchhoffs lover får vi differensiallikningene:
-\begin{align}
-u_x + R i + L i_t &= 0 \\
-C u_t + G u + i_x &= 0
-\end{align}
-Disse kan kombineres til telegraflikningen:
+Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
 \begin{equation}
-u_{tt} + (\alpha + \beta) u_t + \alpha \beta u = c^2 u_{xx}
+    u(x,t) - u(x+\Delta x,t) = R \Delta x \cdot i(x,t) + L \Delta x \cdot \frac{\partial i(x,t)}{\partial t} .
 \end{equation}
-hvor
-\begin{align*}
-c^2 &= \frac{1}{LC} \\
-\alpha &= \frac{G}{C} \\
-\beta &= \frac{R}{L}
-\end{align*}
-Her er $R$, $L$, $G$, $C$ motstand, induktans, konduktans og kapasitans per lengdeenhet. Denne likningen danner grunnlaget for å forstå tap, dispersjon og maksimal kabellengde i praksis.
+Ved å la $\Delta x \to 0$ får vi den første differensialligningen:
+\begin{equation}
+    \frac{\partial u(x,t)}{\partial x} = -R i(x,t) - L \frac{\partial i(x,t)}{\partial t} . 
+\end{equation}
+Tilsvarende, ved å bruke Kirchhoffs strømlov, får vi:
+\begin{equation}
+    i(x,t) - i(x+\Delta x,t) = -G \Delta x \cdot u(x,t) - C \Delta x \cdot \frac{\partial u(x,t)}{\partial t} .
+\end{equation}
+Igjen, ved å la $\Delta x \to 0$ får vi den andre differensialligningen:
+\begin{equation}
+    \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t} .
+\end{equation}
+Ved å derivere den første ligningen med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
+\begin{equation}
+    u_{tt} + (RG + LC)u_t + RG\,u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} .
+\end{equation}
+Dette kan vi skrive som:
+\begin{equation}
+    u_{tt} + (\alpha + \beta)u_t + \alpha \beta u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
+\end{equation}
+der vi har definert:
+\begin{equation}
+    \alpha = \frac{R}{L}, \qquad \beta = \frac{G}{C} .
+\end{equation}
+Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $R$, $L$, $C$, og $G$.
 
 \subsubsection{Metoder og praktisk relevans}
 
