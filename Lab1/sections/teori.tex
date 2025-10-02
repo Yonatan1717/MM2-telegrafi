@@ -48,6 +48,27 @@ der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabe
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
 Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Med Fourier-analyse kan signalet uttrykkes som en sum av slike frekvenskomponenter, og telegrafligningen gir oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
 
+
+\subsubsection{R - Resistans}
+Resistans per lengde $[\Omega/\mathrm{m}]$ er den ohmske motstanden i lederen. Den skyldes av materialets resistivitet og ledertverrsnitt, og øker med temperatur. Motstanden øker dempingen og rekkevidden til signalet. I telegrafligningen bidrar R direkte til tidsdemping av både strøm og spenning.
+
+\subsubsection{L - Induktans}
+Induktansen per lengde $[\mathrm{L}/\mathrm{m}]$ er magnetisk lagring av energi rundt lederen når strømmen endres, per meter kabel. Sammen med kapasitans vil denne bestemme farten på signalet i kabelen. I linjemodellen er induktans i seriekobling.
+
+\subsubsection{C - Kapasitans}
+Kapasitans per lengde $[\mathrm{C}/\mathrm{m}]$ er elektrisk lagring av energi i feltet mellom leder og referanse, per meter. Sammen med induktans har kapasitans påvirkning på fart. I linjemodellen er dette en gren til jord, den trekker ladning når spenningen endres.
+
+\subsubsection{G - Ledningsevne}
+Ledningsevnen per meter $[\mathrm{G}/\mathrm{m}]$ beskriver det dielektriske taper gjennom isolasjonen til jord, per meter. Det påvirker signalet i form av å øke dempingen fordi energi vil lekke i dielektrikumet. Høy fuktighet eller dårlig isolasjon vil svekke ledningsevnen. Ledningsevnen opererer i parallelt med kapasitansen i linjemodellen.
+
+
+
+
+
+
+
+
+
 \subsubsection{Utledning av telegraflikningen}
 Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$, og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
 \begin{figure}[h]
@@ -85,6 +106,35 @@ der vi har definert:
     \alpha = \frac{R}{L}, \qquad \beta = \frac{G}{C} .
 \end{equation}
 Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $R$, $L$, $C$, og $G$.
+
+
+
+
+\subsubsection{Utledning av endelig løsning}
+Vi studerer et standard randverdi-rpoblem på $[0,\mathrm{l}]$ med spenningsnull i endene og en gitt startprofil:
+
+\begin{equation}
+    u_{tt} + (\alpha + \beta)u_t + \alpha \beta u = c^2 u_{xx}
+\end{equation}
+\begin{equation}
+    u(0,t) = 0
+\end{equation}
+\begin{equation}
+    u(l,t) = 0
+\end{equation}
+\begin{equation}
+    u(x,0) = \delta(x - a)
+\end{equation}
+\begin{equation}
+    u_t(x,0) = 0
+\end{equation}
+
+
+
+
+
+
+
 
 \subsection{Metoder og praktisk relevans}
 
