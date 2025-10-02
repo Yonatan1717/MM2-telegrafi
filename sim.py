@@ -7,16 +7,20 @@ R = 0.085        # ohm/m
 L = 5e-7         # H/m
 C = 5e-11        # F/m
 G = 1e-10        # S/m
-l = 1000         # kabelens lengde (m)
+l = 150          # kabelens lengde (m)
 
 alpha = G/C
 beta = R/L
 c = 1/np.sqrt(L*C)   
 a = l*0.01         
-space_alpha = 0.002  # Dempingsparameter for avstand 
+# Romlig demping: sett ønsket relativ amplitude ved kabelenden (0<amp_at_end<=1)
+amp_at_end = 0.1  # f.eks. 0.6 betyr ~60% amplitude igjen ved x = l
+space_alpha = -np.log(amp_at_end)/l  # skaleres automatisk med l
 
 n_terms = 20
-t_vals = np.linspace(0, 10e-6, 400)   
+# Tidsvindu: ~2 ganger tiden bølgefronten bruker til enden
+t_max = 2*l/c
+t_vals = np.linspace(0, t_max, 400)   
 x_vals = np.linspace(0, l, 500)       
 
 def sum_u(x, t, n):
@@ -37,16 +41,20 @@ fig, ax = plt.subplots()
 line, = ax.plot([], [], lw=2, label="Signal")
 front_line = ax.axvline(0, color='r', linestyle='--', label="Bølgefront (v*t)")
 
+# Sett aksegrenser
 ax.set_xlim(0, l)             
-ax.set_ylim(-0.02, 0.02)      
+# Estimer startamplitude for å sette y-akse dynamisk (symmetrisk rundt 0)
+y0 = u(x_vals, 0.0, n_terms)
+ymax = max(1e-6, float(np.max(np.abs(y0))))
+ax.set_ylim(-1.2*ymax, 1.2*ymax)
 ax.set_xlabel("Posisjon langs kabel (m)")
 ax.set_ylabel("Spenning (V)")
-ax.set_title("Bølgeforplantning i 1000 m kabel (Fourier-sum)")
+ax.set_title(f"Bølgeforplantning i {l} m kabel (Fourier-sum)")
 ax.legend()
 
 def init():
     line.set_data([], [])
-    front_line.set_xdata(0)
+    front_line.set_xdata(a)
     return line, front_line
 
 def animate(i):
@@ -62,5 +70,5 @@ def animate(i):
         front_line.set_xdata(np.nan) 
     return line, front_line
 
-ani = FuncAnimation(fig, animate, init_func=init, frames=len(t_vals), interval=50, blit=True)
+ani = FuncAnimation(fig, animate, init_func=init, frames=len(t_vals), interval=25, blit=True)
 plt.show()
