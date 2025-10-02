@@ -129,8 +129,128 @@ Vi studerer et standard randverdi-rpoblem på $[0,\mathrm{l}]$ med spenningsnull
     u_t(x,0) = 0
 \end{equation}
 
+Dette gjelder for $\mathrm{t} > 0, 0 < \mathrm{x} < \mathrm{l}$. Ved seperasjon av $u(x,t)=X(x)T(t)$ kan vi beskrive telegrafligningen følgende.
+
+\begin{equation}
+    XT'' + (\alpha + \beta)XT' + \alpha \beta XT = c^2 X''T
+\end{equation}
+
+Telegraflikningen er nå uttrykt ved bruk av $X(x)$ og $T(t)$ for $u(x,t)$. Videre kan vi simplifisere uttrykket. Ved å multiplisere begge sider med $1/(XT)$.
+
+\begin{equation}
+    \frac{1}{c^2}(\frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta) = \frac{X''}{X} = \sigma
+\end{equation}
+
+siden venstre side bare avhenger av $t$ og høyre siden bare av $x$, må begge være konstant. Derfor kaller vi dette $\omega$. Randebetingelsene våre er faste ved endene $[0, \mathrm{l}]$ (spenning 0).
+
+\begin{equation}
+    u(0,t)=u(l,t)=0
+\end{equation}
+\begin{equation}
+    X(0)=X(l)=0
+\end{equation}
+
+Romlikningen er
+
+\begin{equation}
+    X'' - \sigma X = 0
+\end{equation}
+
+Ikke alle $\sigma$ gir ikke-trivielle løsninger som også har $X(0) = X(l) = 0$. Kravet leder til sinus-eigenfunksjoner.
+
+\begin{equation}
+    X_n(x) = \sin(\frac{n \pi x}{l}), n = 1,2,3,...
+\end{equation}
+
+Disse oppfyller randebetingelsene fordi når $x = 0$ vil $X_n(x) = \sin(0) = 0$, og når $x = l$ vil $X_n(x) = \sin(n\pi) = 0$. Siden $\sigma$ er uttrykt ved en differensialligning. $X''(x)$ kan uttrykkes følgende
+
+\begin{equation}
+    X_n'(x) = \frac{l}{n\pi}\cos(\frac{n\pi x}{l})
+\end{equation}
+\begin{equation}
+    X_n''(x) = -(\frac{l}{n\pi})^2\sin(\frac{n\pi x}{l})
+\end{equation}
+\begin{equation}
+    X_n''(x) = -(\frac{l}{n\pi})^2 X_n
+\end{equation}
+\begin{equation}
+    \sigma = -(\frac{l}{n\pi})^2
+\end{equation}
+
+Uttrykket for T er følgende.
+
+\begin{equation}
+    \frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta = \sigma
+\end{equation}
+\begin{equation}
+    \frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta - \sigma = 0
+\end{equation}
+\begin{equation}
+    T'' + (\alpha + \beta)T' + (\alpha \beta - \sigma)T = 0
+\end{equation}
+
+Dette er en lineær, homogen 2.-ordens ODE med konstante koeffisienter. Den generelle løsningen er.
+\begin{equation}
+    T = C_1e^{r_1t}+C_2e^{r_2t}
+\end{equation}
+med
+\begin{equation}
+    r_i=\frac{1}{2}(-\alpha-\beta \pm \sqrt{(\alpha+\beta)^2 - 4\alpha\beta + 4\sigma c^2})
+\end{equation}
+\begin{equation}
+    r_i=-d \pm iw_n
+\end{equation}
+\begin{equation}
+    d=(\alpha+\beta)/2, w_n = \sqrt{\left( \frac{n\pi c}{l} \right)^2 - \frac{1}{4}(\alpha-\beta)^2}
+\end{equation}
+
+Realdelen $-d$ gir ren demping, imaginærdelen $\pm w_n$ gir svingning. Derfor kan tidsdelen for modus n skrives som en dempet kosinus:
+
+\begin{equation}
+    T_n(t) = A_n e^{-dt} \cos{w_nt-\Phi_n}
+\end{equation}
+
+med amplitude $A_n$ og fase $\phi_n$ som bestemmes av initialbetingelsene. Siden endene er faste med nullspenning i endene $x = 0$ og $x = l$, er romfunksjonene $\sin{\frac{n\pi x}{l}}$. Hele løsningen blir derfor.
+
+\begin{equation}
+    u(x,t)=\sum_{n=1}^{\infty}A_n e^{-d t} * \cos(w_nt-\phi_n) \sin{\frac{n \pi x}{l}}
+\end{equation}
+
+Dette uttrykket for $u(x,t)$ oppfyller telegrafligningen og grensebetingelsene for nullspenning ved endene. Det som mangler er å tilfredsstille initialbetingelsene. Initialbetingelsen $u_t(x,0)=\delta(x-a)$ gir følgende.
+\begin{equation}
+    u(x,0)=\sum_{n=1}^{\infty}A_n\cos{(\phi_n)\sin{\left( \frac{n \pi x}{l} \right)} = \delta(x-a)}
+\end{equation}
+\begin{equation}
+    \int_{0}^{l} u(x,0) \sin{\left( \frac{n\pi x}{l} \right)} dx = \int_{0}^{l} \delta(x-a) \sin{\left( \frac{n\pi x}{l} \right)} dx
+\end{equation}
+\begin{equation}
+    \int_{0}^{l} \sin{\left( \frac{n\pi x}{l} \right)} \sin{\left( \frac{n\pi x}{l} \right)} dx = \frac{l}{2}
+\end{equation}
+\begin{equation}
+    \int_{0}^{l} u(x,0) \sin{\left( \frac{n\pi x}{l} \right)} dx = \left( \frac{l}{2} \right)  A_n \cos(\phi_n)
+\end{equation}
+
+Dette kan vi nå uttrykke som.
+\begin{equation}
+    \int_{0}^{l} \delta (x-a) f(x) dx = f(a)
+\end{equation}
+\begin{equation}
+    \int_{0}^{l} \delta (x-a) \sin{\left( \frac{n \pi x}{l} \right)} dx = \sin{\left( \frac{n \pi a}{l} \right)}
+\end{equation}
+
+Løsningen for denne initialbetingelsen er nå oppnådd.
+\begin{equation}
+    A_n \cos{\phi_n} = \frac{2}{l} \sin{\left( \frac{n \pi a}{l} \right)}
+\end{equation}
+
+Nå trenger vi en løsning for den andre initialbetingelsen... orker ikke mer skal finishe en annen gang
+
+\clearpage
 
 
+I modellen brukes \(u(x,0)=\delta(x-a)\) som en idealpuls med svært kort varighet. Den inneholder rikelig med høye frekvenser, altså nettopp de komponentene som bestemmer kantskarphet i digitale signaler. I et praktisk oppsett med funksjonsgenerator og oscilloskop blir to forhold avgjørende for tolkningen: (i) generatorens endelige båndbredde (og tilsvarende stigetid) gjør at innsignalet ikke er ideelt skarpt, og (ii) oscilloskopets båndbredde og tidsoppløsning begrenser hva som faktisk registreres av raske endringer. 
+
+Disse rammene er viktige fordi de påvirker hvordan kabelens ekstra demping og utglatting av de høyfrekvente komponentene fremtrer i målekurvene. Når de høyeste frekvensene svekkes med lengde, øker stigetid og hale, og bitene blir mindre adskilt. Dette er samme mekanisme som gjør at en kabel på omkring 100\,m nærmer seg grensen for pålitelig deteksjon ved gitt symbolhastighet: ikke bare faller nivået, men kantinformasjonen utvannes.
 
 
 
