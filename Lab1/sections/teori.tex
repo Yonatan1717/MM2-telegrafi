@@ -109,143 +109,158 @@ Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg
 
 
 
+\paragraph{Løsning av randverdiproblemet og valg av koeffisienter}
 
-\subsubsection{Utledning av endelig løsning}
-Vi studerer et standard randverdi-rpoblem på $[0,\mathrm{l}]$ med spenningsnull i endene og en gitt startprofil:
+Vi løser nå randverdiproblemet
+\begin{align}
+  &u_{tt}+(\alpha+\beta)u_t+\alpha\beta\,u = c^2 u_{xx}, \tag{1}\\
+  &u(0,t)=0, \tag{2}\\
+  &u(\ell,t)=0, \tag{3}\\
+  &u(x,0)=\delta(x-a), \tag{4}\\
+  &u_t(x,0)=0, \tag{5}
+\end{align}
+for alle $t>0$ og $0<x<\ell$. Dette modellerer en telegraflinje av lengde $\ell$ med spenningsnull i begge ender, og en ideell startimpuls lokalisert i $x=a$ som i utgangspunktet er stasjonær.
 
-\begin{equation}
-    u_{tt} + (\alpha + \beta)u_t + \alpha \beta u = c^2 u_{xx}
-\end{equation}
-\begin{equation}
-    u(0,t) = 0
-\end{equation}
-\begin{equation}
-    u(l,t) = 0
-\end{equation}
-\begin{equation}
-    u(x,0) = \delta(x - a)
-\end{equation}
-\begin{equation}
-    u_t(x,0) = 0
-\end{equation}
+\paragraph{Separasjon av variabler.}
+Vi prøver $u(x,t)=X(x)T(t)$. Setter dette inn i (1):
+\[
+XT'' + (\alpha+\beta)XT' + \alpha\beta XT
+\;=\; c^2 X''T.
+\]
+Vi deler på $XT$ og får
+\[
+\frac{1}{c^2}\!\left(\frac{T''}{T} + (\alpha+\beta)\frac{T'}{T} + \alpha\beta\right) \;=\; \frac{X''}{X} \;=\; \sigma,
+\]
+der $\sigma$ er en separasjonskonstant. Denne er konstant siden venstresiden avhenger bare av $t$ og høyresiden bare av $x$, begge sider må være konstant.
 
-Dette gjelder for $\mathrm{t} > 0, 0 < \mathrm{x} < \mathrm{l}$. Ved seperasjon av $u(x,t)=X(x)T(t)$ kan vi beskrive telegrafligningen følgende.
+\paragraph{Romdel og randbetingelser.}
+Randbetingelsene (2)--(3) krever $X(0)=X(\ell)=0$. Romlikningen er
+\[
+X'' - \sigma X = 0.
+\]
+Ikke-trivielle løsninger som tilfredsstiller faste ender oppnås ved
 
-\begin{equation}
-    XT'' + (\alpha + \beta)XT' + \alpha \beta XT = c^2 X''T
-\end{equation}
+\[
+\sigma = -\Big(\frac{n\pi}{\ell}\Big)^2, \qquad
+X_n(x)=\sin\!\Big(\frac{n\pi x}{\ell}\Big), \qquad n=1,2,\dots
+\]
+(her er $X_n''=-(n\pi/\ell)^2 X_n$ og $X_n(0)=X_n(\ell)=0$).
 
-Telegraflikningen er nå uttrykt ved bruk av $X(x)$ og $T(t)$ for $u(x,t)$. Videre kan vi simplifisere uttrykket. Ved å multiplisere begge sider med $1/(XT)$.
+\paragraph{Tidsdel per modus.}
+For gitt $n$ blir tidslikningen
+\[
+T'' + (\alpha+\beta)T' + \big(\alpha\beta - \sigma c^2\big)\,T \;=\; 0
+\;\;\Longleftrightarrow\;\;
+T'' + (\alpha+\beta)T' + \Big(\alpha\beta + c^2\Big(\frac{n\pi}{\ell}\Big)^2\Big)T = 0.
+\]
+Det karakteristiske polynomet gir røtter
+\[
+r_i = \frac{1}{2}\!\left(-\alpha-\beta \pm \sqrt{(\alpha+\beta)^2 - 4\alpha\beta + 4c^2\Big(\frac{n\pi}{\ell}\Big)^2}\right).
+\]
+Sett
+\[
+d=\frac{\alpha+\beta}{2}, \qquad
+\omega_n = \sqrt{\,c^2\Big(\frac{n\pi}{\ell}\Big)^2 - \frac{1}{4}(\alpha-\beta)^2\,}.
+\]
+Da er $r_i=-d\pm i\omega_n$, og en praktisk realform av løsningen er
+\[
+T_n(t)=A_n e^{-dt}\cos(\omega_n t - \phi_n),
+\]
+med fri amplitude $A_n$ og fase $\phi_n$ (bestemmes av (4)--(5)).
 
-\begin{equation}
-    \frac{1}{c^2}(\frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta) = \frac{X''}{X} = \sigma
-\end{equation}
 
-siden venstre side bare avhenger av $t$ og høyre siden bare av $x$, må begge være konstant. Derfor kaller vi dette $\omega$. Randebetingelsene våre er faste ved endene $[0, \mathrm{l}]$ (spenning 0).
 
-\begin{equation}
-    u(0,t)=u(l,t)=0
-\end{equation}
-\begin{equation}
-    X(0)=X(l)=0
-\end{equation}
 
-Romlikningen er
+\paragraph{Seriesløsning og løsning av initialverdier}
 
-\begin{equation}
-    X'' - \sigma X = 0
+Vi har fra separasjon av variabler at løsningene med faste ender $x=0$ og $x=\ell$ kan bygges som en superposisjon av romlige egenfunksjoner
+\[
+X_n(x)=\sin\!\Big(\frac{n\pi x}{\ell}\Big),\qquad n=1,2,\dots
+\]
+multiplisert med tilhørende tidsfaktorer. I det underdempede tilfellet (der \(\omega_n>0\), se definisjon nedenfor) kan tidsdelen skrives på realform med demping og fase. Summen over alle moduser blir
+\begin{equation}\label{eq:series-solution}
+u(x,t)=\sum_{n=1}^{\infty} A_n\,e^{-dt}\cos\!\big(\omega_n t-\phi_n\big)\,
+\sin\!\Big(\frac{n\pi x}{\ell}\Big),
 \end{equation}
+der parameterne er
+\[
+d=\frac{\alpha+\beta}{2},\qquad
+\omega_n=\sqrt{\,c^2\Big(\frac{n\pi}{\ell}\Big)^2-\frac{1}{4}(\alpha-\beta)^2\,}.
+\]
+Uttrykket \eqref{eq:series-solution} tilfredsstiller allerede PDE-en og randbetingelsene i endepunktene. Det som gjenstår er å bestemme amplituder $A_n$ og faser $\phi_n$ slik at startbetingelsene oppfylles på $t=0$.
 
-Ikke alle $\sigma$ gir ikke-trivielle løsninger som også har $X(0) = X(l) = 0$. Kravet leder til sinus-eigenfunksjoner.
+\paragraph{Trinn 1: Bruk av $u_t(x,0)=0$.}
+Vi deriverer \eqref{eq:series-solution} i tid og setter $t=0$:
+\[
+u_t(x,0)=\sum_{n=1}^{\infty} A_n\Big[-d\cos\phi_n+\omega_n\sin\phi_n\Big]\,
+\sin\!\Big(\frac{n\pi x}{\ell}\Big).
+\]
+Siden \(\{\sin(n\pi x/\ell)\}_{n\ge 1}\) er ortogonal og fullstendig på \((0,\ell)\) med faste ender, må hver Fourier-koeffisient være null for at $u_t(x,0)$ skal være identisk null. Dermed får vi, for hvert $n$,
+\begin{equation}\label{eq:phase-eq}
+-d\cos\phi_n+\omega_n\sin\phi_n=0
+\quad\Longrightarrow\quad
+\phi_n=\arctan\!\Big(\frac{d}{\omega_n}\Big).
+\end{equation}
+Denne relasjonen sier at fasen bestemmes entydig av forholdet mellom dempningsraten \(d\) og egenfrekvensen \(\omega_n\): jo sterkere demping i forhold til svingning, desto større faseforskyvning i tidsfaktoren.
 
-\begin{equation}
-    X_n(x) = \sin(\frac{n \pi x}{l}), n = 1,2,3,...
-\end{equation}
-
-Disse oppfyller randebetingelsene fordi når $x = 0$ vil $X_n(x) = \sin(0) = 0$, og når $x = l$ vil $X_n(x) = \sin(n\pi) = 0$. Siden $\sigma$ er uttrykt ved en differensialligning. $X''(x)$ kan uttrykkes følgende
-
-\begin{equation}
-    X_n'(x) = \frac{l}{n\pi}\cos(\frac{n\pi x}{l})
-\end{equation}
-\begin{equation}
-    X_n''(x) = -(\frac{l}{n\pi})^2\sin(\frac{n\pi x}{l})
-\end{equation}
-\begin{equation}
-    X_n''(x) = -(\frac{l}{n\pi})^2 X_n
-\end{equation}
-\begin{equation}
-    \sigma = -(\frac{l}{n\pi})^2
-\end{equation}
-
-Uttrykket for T er følgende.
-
-\begin{equation}
-    \frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta = \sigma
-\end{equation}
-\begin{equation}
-    \frac{T''}{T} + (\alpha + \beta)\frac{T'}{T} + \alpha \beta - \sigma = 0
-\end{equation}
-\begin{equation}
-    T'' + (\alpha + \beta)T' + (\alpha \beta - \sigma)T = 0
-\end{equation}
-
-Dette er en lineær, homogen 2.-ordens ODE med konstante koeffisienter. Den generelle løsningen er.
-\begin{equation}
-    T = C_1e^{r_1t}+C_2e^{r_2t}
-\end{equation}
-med
-\begin{equation}
-    r_i=\frac{1}{2}(-\alpha-\beta \pm \sqrt{(\alpha+\beta)^2 - 4\alpha\beta + 4\sigma c^2})
-\end{equation}
-\begin{equation}
-    r_i=-d \pm iw_n
-\end{equation}
-\begin{equation}
-    d=(\alpha+\beta)/2, w_n = \sqrt{\left( \frac{n\pi c}{l} \right)^2 - \frac{1}{4}(\alpha-\beta)^2}
-\end{equation}
-
-Realdelen $-d$ gir ren demping, imaginærdelen $\pm w_n$ gir svingning. Derfor kan tidsdelen for modus n skrives som en dempet kosinus:
-
-\begin{equation}
-    T_n(t) = A_n e^{-dt} \cos{w_nt-\Phi_n}
-\end{equation}
-
-med amplitude $A_n$ og fase $\phi_n$ som bestemmes av initialbetingelsene. Siden endene er faste med nullspenning i endene $x = 0$ og $x = l$, er romfunksjonene $\sin{\frac{n\pi x}{l}}$. Hele løsningen blir derfor.
-
-\begin{equation}
-    u(x,t)=\sum_{n=1}^{\infty}A_n e^{-d t} * \cos(w_nt-\phi_n) \sin{\frac{n \pi x}{l}}
-\end{equation}
-
-Dette uttrykket for $u(x,t)$ oppfyller telegrafligningen og grensebetingelsene for nullspenning ved endene. Det som mangler er å tilfredsstille initialbetingelsene. Initialbetingelsen $u_t(x,0)=\delta(x-a)$ gir følgende.
-\begin{equation}
-    u(x,0)=\sum_{n=1}^{\infty}A_n\cos{(\phi_n)\sin{\left( \frac{n \pi x}{l} \right)} = \delta(x-a)}
-\end{equation}
-\begin{equation}
-    \int_{0}^{l} u(x,0) \sin{\left( \frac{n\pi x}{l} \right)} dx = \int_{0}^{l} \delta(x-a) \sin{\left( \frac{n\pi x}{l} \right)} dx
-\end{equation}
-\begin{equation}
-    \int_{0}^{l} \sin{\left( \frac{n\pi x}{l} \right)} \sin{\left( \frac{n\pi x}{l} \right)} dx = \frac{l}{2}
-\end{equation}
-\begin{equation}
-    \int_{0}^{l} u(x,0) \sin{\left( \frac{n\pi x}{l} \right)} dx = \left( \frac{l}{2} \right)  A_n \cos(\phi_n)
+\paragraph{Trinn 2: Bruk av $u(x,0)=\delta(x-a)$.}
+Setter vi $t=0$ i \eqref{eq:series-solution} og benytter \(\cos(-\phi_n)=\cos\phi_n\), får vi
+\[
+u(x,0)=\sum_{n=1}^{\infty} A_n\cos\phi_n\,\sin\!\Big(\frac{n\pi x}{\ell}\Big).
+\]
+Startprofilen er en ideell spiss plassert i \(x=a\), dvs.\ \(\delta(x-a)\). Dens sinusutvikling på \((0,\ell)\) er
+\[
+\delta(x-a)=\sum_{n=1}^{\infty}\Big(\frac{2}{\ell}\sin\!\frac{n\pi a}{\ell}\Big)\,
+\sin\!\Big(\frac{n\pi x}{\ell}\Big),
+\]
+som følger ved å projisere mot \(\sin(n\pi x/\ell)\) og bruke
+\[
+\int_0^\ell \delta(x-a)f(x)\,dx=f(a),\qquad
+\int_0^\ell \sin^2\!\Big(\frac{n\pi x}{\ell}\Big)\,dx=\frac{\ell}{2}.
+\]
+Identifikasjon av koeffisientene gir derfor
+\begin{equation}\label{eq:Acosphi}
+A_n\cos\phi_n=\frac{2}{\ell}\,\sin\!\Big(\frac{n\pi a}{\ell}\Big).
 \end{equation}
 
-Dette kan vi nå uttrykke som.
-\begin{equation}
-    \int_{0}^{l} \delta (x-a) f(x) dx = f(a)
+\paragraph{Amplituder og faser eksplisitt.}
+Fra \eqref{eq:phase-eq} har vi
+\[
+\cos\phi_n=\frac{\omega_n}{\sqrt{\omega_n^2+d^2}},\qquad
+\sin\phi_n=\frac{d}{\sqrt{\omega_n^2+d^2}}.
+\]
+Setter vi dette inn i \eqref{eq:Acosphi}, fås en praktisk eksplisitt amplitude
+\begin{equation}\label{eq:An-explicit}
+A_n=\frac{2}{\ell}\,\frac{\sqrt{\omega_n^2+d^2}}{\omega_n}\,
+\sin\!\Big(\frac{n\pi a}{\ell}\Big),
+\qquad
+\phi_n=\arctan\!\Big(\frac{d}{\omega_n}\Big).
 \end{equation}
-\begin{equation}
-    \int_{0}^{l} \delta (x-a) \sin{\left( \frac{n \pi x}{l} \right)} dx = \sin{\left( \frac{n \pi a}{l} \right)}
+Alternativt, og ofte penere i kompakt form, skriver vi amplituden direkte i samme stil som i oppsettet over:
+\begin{equation}\label{eq:An-cosphi}
+A_n=\frac{2}{\ell}\,\frac{1}{\cos\phi_n}\,
+\sin\!\Big(\frac{n\pi a}{\ell}\Big),
+\qquad
+\phi_n \text{ gitt av \eqref{eq:phase-eq}.}
 \end{equation}
 
-Løsningen for denne initialbetingelsen er nå oppnådd.
-\begin{equation}
-    A_n \cos{\phi_n} = \frac{2}{l} \sin{\left( \frac{n \pi a}{l} \right)}
+\paragraph{Endelig løsning og tolkning.}
+Setter vi \eqref{eq:An-cosphi} og \eqref{eq:phase-eq} inn i \eqref{eq:series-solution}, får vi den endelige seriesummen
+\begin{equation}\label{eq:final-solution}
+u(x,t)=\sum_{n=1}^{\infty} A_n\,e^{-dt}\cos\!\big(\omega_n t-\phi_n\big)\,
+\sin\!\Big(\frac{n\pi x}{\ell}\Big),
+\quad
+A_n=\frac{2}{\ell}\,\frac{1}{\cos\phi_n}\sin\!\Big(\frac{n\pi a}{\ell}\Big),
+\quad
+\phi_n=\arctan\!\Big(\frac{d}{\omega_n}\Big).
 \end{equation}
+Hvert romlig modus \(\sin(n\pi x/\ell)\) oscillerer i tid med vinkelhastighet \(\omega_n\) og dempes med rate \(d=(\alpha+\beta)/2\). Fasene \(\phi_n\) er valgt slik at hastighetsbetingelsen \(u_t(x,0)=0\) oppfylles koeffisientvis. Startimpulsen i \(x=a\) fordeler seg på alle moduser gjennom vektene \(\sin(n\pi a/\ell)\); moduser med et nullpunkt i \(x=a\) (\(\sin(n\pi a/\ell)=0\)) blir ikke eksitert.
 
-Nå trenger vi en løsning for den andre initialbetingelsen... orker ikke mer skal finishe en annen gang
+\medskip
+\noindent
+\emph{Merknad om dempningsregimer.} Når \(\omega_n>0\) (underdempet) har vi formen \(\mathrm{e}^{-dt}\cos(\omega_n t-\phi_n)\). I grensefallet \(\omega_n=0\) (kritisk demping) og for \(\omega_n^2<0\) (overdempet) erstattes denne av de tilsvarende reelle eksponentialformene for tidsløsningen. Fremgangsmåten for å bestemme koeffisienter via \eqref{eq:phase-eq}–\eqref{eq:Acosphi} er ellers uendret.
 
-\clearpage
+\subsubsection{Idealpuls}
 
 
 I modellen brukes \(u(x,0)=\delta(x-a)\) som en idealpuls med svært kort varighet. Den inneholder rikelig med høye frekvenser, altså nettopp de komponentene som bestemmer kantskarphet i digitale signaler. I et praktisk oppsett med funksjonsgenerator og oscilloskop blir to forhold avgjørende for tolkningen: (i) generatorens endelige båndbredde (og tilsvarende stigetid) gjør at innsignalet ikke er ideelt skarpt, og (ii) oscilloskopets båndbredde og tidsoppløsning begrenser hva som faktisk registreres av raske endringer. 
