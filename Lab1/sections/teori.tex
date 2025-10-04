@@ -42,7 +42,10 @@ en transmisjonslinje kan beskrives ved fire per-enhet-lengde parametre:
 \end{itemize}
 Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligningen, som beskriver spenning og strøm som funksjon av både posisjon og tid langs kabelen. For spenningen $u(x,t)$ kan den skrives på formen:
 \begin{equation}
-    u_{tt} + (RG + LC)u_t + RG\,u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
+    u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{\sqrt{LC}}\right) u_{xx}
+\end{equation}
+\begin{equation}
+    u_{tt} + \left(\alpha + \beta\right)u_t + \alpha\beta\,u = c^2 u_{xx}, \qquad \alpha=\frac{R}{L}, \qquad \beta=\frac{G}{C}, \qquad c = \frac{1}{\sqrt{LC}} ,
 \end{equation}
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
@@ -59,7 +62,7 @@ Induktansen per lengde $[\mathrm{H}/\mathrm{m}]$ er magnetisk lagring av energi 
 Kapasitans per lengde $[\mathrm{F}/\mathrm{m}]$ er elektrisk lagring av energi i feltet mellom leder og referanse, per meter. Sammen med induktans har kapasitans påvirkning på fart. I linjemodellen er dette en gren til jord, den trekker ladning når spenningen endres.
 
 \subsubsection{G - Ledningsevne}
-Ledningsevnen per meter $[\mathrm{S}/\mathrm{m}]$ beskriver det dielektriske taper gjennom isolasjonen til jord, per meter. Det påvirker signalet i form av å øke dempingen fordi energi vil lekke i dielektrikumet. Høy fuktighet eller dårlig isolasjon vil svekke ledningsevnen. Ledningsevnen opererer i parallelt med kapasitansen i linjemodellen.
+Ledningsevnen per meter $[\mathrm{S}/\mathrm{m}]$ beskriver det dielektriske taper gjennom isolasjonen til jord, per meter. Det påvirker signalet i form av å øke dempingen fordi energi vil lekke i dielektrikumet. Høy fuktighet eller dårlig isolasjon vil øke lekkasje. Ledningsevnen opererer i parallelt med kapasitansen i linjemodellen.
 
 
 
@@ -95,7 +98,7 @@ Igjen, ved å la $\Delta x \to 0$ får vi den andre differensialligningen:
 \]
 Ved å derivere den første ligningen med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
-    u_{tt} + (RG + LC)u_t + RG\,u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} .
+    u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{\sqrt{LC}}\right) u_{xx}
 \]
 Dette kan vi skrive som:
 \begin{equation}
@@ -114,7 +117,7 @@ Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg
 
 I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $R, L, G, C$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen
 \begin{equation}
-V(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
+u(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
 \label{eq:harm-ansatz}
 \end{equation}
 Her har vi valgt tre elementer:
@@ -131,21 +134,23 @@ Dette kalles en \emph{harmonisk ansats}. Den er valgt fordi vi vet fra Fourier-t
 kan bygges opp som en sum av slike harmoniske komponenter. Når vi kjenner kabelens respons på en frekvens, 
 kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegraflikningen \eqref{eq:telegraflikningen}:
 \[    
-    V_{tt} + (\alpha + \beta)V_{t} + \alpha \beta V = c^2 V_{xx}.
+    u_{tt} + (\alpha + \beta)u_{t} + \alpha \beta u = c^2 u_{xx}.
 \]
 Ser vi at den tidslige avledningen bare gir faktorer av $j\omega$:
 \[
-    V_{t} = j\omega V, \quad V_{tt} = -\omega^2 V,
+    u_{t} = j\omega u, \quad u_{tt} = -\omega^2 u,
 \]
 og den romlige avledningen gir faktorer av $\gamma$:
 \[
-    V_{x} = -\gamma V, \quad V_{xx} = \gamma^2 V.
+    u_{x} = -\gamma u, \quad u_{xx} = \gamma^2 u.
 \]
 Som gir oss:
 \[    
--\omega^2 V + j\omega(\alpha+\beta)V + \alpha \beta V = c^2 \gamma^2 V.
+-\omega^2 u + j\omega(\alpha+\beta)u + \alpha \beta u = c^2 \gamma^2 u.
 \]
 Etter innsetting og forenkling står vi igjen med sammenhengen
+Mulig endre til:
+Med ansatsen $u=Ue^{j\omega t -\gamma x}$ følger:
 \[
 c^2 \gamma^2(\omega) = \alpha \beta - \omega^2 + j\omega(\alpha+\beta).
 \]
