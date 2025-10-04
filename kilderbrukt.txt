@@ -1,0 +1,15 @@
+>--- Info bank ---<
+
+Info:
+    skinneffekt: https://www.allaboutcircuits.com/technical-articles/lossy-transmission-lines-introduction-to-the-skin-effect
+    transmisjonslinje og propagasjonskonstanten: https://dn790009.ca.archive.org/0/items/electromagnetic-field-theory/William%20H.%20Hayt%2C%20Jr.%20and%20John%20A.%20Buck%20-%20Engineering%20Electromagnetics-McGraw-Hill%20Education%20%282018%29.pdf
+    utledelse telegraflikning: telegraflikningen.pdf
+    propegasjon: https://people.engr.tamu.edu/spalermo/ecen689/lecture3_ee689_tlines.pdf
+
+Figurer:
+    fig1: 
+        kilde: telegraflikninge.pdf
+        position/link (her): file://./Lab1/Media/telegraflinje.png
+    fig2: 
+        kilde: https://docs.keysight.com/eesofapps/post-5-root-cause-of-eye-closure-678068340.html
+        position/link (her): (file://./Lab1/Media/frekvensdoment_tidsdoment.png)
