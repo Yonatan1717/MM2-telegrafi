@@ -217,23 +217,19 @@ Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
   Ut fra propagasjonskonstanten \eqref{eq:prop-konstant} følger at $\alpha_p(\omega)$ vokser omtrent som $\sqrt{\omega}$.\\
   \item \textbf{Dielektriske tap}: Et virkelig dielektrikum er ikke tapsfritt: polarisasjonen henger litt etter feltet (faseforsinkelse), noe som kan modelleres med \emph{loss tangent} \(\tan\delta\). For små tap får vi den nyttige tilnærmingen
   \[
-  G(\omega)\ =\ \omega\,C\,\tan\delta
-  \]
-  \[
-    G(\omega)\ \propto\ \omega
+  G(\omega)\ =\ \omega\,C\,\tan\delta \quad \Rightarrow \quad G(\omega)\ \propto\ \omega
   \]
   slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha_p(\omega)\) og dermed til økende demping med \(\omega\).\\
 \end{itemize}
 Dette gir da direkte utslag i overføringsfunksjonen. Siden både \(R(\omega)\) og \(G(\omega)\) øker med frekvens, dempes høyfrekvente komponenter mest.
 I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i øyediagram) siden høye frekvenser som trengs for å gjenskape skarpe kanter, er mest dempet.
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/frekvensdoment_tidsdoment.png}
     \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}
     \label{fig:eyediagram}
 \end{figure}
-
+\clearpage
 \subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
 Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten):
 \[
