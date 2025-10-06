@@ -5,11 +5,19 @@
         
         \item \textbf{Numerisk simulering:} \textcolor{red}{Vi implementerte telegrafligningen i et numerisk simuleringsverktøy (f.eks. MATLAB eller Python) for å modellere signaloverføring over en gitt lengde av transmisjonslinjen. Dette inkluderte å simulere impulsresponsen og overføringsfunksjonen.}
         \item \textbf{Parameterstudie:} \textcolor{red}{Vi varierte parametrene R, L, G, og C for å observere deres individuelle og kollektive effekter på signaldemping og forvrengning. Dette hjalp oss med å identifisere hvilke faktorer som har størst innvirkning på signalintegriteten.}
-        \item \textbf{Labratoriestudie:}\textcolor{red}{ Vi gjennomførte eksperimenter med faktiske kabler og måleutstyr for å validere våre simuleringer. Dette inkluderte måling av signalrespons ved forskjellige frekvenser og sammenligning med teoretiske prediksjoner.}
+        \item \textbf{Labaratoriestudie:}\textcolor{red}{ Vi gjennomførte eksperimenter med faktiske kabler og måleutstyr for å validere våre simuleringer. Dette inkluderte måling av signalrespons ved forskjellige frekvenser og sammenligning med teoretiske prediksjoner.}
     \end{itemize}
 \subsection{Numerisk simulering}
     
 \subsection{Parameterstudie}
 
-\subsection{Labratoriestudie}
+\subsection{Labaratoriestudie}
 
+Labaratoriestudien ble utført ved å koble opp en funksjonsgenerator til et oscilloskop gjennom en kjent lengde av Ethernet-kabel. Vi brukte en Cat-5 kabel med spesifikasjoner som følger:
+\begin{itemize}
+    \item Motstand per lengdeenhet (R): 0.188 $\Omega/\mathrm{m}$
+    \item Induktans per lengdeenhet (L): 0.25 $\mu \mathrm{H}/\mathrm{m}$
+    \item Konduktans per lengdeenhet (G): 0.10 $\mathrm{mS}/\mathrm{m}$
+    \item Kapasitans per lengdeenhet (C): 52 $\mathrm{pF}/\mathrm{m}$
+\end{itemize}
+Vi sendte et \textcolor{red}{type (kvadratisk, raskt?)} signal med en frekvens på \textcolor{red}{x Hz} fra en funksjonsgenerator gjennom en Ethernet-kabel og målte signalet ved mottakersiden med oscilloskopet. Vi registrerte både inngangs- og utgangssignalet for å analysere demping og forvrengning. Signalet ble sammenlignet med det av en direktekobling med koaksialkabel. Dette var for å ha en referanse for å vurdere effekten av transmisjonslinjen, og knytte den utledede teorien opp til praktiske observasjoner på labaratoriet. Resultatene fra målingene ble deretter sammenlignet med de numeriske simuleringene for å validere modellens nøyaktighet.
