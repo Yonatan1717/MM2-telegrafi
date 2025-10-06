@@ -3,6 +3,35 @@
 
     \textbf{Motivasjon og sammenheng:} For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, bruker vi telegrafligningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap, dispersjon.
 
+\subsection{Kirchhoffs lover}
+
+Grunnlaget for telegrafligningen ligger i Kirchhoffs lover, som beskriver hvordan spenning og strøm 
+fordeler seg i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
+for energi og ladning, og de brukes til å beskrive forholdet mellom elektriske størrelser i ethvert 
+kretsnettverk.
+
+\textbf{Kirchhoffs spenningslov (KVL)} sier at summen av alle spenningsendringer rundt en lukket 
+sløyfe er lik null. Dette uttrykker energibevaring: den elektriske energien som brukes opp i motstander 
+og spoler, må være lik den energien som tilføres av spenningskilder. I telegrafligningen brukes KVL 
+til å uttrykke hvordan spenningen endrer seg langs et lite element av ledningen. Spenningsfallet 
+langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som
+\begin{equation}
+\frac{\partial u}{\partial x} = -R i - L \frac{\partial i}{\partial t}.
+\end{equation}
+
+\textbf{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
+er lik summen av de som går ut. Dette er et uttrykk for ladningsbevaring. I telegrafligningen brukes 
+KCL til å beskrive hvordan strømmen endrer seg langs ledningen, når en del av strømmen lekker til jord 
+gjennom konduktans og kapasitans. Dette gir
+\begin{equation}
+\frac{\partial i}{\partial x} = -G u - C \frac{\partial u}{\partial t}.
+\end{equation}
+
+Ved å kombinere Kirchhoffs lover kan man beskrive hvordan både spenning og strøm endrer seg 
+langs ledningen over tid. Dette er utgangspunktet for telegrafligningen, som gir 
+en fullstendig matematisk modell for hvordan signaler forplanter seg, dempes og forvrenges når de beveger 
+seg gjennom en elektrisk leder.
+
 \subsection{Fourierrekker}
 
 Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Ethernet-signaler kan sees på som en sekvens av pulser (bitstrøm), som i praksis kan betraktes som et periodisk pulstog. Dette gjør at Fourierrekker er et naturlig verktøy for å analysere slike signaler i frekvensdomenet, siden pulstoget kan uttrykkes som en sum av sinus- og cosinuskomponenter.\\[1em]
