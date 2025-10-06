@@ -1,7 +1,7 @@
 >--- Info bank ---<
 
 Info:
-    skinneffekt: https://www.allaboutcircuits.com/technical-articles/lossy-transmission-lines-introduction-to-the-skin-effect
+    skinneffekt: https://www.allaboutcircuits.com/technical-articles/lossy-transmission-lines-introduction-to-the-skin-effect og https://people.engr.tamu.edu/spalermo/ecen689/lecture3_ee689_tlines.pdf
     transmisjonslinje og propagasjonskonstanten: https://dn790009.ca.archive.org/0/items/electromagnetic-field-theory/William%20H.%20Hayt%2C%20Jr.%20and%20John%20A.%20Buck%20-%20Engineering%20Electromagnetics-McGraw-Hill%20Education%20%282018%29.pdf
     utledelse telegraflikning: telegraflikningen.pdf
     propegasjon: https://people.engr.tamu.edu/spalermo/ecen689/lecture3_ee689_tlines.pdf

@@ -221,15 +221,16 @@ Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
   \]
   slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha_p(\omega)\) og dermed til økende demping med \(\omega\).\\
 \end{itemize}
+\clearpage
+
 Dette gir da direkte utslag i overføringsfunksjonen. Siden både \(R(\omega)\) og \(G(\omega)\) øker med frekvens, dempes høyfrekvente komponenter mest.
 I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i øyediagram) siden høye frekvenser som trengs for å gjenskape skarpe kanter, er mest dempet.
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{Media/frekvensdoment_tidsdoment.png}
+    \includegraphics[width=0.9\textwidth]{Media/frekvensdoment_tidsdoment.png}
     \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}
     \label{fig:eyediagram}
 \end{figure}
-\clearpage
 \subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
 Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten):
 \[
@@ -249,7 +250,8 @@ Den sier noe om hvor mye en smal båndbredde rundt frekvensen \(\omega\) forsink
 \[
 v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta_p(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta_p(\omega)}{d\omega} \quad [\mathrm{s/m}]
 \]
-Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er netteopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. Dette får direkte konsekvenser for pulsform og øyediagram.\\
+\clearpage
+\noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er netteopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. Dette får direkte konsekvenser for pulsform og øyediagram.\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
   \item \textbf{Ingen dispersjon:} Hvis \(\frac{d\beta_p}{d\omega} \) er konstant (lineær fase), får alle frekvenskomponenter samme tidsforsinkelse \(\Rightarrow\) ingen pulsbredding (ingen horisontal øyelukking).\\
   \item \textbf{Dispersjon:} Når \(\frac{d\beta_p}{d\omega}\) varierer med frekvens (ikke-lineær fase), får ulike frekvenskomponenter ulik tidsforsinkelse \(\Rightarrow\) pulsbredding (horisontal øyelukking). I lavtap-tilfellet er ofte 
@@ -266,7 +268,6 @@ Heaviside-betingelsen:
 gir \(\beta_p(\omega)\) lineær i \(\omega\)
 (konstant \(\tau_g'\)) og \(\alpha_p(\omega)\) frekvensuavhengig. Da fås ingen dispersiv forvrengning (kun lik demping av alle frekvenser).
 
-\clearpage
 
 \subsection{Kobling til pulstog}
 Et periodisk innsignal med Fourierkoeffisienter \(c_n\) filtreres som

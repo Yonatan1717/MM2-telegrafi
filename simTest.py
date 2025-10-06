@@ -10,7 +10,7 @@ duty = 0.5          # 0..1
 N_harm = 200        # antall harmoniske på hver side (totalt 2N+1)
 
 # Kabellengder (m)
-lengths_m = [10, 50, 1000]
+lengths_m = [10, 50, 100]
 
 # RLGC ~ typisk tvunnet parkabel (approx—tilpass datasheet)
 L = 0.5e-6          # H/m
@@ -18,14 +18,14 @@ C = 50e-12          # F/m
 R0 = 0.08           # ohm/m @ f_ref (effektiv pr. par)
 tan_delta = 2e-3    # dielektrisk loss tangent
 f_ref = 1e6         # Hz, referanse for R(f) skalering
-
+V0 = 5              # V, amplitudeskala (brukes ikke i normalisering)
 # Frekvensakse til H-plot
 f_max = 200e6
 Nf = 4000
 
 # Tidsprøver for rekonstruksjon
 Nt = 5000
-t_cycles = 1.0      # tegn en periode
+t_cycles = 3.0      # tegn en periode
 
 
 
@@ -47,7 +47,7 @@ def G_f(f):
     return omega * C * tan_delta
 
 def gamma_f(f):
-    """γ(f) = sqrt((R + jωL)(G + jωC))."""
+    """gamma(f) = sqrt((R + jωL)(G + jωC))."""
     f = np.asarray(f, dtype=float)
     omega = 2*pi*f
     R = R_f(f)
@@ -55,14 +55,14 @@ def gamma_f(f):
     return np.sqrt((R + j*omega*L) * (G + j*omega*C))
 
 def H_f(f, length):
-    """Overføringsfunksjon H(f, l) = exp(-γ l) med H(0)=1."""
+    """Overføringsfunksjon H(f, l) = exp(-gamma*l) med H(0)=1."""
     f = np.asarray(f, dtype=float)
     H = np.exp(-gamma_f(f) * length)
     H[f == 0.0] = 1.0
     return H
 
 def fourierRekkeCoeffs(T, duty, N):
-    """
+    """ 
     Fourierkoeffisienter c_n for 0/1-puls med varighet tau=duty*T per periode.
     f(t)=sum_{n} c_n e^{j n ω0 t},  ω0=2π/T.
     """
@@ -70,9 +70,9 @@ def fourierRekkeCoeffs(T, duty, N):
     w0 = 2*pi/T
     tau = duty*T
     c = np.zeros_like(n, dtype=complex)
-    c[n==0] = duty
+    c[n==0] = duty * V0  # DC-komponent
     nz = n != 0
-    c[nz] = (1.0/T) * (1 - np.exp(-j*n[nz]*w0*tau)) / (j*n[nz]*w0)
+    c[nz] = V0 * (1.0/T) * (1 - np.exp(-j*n[nz]*w0*tau)) / (j*n[nz]*w0)
     return n, c
 
 
@@ -89,28 +89,33 @@ def rekonTidsSignal(T, n, c, Hn=None, Nt=4000, t_cycles=1.0):
 
 n, c = fourierRekkeCoeffs(T, duty, N_harm)
 
-
 f0 = 1.0/T
 harm_freqs = n * f0
 
 
-#Spekter (amplituder etter kabel)
+#frekvensdommene: Spekter (amplituder etter kabel)
+harm_freqs = n * f0
+odd_pos_idx = np.where((harm_freqs > 0) & (np.abs(n) % 2 == 1))[0]
+freqs_odd_MHz = harm_freqs[odd_pos_idx] / 1e6
+
 amps_in = np.abs(c)
 Hn_by_len = {}
 for Lm in lengths_m:
+    # behold full lengde (brukes senere i tidsdomenet), men evaluer på |f|
     Hn_by_len[Lm] = H_f(np.abs(harm_freqs), Lm)
 
-mask_pos = n > 0
 fig1, ax1 = plt.subplots(figsize=(9,5))
-ax1.stem(harm_freqs[mask_pos]/1e6, amps_in[mask_pos],
-         linefmt='k-', markerfmt='ko', basefmt=' ')
+ax1.stem(freqs_odd_MHz, amps_in[odd_pos_idx],
+         linefmt='k-', markerfmt='ko', basefmt=' ', label='Inn (odd n)')
+
 for Lm in lengths_m:
     amps_out = np.abs(c * Hn_by_len[Lm])
-    ax1.stem(harm_freqs[mask_pos]/1e6, amps_out[mask_pos],
+    ax1.stem(freqs_odd_MHz, amps_out[odd_pos_idx],
              linefmt='-', markerfmt='o', basefmt=' ', label=f'{Lm} m')
+
 ax1.set_xlabel('Frekvens (MHz)')
-ax1.set_ylabel('Amplitude |c_n·H|')
-ax1.set_title('Harmoniske og amplituder etter kabelen')
+ax1.set_ylabel('Amplitude |c_n·H| (V)')
+ax1.set_title('Harmoniske (kun odd n) og amplituder etter kabelen')
 ax1.legend()
 ax1.grid(True, alpha=0.3)
 
