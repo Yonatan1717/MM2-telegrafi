@@ -15,13 +15,43 @@ Vi bestemmer først Fourier-rekken til firkantpulsen for å finne frekvenskompon
 Merk at siden vi vet at duty cycle er 50\%, vil bare oddetalls harmoniske være tilstede i Fourier-rekken.
 Koefisientene $c_n$ kan beregnes som:
 \[
-    c_n = \frac{1}{T} \int_{-T/2}^{T/2} V(t) e^{-j n \omega_0 t} dt = \frac{5}{T} \int_{-T/2}^{0} e^{-j n \omega_0 t} dt = \frac{5}{j n \pi} (1 - (-1)^n)
+    c_0 = \frac{1}{T} \int_{-T/2}^{T/2} V(t) dt = \frac{5}{2}
+\]
+\[
+    c_n = \frac{1}{T} \int_{-T/2}^{T/2} V(t) e^{-j n \omega_0 t} dt =  \frac{5}{j 2 n \pi} (1 - (-1)^n)
 \]
 Vi for dermed at:
 \[
-    V_{inn}(t) = \sum_{n=1,3,5,...}^{\infty} \frac{10}{j n \pi} e^{j n \omega_0 t}
+    V_{inn}(t) = \frac{5}{2} + \sum_{n=1,3,5,...}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
 For å modellere dempingen i mediet, antar vi en en tilnærment lik realistiske verider for R, G, L og C:
+\[
+    R(f) = R_{DC} \cdot \sqrt{\frac{f}{f_{s}}}, \quad hvor \quad f_{s} = \frac{\rho_{cu}}{\pi \mu_{cu} r^2}, \quad R_{DC} = n_s \cdot \frac{\rho_{cu}}{\pi r^2}
+\]
+\[
+    \rho_{cu} = 1.72 \cdot 10^{-8} \Omega m, \quad r = 0.255 mm, \quad \mu_{cu} = \mu_0 \cdot \mu_r = 4\pi \cdot 10^{-7} H/m., \quad n_s = 2
+\]
+\[
+    f_s \approx 67kHz, \quad R_{DC} \approx 0.17 \Omega/m,
+\]
+Dermed får vi:
+\[
+    R(f) = 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \quad [\Omega/m]
+\]
+Her er $f_s$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho_{cu}$ er resistiviteten til kobber, $\mu_{cu}$ er permabiliteten til kobber og $r$ er radiusen til lederen.
+Vi antar videre at:
+\[
+    L = 525 nH/m, \quad C = 52 pF/m
+\]
+\[
+    G(f) = 2\pi f C \tan \delta, \quad hvor \quad \tan \delta = 0.002
+\]
+Disse verdiene er basert på typiske verdier for en Cat5e kabel og vi står igjen med:
+\[
+    R(f) \approx 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \quad [\Omega/m], \quad L = 525 nH/m, \quad C = 52 pF/m, \quad G(f) \approx 0.65f \quad [pS/m]
+\]
+\clearpage
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering1.png}
