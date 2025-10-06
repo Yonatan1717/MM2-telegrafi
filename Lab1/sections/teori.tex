@@ -1,7 +1,36 @@
 
 \section{Teori}
 
-    \textbf{Motivasjon og sammenheng:} For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, må vi bruke telegraflikningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap, dispersjon.
+    \textbf{Motivasjon og sammenheng:} For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, bruker vi telegrafligningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap, dispersjon.
+
+\subsection{Kirchhoffs lover}
+
+Grunnlaget for telegrafligningen ligger i Kirchhoffs lover, som beskriver hvordan spenning og strøm 
+fordeler seg i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
+for energi og ladning, og de brukes til å beskrive forholdet mellom elektriske størrelser i ethvert 
+kretsnettverk.
+
+\textbf{Kirchhoffs spenningslov (KVL)} sier at summen av alle spenningsendringer rundt en lukket 
+sløyfe er lik null. Dette uttrykker energibevaring: den elektriske energien som brukes opp i motstander 
+og spoler, må være lik den energien som tilføres av spenningskilder. I telegrafligningen brukes KVL 
+til å uttrykke hvordan spenningen endrer seg langs et lite element av ledningen. Spenningsfallet 
+langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som
+\begin{equation}
+\frac{\partial u}{\partial x} = -R i - L \frac{\partial i}{\partial t}.
+\end{equation}
+
+\textbf{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
+er lik summen av de som går ut. Dette er et uttrykk for ladningsbevaring. I telegrafligningen brukes 
+KCL til å beskrive hvordan strømmen endrer seg langs ledningen, når en del av strømmen lekker til jord 
+gjennom konduktans og kapasitans. Dette gir
+\begin{equation}
+\frac{\partial i}{\partial x} = -G u - C \frac{\partial u}{\partial t}.
+\end{equation}
+
+Ved å kombinere Kirchhoffs lover kan man beskrive hvordan både spenning og strøm endrer seg 
+langs ledningen over tid. Dette er utgangspunktet for telegrafligningen, som gir 
+en fullstendig matematisk modell for hvordan signaler forplanter seg, dempes og forvrenges når de beveger 
+seg gjennom en elektrisk leder.
 
 \subsection{Fourierrekker}
 
@@ -44,9 +73,9 @@ Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligninge
 \begin{equation}
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \end{equation}
-\begin{equation}
+\[
     u_{tt} + \left(\alpha + \beta\right)u_t + \alpha\beta\,u = c^2 u_{xx}, \qquad \alpha=\frac{R}{L}, \qquad \beta=\frac{G}{C}, \qquad c = \frac{1}{\sqrt{LC}} ,
-\end{equation}
+\]
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
 Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
@@ -61,8 +90,8 @@ Induktansen per lengde $[\mathrm{H}/\mathrm{m}]$ er magnetisk lagring av energi 
 \subsubsection{C - Kapasitans}
 Kapasitans per lengde $[\mathrm{F}/\mathrm{m}]$ er elektrisk lagring av energi i feltet mellom leder og referanse, per meter. Sammen med induktans har kapasitans påvirkning på fart. I linjemodellen er dette en gren til jord, den trekker ladning når spenningen endres.
 
-\subsubsection{G - Ledningsevne}
-Ledningsevnen per meter $[\mathrm{S}/\mathrm{m}]$ beskriver det dielektriske tap gjennom isolasjonen til jord, per meter. Det påvirker signalet i form av å øke dempingen fordi energi vil lekke i dielektrikumet. Høy fuktighet eller dårlig isolasjon vil øke lekkasje. Ledningsevnen står parallelt med kapasitansen i linjemodellen.
+\subsubsection{G - Shunt-ledningsevne (lekkasje)}
+$G$ $[\mathrm{S}/\mathrm{m}]$ er shunt-ledningsevnen til jord per lengdeenhet. Den modellerer dielektrisk lekkasje gjennom isolasjonen og står parallelt med kapasitansen $C$ i linjemodellen. Større $G$ gir større demping fordi mer energi tappes i dielektrikumet. Høy fuktighet, aldring eller skadet/dårlig isolasjon øker $G$ (ideell isolasjon gir $G \approx 0$).
 
 
 \subsubsection{Utledning av telegraflikningen}
