@@ -1,6 +1,22 @@
 \documentclass[12pt,a4paper]{article}
+
+\PassOptionsToPackage{
+  backend=biber,
+  style=numeric, % eller authoryear
+  sorting=nyt,
+  giveninits=true,
+  maxbibnames=99,
+  doi=false,isbn=false,url=true,
+  dashed=false
+}{biblatex}
+
+
 \usepackage{preamble}
 \usepackage{xcolor}
+
+
+\addbibresource{./referanser.bib}
+
 % ------ Metadata ------
 \newcommand{\institution}{FHS/Cyberingeniørskolen}
 \newcommand{\laboratory}{Matematiske Metoder 2}
@@ -52,6 +68,7 @@
 \input{sections/konklusjon}
 \clearpage
 
+\nocite{*}
 \printbibliography[heading=bibintoc,title={Referanser}]
 \clearpage
 
