@@ -138,10 +138,11 @@ fig2, ax2 = plt.subplots(figsize=(9,5))
 t_in, x_in = rekonTidsSignal(T, n, c, Hn=None, Nt=Nt, t_cycles=t_cycles)
 ax2.plot(t_in*1e9, x_in, 'k', lw=1.5, label='Inn (referanse)')
 
+T_ref= np.mean(T_g['10m'])  # referanse for justering av tid
 for Lm in lengths_m:
     Hn = Hn_by_len[Lm]
     t_out, x_out = rekonTidsSignal(T, n, c, Hn=Hn, Nt=Nt, t_cycles=t_cycles)
-    t_out_shifted = t_out - np.mean(T_g[f'{Lm}m'])  # juster for forsinkelse
+    t_out_shifted = t_out - (np.mean(T_g[f'{Lm}m']) - T_ref)  # juster for forsinkelse
     ax2.plot(t_out_shifted*1e9, x_out, lw=1.6, label=f'{Lm} m')
 
 ax2.set_xlabel('Tid (ns)')
