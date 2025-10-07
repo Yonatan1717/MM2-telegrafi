@@ -40,7 +40,6 @@ def R_f(f, rho=1.72e-8, mu=4*np.pi*1e-7, r=0.255e-3, conductors=2):
     Rdc_per = rho/(np.pi*a*a)          # ohm/m for en leder (DC)
     fs = rho/(np.pi*mu*a*a)            # Hz
     f = np.asarray(f, dtype=float)
-    print(fs)
     Rac_one = np.where(f < fs, Rdc_per, Rdc_per*np.sqrt(f/fs))
     return conductors*Rac_one          # total serie-R per meter
 
@@ -48,7 +47,6 @@ def R_f(f, rho=1.72e-8, mu=4*np.pi*1e-7, r=0.255e-3, conductors=2):
 def G_f(f):
     """Dielektrisk tap: G = ω C tanδ (G(0)=0)."""
     omega = 2*pi*np.asarray(f, dtype=float)
-    print(tan_delta*C*2*pi)
     return omega * C * tan_delta
 
 def gamma_f(f):
@@ -64,6 +62,16 @@ def H_f(f, length):
     H = np.exp(-gamma_f(f) * length)
     H[f == 0.0] = 1.0
     return H
+
+alpha = np.real(gamma_f(np.linspace(0, f_max, Nf)))
+beta = np.imag(gamma_f(np.linspace(0, f_max, Nf)))
+
+beta_prime_f = np.gradient(beta, f_max/(Nf-1))
+T_g = {}
+T_g['10m'] = beta_prime_f * lengths_m[0]
+T_g['50m'] = beta_prime_f * lengths_m[1]
+T_g['100m'] = beta_prime_f * lengths_m[2]
+
 
 def fourierRekkeCoeffs(T, duty, N):
     """ 
@@ -133,7 +141,8 @@ ax2.plot(t_in*1e9, x_in, 'k', lw=1.5, label='Inn (referanse)')
 for Lm in lengths_m:
     Hn = Hn_by_len[Lm]
     t_out, x_out = rekonTidsSignal(T, n, c, Hn=Hn, Nt=Nt, t_cycles=t_cycles)
-    ax2.plot(t_out*1e9, x_out, lw=1.6, label=f'{Lm} m')
+    t_out_shifted = t_out - np.mean(T_g[f'{Lm}m'])  # juster for forsinkelse
+    ax2.plot(t_out_shifted*1e9, x_out, lw=1.6, label=f'{Lm} m')
 
 ax2.set_xlabel('Tid (ns)')
 ax2.set_ylabel('Spenning (norm.)')
