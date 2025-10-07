@@ -18,7 +18,7 @@ C = 52e-12          # F/m
 tan_delta = 2e-3    # dielektrisk loss tangent
 V0 = 5              # V, amplitudeskala (brukes ikke i normalisering)
 # Frekvensakse til H-plot
-f_max = 200e6
+f_max = 25e6
 Nf = 4000
 
 # Tidsprøver for rekonstruksjon
