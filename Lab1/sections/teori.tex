@@ -101,7 +101,7 @@ skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren
 tap som skyldes ufullkommen isolasjon mellom lederen og jord.
 \clearpage
 \subsubsection{Utledning av telegraflikningen}
-Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$, og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
+Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
@@ -112,19 +112,15 @@ Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
 \[
     u(x,t) - u(x+\Delta x,t) = R \Delta x \cdot i(x,t) + L \Delta x \cdot \frac{\partial i(x,t)}{\partial t} .
 \]
-Ved å dele begge sider av ligningen med $\Delta x$ og lar $\Delta x \to 0$ får vi den første differensialligningen:
-\begin{equation}
-    \frac{\partial u(x,t)}{\partial x} = -R i(x,t) - L \frac{\partial i(x,t)}{\partial t} . 
-\end{equation}
+
+Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen langs linjen slik det ble vist tidligere ved Kirchhoffs spenningslov.
+
 Tilsvarende, ved å bruke Kirchhoffs strømlov, får vi:
 \[
     i(x,t) - i(x+\Delta x,t) = -G \Delta x \cdot u(x,t) - C \Delta x \cdot \frac{\partial u(x,t)}{\partial t} .
 \]
-Igjen, ved å dele begge sider av ligningen med $\Delta x$ og lar $\Delta x \to 0$ får vi den andre differensialligningen:
-\[
-    \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t} .
-\]
-Ved å derivere den første ligningen med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
+
+Ved å kombinere disse to relasjonene, der vi deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \]
@@ -139,7 +135,6 @@ der vi har definert:
     \alpha = \frac{R}{L}, \qquad \beta = \frac{G}{C} .
 \]
 Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $R$, $L$, $C$, og $G$.
-
 
 
 \subsubsection{Propagerende løsning og overføringsfunksjon}
