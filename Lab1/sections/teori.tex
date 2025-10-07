@@ -14,18 +14,11 @@ kretsnettverk.
 sløyfe er lik null. Dette uttrykker energibevaring: den elektriske energien som brukes opp i motstander 
 og spoler, må være lik den energien som tilføres av spenningskilder. I telegrafligningen brukes KVL 
 til å uttrykke hvordan spenningen endrer seg langs et lite element av ledningen. Spenningsfallet 
-langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som
-\begin{equation}
-\frac{\partial u}{\partial x} = -R i - L \frac{\partial i}{\partial t}.
-\end{equation}
-
+langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som vist i likningen \eqref{eq:KVL}.\\
 \textbf{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
 er lik summen av de som går ut. Dette er et uttrykk for ladningsbevaring. I telegrafligningen brukes 
 KCL til å beskrive hvordan strømmen endrer seg langs ledningen, når en del av strømmen lekker til jord 
-gjennom konduktans og kapasitans. Dette gir
-\begin{equation}
-\frac{\partial i}{\partial x} = -G u - C \frac{\partial u}{\partial t}.
-\end{equation}
+gjennom konduktans og kapasitans. Dette gir likningen \eqref{eq:KCL}.\\
 
 Ved å kombinere Kirchhoffs lover kan man beskrive hvordan både spenning og strøm endrer seg 
 langs ledningen over tid. Dette er utgangspunktet for telegrafligningen, som gir 
@@ -108,16 +101,23 @@ Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinje
     \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}
     \label{fig:transmission_line_segment}   
 \end{figure}\\
-Ved å anvende Kirchhoffs spenningslov (se ligning (1)) på segmentet får vi:
+Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
 \[
     u(x,t) - u(x+\Delta x,t) = R \Delta x \cdot i(x,t) + L \Delta x \cdot \frac{\partial i(x,t)}{\partial t} .
 \]
-Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen langs linjen slik det ble vist tidligere ved Kirchhoffs spenningslov.
-\\
-\\Tilsvarende, ved å bruke Kirchhoffs strømlov (se ligning (2)), får vi:
+Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen:
+\begin{equation}
+    \frac{\partial u(x,t)}{\partial x} = -R i(x,t) - L \frac{\partial i(x,t)}{\partial t}.
+    \label{eq:KVL}
+\end{equation}
+\\Tilsvarende, ved å bruke Kirchhoffs strømlov, får vi:
 \[
     i(x,t) - i(x+\Delta x,t) = -G \Delta x \cdot u(x,t) - C \Delta x \cdot \frac{\partial u(x,t)}{\partial t} .
 \] 
+\begin{equation}
+    \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t}.
+    \label{eq:KCL}
+\end{equation}
 Ved å kombinere disse to relasjonene, der vi deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
@@ -146,10 +146,10 @@ Her har vi valgt tre elementer:
 \begin{itemize}
     \item \textbf{Tidsdelen $e^{j\omega t}$:} beskriver en harmonisk oscillasjon i tid. At vi bruker den 
     komplekse eksponentialen i stedet for $\cos(\omega t)$ eller $\sin(\omega t)$ skyldes at dette 
-    gjør beregningene enklere. Til slutt tar vi realdelen for å hente ut det fysiske signalet.
+    gjør beregningene enklere. Til slutt tar vi realdelen for å hente ut det fysiske signalet.\\
     \item \textbf{Romdelen $e^{-\gamma x}$:} beskriver hvordan signalet utvikler seg langs kabelens lengde. 
     Hvis $\gamma$ er reell, betyr dette ren demping. Hvis $\gamma$ er imaginær, betyr det ren faseforskyvning. 
-    I praksis er $\gamma$ kompleks, slik at vi får begge deler.
+    I praksis er $\gamma$ kompleks, slik at vi får begge deler.\\
     \item \textbf{Kompleks amplitude $U$:} setter størrelsen og fasen på bølgen.\\
 \end{itemize}
 Dette kalles en \emph{harmonisk ansats}. Den er valgt fordi vi vet fra Fourier-teori at alle signaler 
@@ -175,7 +175,7 @@ Vi kan forkorte med $V$ (som er forskjellig fra null) og får:
 c^2 \gamma^2(\omega) = \alpha \beta - \omega^2 + j\omega(\alpha+\beta).
 \]
 \clearpage
-Dette er en såkalt \emph{dispersjonsrelasjon}, som forteller hvilke kombinasjoner av 
+\noindent Dette er en såkalt \emph{dispersjonsrelasjon}, som forteller hvilke kombinasjoner av 
 frekvens $\omega$ og bølgetall $\gamma$ som er mulige. Vi kan løse for $\gamma$ og får
 \[
 \gamma(\omega) = \frac{1}{c}\sqrt{\alpha\beta - \omega^2 + j\omega(\alpha+\beta)}.
@@ -205,8 +205,8 @@ H(\omega,l) = e^{-\gamma(\omega)l} = e^{-\alpha_p(\omega)l}\,e^{-j\beta_p(\omega
 Dette er kabelens \emph{overføringsfunksjon}. 
 Den kan forstås slik:
 \begin{itemize}
-    \item $e^{-\alpha_p l}$: amplituden reduseres eksponentielt med lengden, 
-    \item $e^{-j\beta_p l}$: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
+    \item \textbf{$e^{-\alpha_p l}$}: amplituden reduseres eksponentielt med lengden, 
+    \item \textbf{$e^{-j\beta_p l}$}: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
 \end{itemize}
 Så langt har vi bare sett på en harmonisk bølge. Men i praksis er alle signaler satt sammen av mange slike bølger. 
 Et vilkårlig innsignal kan skrives som en Fourier-rekke:
@@ -239,19 +239,25 @@ Når $c_n$ er Fourier-koeffisienten til n-te harmoniske komponent, er amplituden
 Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
   \item \textbf{Skinneffekt}: Når frekvensen øker, presses strømmen mot overflaten av lederen. Det effektive tverrsnittet blir mindre, og den elektriske motstanden per lengde øker. For runde ledere (og godt approksimert i praksis) gjelder:
-  \[
-  R(\omega)\ \propto\ \sqrt{\omega}
-  \]
+    \begin{equation}
+        R(\omega) = R_{DC} \cdot \sqrt{\frac{\omega}{\omega_{s}}}, \quad hvor \quad \omega_{s} = \frac{2 \rho}{ \mu r^2}, \quad R_{DC} = n_s \cdot \frac{\rho}{\pi r^2}
+        \label{eq:skin-effekt}
+    \end{equation}
+    Her er $\omega_{s}$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho$ er resistiviteten til lederne, $\mu$ er permabiliteten til lederen og $r$ er radiusen til lederen. Vi ser dermed at:
+    \[
+    R(\omega)\ \propto\ \sqrt{\omega}
+    \]
   Ut fra propagasjonskonstanten \eqref{eq:prop-konstant} følger at $\alpha_p(\omega)$ vokser omtrent som $\sqrt{\omega}$.\\
   \item \textbf{Dielektriske tap}: Et virkelig dielektrikum er ikke tapsfritt: polarisasjonen henger litt etter feltet (faseforsinkelse), noe som kan modelleres med \emph{loss tangent} \(\tan\delta\). For små tap får vi den nyttige tilnærmingen
-  \[
+  \begin{equation}
   G(\omega)\ =\ \omega\,C\,\tan\delta \quad \Rightarrow \quad G(\omega)\ \propto\ \omega
-  \]
+    \label{eq:dielectric_loss}
+  \end{equation}
   slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha_p(\omega)\) og dermed til økende demping med \(\omega\).\\
 \end{itemize}
 \clearpage
 
-Dette gir da direkte utslag i overføringsfunksjonen. Siden både \(R(\omega)\) og \(G(\omega)\) øker med frekvens, dempes høyfrekvente komponenter mest.
+\noindent Dette gir da direkte utslag i overføringsfunksjonen. Siden både \(R(\omega)\) og \(G(\omega)\) øker med frekvens, dempes høyfrekvente komponenter mest.
 I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i øyediagram) siden høye frekvenser som trengs for å gjenskape skarpe kanter, er mest dempet.
 \begin{figure}[h]
     \centering
@@ -278,8 +284,9 @@ Den sier noe om hvor mye en smal båndbredde rundt frekvensen \(\omega\) forsink
 \[
 v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta_p(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta_p(\omega)}{d\omega} \quad [\mathrm{s/m}]
 \]
+\noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er netteopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. 
 \clearpage
-\noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er netteopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. Dette får direkte konsekvenser for pulsform og øyediagram.\\
+\noindent Dette får direkte konsekvenser for pulsform og øyediagram.\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
   \item \textbf{Ingen dispersjon:} Hvis \(\frac{d\beta_p}{d\omega} \) er konstant (lineær fase), får alle frekvenskomponenter samme tidsforsinkelse \(\Rightarrow\) ingen pulsbredding (ingen horisontal øyelukking).\\
   \item \textbf{Dispersjon:} Når \(\frac{d\beta_p}{d\omega}\) varierer med frekvens (ikke-lineær fase), får ulike frekvenskomponenter ulik tidsforsinkelse \(\Rightarrow\) pulsbredding (horisontal øyelukking). I lavtap-tilfellet er ofte 

@@ -11,3 +11,5 @@ Lab1/main.run.xml
 Lab1/main.synctex.gz
 Lab1/main.toc
 Lab1/main.synctex(busy)
+.vscode/
+.venv/

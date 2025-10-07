@@ -6,7 +6,7 @@ Vi tar utgangspunkt i en firkantpuls med periode $T$:
     V_{in}(t) = \begin{cases}
         5, & -\frac{T}{2} \leq t < 0 \\
         0, & 0 \leq t < \frac{T}{2} \\
-    \end{cases}, \quad hvor \quad T = 100ns,\qquad duty\ cycle = 50\%
+    \end{cases}, \quad hvor \quad T = 2 \mu s,\qquad duty\ cycle = 50\%
 \]
 Vi bestemmer først Fourier-rekken til firkantpulsen for å finne frekvenskomponentene:
 \[
@@ -24,9 +24,11 @@ Vi for dermed at:
 \[
     V_{inn}(t) = \frac{5}{2} + \sum_{n=1,3,5,...}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
-For å modellere dempingen i mediet, antar vi en en tilnærment lik realistiske verider for R, G, L og C:
+For å modellere dempingen i mediet, antar vi en en tilnærment lik realistiske verider for R, G, L og C.
+Vi antar at mediet er en Cat5e kabel med følgende parametere:
+Fra formel \eqref{eq:skin-effekt} for vi at R er gitt ved:
 \[
-    R(f) = R_{DC} \cdot \sqrt{\frac{f}{f_{s}}}, \quad hvor \quad f_{s} = \frac{\rho_{cu}}{\pi \mu_{cu} r^2}, \quad R_{DC} = n_s \cdot \frac{\rho_{cu}}{\pi r^2}
+    R(f) = R_{DC} \cdot \sqrt{\frac{f}{f_{s}}}, \quad hvor \quad f_{s} = \frac{\rho_{cu}}{\pi \mu_{cu} r^2}, \quad R_{DC} = n_s \cdot \frac{\rho_{cu}}{\pi r^2}, \quad (merk\ at \quad \omega = 2\pi f)
 \]
 \[
     \rho_{cu} = 1.72 \cdot 10^{-8} \Omega m, \quad r = 0.255 mm, \quad \mu_{cu} = \mu_0 \cdot \mu_r = 4\pi \cdot 10^{-7} H/m., \quad n_s = 2
@@ -38,19 +40,20 @@ Dermed får vi:
 \[
     R(f) = 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \quad [\Omega/m]
 \]
-Her er $f_s$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho_{cu}$ er resistiviteten til kobber, $\mu_{cu}$ er permabiliteten til kobber og $r$ er radiusen til lederen.
 Vi antar videre at:
 \[
     L = 525 nH/m, \quad C = 52 pF/m
 \]
+Fra formlen \eqref{eq:dielectric_loss} for dielektriske tap, får vi at:
 \[
     G(f) = 2\pi f C \tan \delta, \quad hvor \quad \tan \delta = 0.002
 \]
-Disse verdiene er basert på typiske verdier for en Cat5e kabel og vi står igjen med:
+\clearpage
+\noindent Vi står igjen med:
 \[
     R(f) \approx 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \quad [\Omega/m], \quad L = 525 nH/m, \quad C = 52 pF/m, \quad G(f) \approx 0.65f \quad [pS/m]
 \]
-\clearpage
+
 \noindent Vi har nå alt vi trenger for å finne overføringsfunksjonen til mediet:
 \[
     H(f, l) = e^{-\gamma(f) l}, \quad hvor \quad \gamma(f) = \sqrt{(R(f) + j 2\pi f L)(G(f) + j 2\pi f C)}
@@ -70,3 +73,38 @@ Dempinig av signalet over en lengde på 10, 50 og 100 meter er vist i figur \ref
     \caption{Frekvensdomeneanalyse av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder (10m, 50m, 100m).}
     \label{fig:modell1}
 \end{figure}
+\clearpage
+\subsection{Modell 2}
+I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved hjelp av den inverse Fourier-transformasjonen av de dempede frekvenskomponentene. Her har vi kunn tatt hensyn til amplitudendringen og ikke faseendringen. alstå ser vi på:
+\[
+    H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
+\]
+Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer avrundet etter å ha passert gjennom mediet, noe som bekrefter at høyfrekvente komponenter dempes mer enn lavfrekvente komponenter. Dette resulterer i en signifikant endring i signalets form, spesielt over lengre avstander.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Media/modellering2.png}
+    \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder (10m, 50m, 100m).}
+    \label{fig:modell2}
+\end{figure}
+\clearpage
+\subsection{Modell 3}
+For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den enen kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
+\begin{itemize}
+    \item \textbf{Lavpassfilter (LP):} Her summerer vi alle frekvenskomponenter fra fundamentalfrekvensen $f_0$ opp til en økende grensefrekvens $f_{cut}$. Dette viser hvordan tidsdomenesignalet utvikler seg når vi inkluderer flere lavfrekvente komponenter.
+    \[
+        |f| \leq f_{cut}
+    \]
+    \item \textbf{Høypassfilter (HP):} Her summerer vi alle frekvenskomponenter fra en synkende grensefrekvens $f_{low}$ opp til en øvre grensefrekvens (for eksempel 100 MHz eller høyeste harmoniske). Dette viser hvordan tidsdomenesignalet påvirkes når vi inkluderer flere høyfrekvente komponenter.
+    \[
+        |f| \geq f_{low}
+    \]
+    \item \textbf{Antall kutt:} For å få en jevnere overgang i waterfall plottene, har vi økt antall kutt (cuts) til 15. Dette gir en mer detaljert visualisering av hvordan signalet endres med forskjellige grensefrekvenser.
+\end{itemize}
+Dette er vist i figur \ref{fig:modell3}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Media/modellering3.png}
+    \caption{Waterfall plot som viser hvordan tidsdomenesignalet endres når flere frekvenskomponenter inkluderes opp/ned til forskjellige grensefrekvenser (plottet er for 50m kabel).}
+    \label{fig:modell3}
+\end{figure}\\
+Vi ser at når vi inkluderer flere frekvenskomponenter, blir tidsdomenesignalet mer detaljert og nærmere den opprinnelige firkantpulsen. Dette illustrerer viktigheten av høyfrekvente komponenter for å bevare signalets form. For lavpassfilteret ser vi at signalet gradvis nærmer seg firkantpulsen når flere lavfrekvente komponenter inkluderes. For høypassfilteret ser vi at signalet blir mer avrundet når flere høyfrekvente komponenter inkluderes, noe som bekrefter at høyfrekvente komponenter er avgjørende for å opprettholde skarpe overganger i tidsdomenesignalet.
