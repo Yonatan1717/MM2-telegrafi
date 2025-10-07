@@ -90,9 +90,15 @@ Induktansen per lengde $[\mathrm{H}/\mathrm{m}]$ er magnetisk lagring av energi 
 \subsubsection{C - Kapasitans}
 Kapasitans per lengde $[\mathrm{F}/\mathrm{m}]$ er elektrisk lagring av energi i feltet mellom leder og referanse, per meter. Sammen med induktans har kapasitans påvirkning på fart. I linjemodellen er dette en gren til jord, den trekker ladning når spenningen endres.
 
-\subsubsection{G - Shunt-ledningsevne (lekkasje)}
-$G$ $[\mathrm{S}/\mathrm{m}]$ er shunt-ledningsevnen til jord per lengdeenhet. Den modellerer dielektrisk lekkasje gjennom isolasjonen og står parallelt med kapasitansen $C$ i linjemodellen. Større $G$ gir større demping fordi mer energi tappes i dielektrikumet. Høy fuktighet, aldring eller skadet/dårlig isolasjon øker $G$ (ideell isolasjon gir $G \approx 0$).
+\subsubsection{G -- Konduktans per lengdeenhet (lekkasje)}
+$G$ [$\mathrm{S/m}$] er \textit{konduktansen per lengdeenhet} til jord, ofte kalt 
+\textit{shunt-konduktansen}. Den modellerer lekkasjestrøm gjennom kabelens isolasjon og står 
+parallelt med kapasitansen $C$ i den ekvivalente linjemodellen. En større $G$ gir økt demping 
+fordi mer energi tapes i dielektrikumet. 
 
+Verdien av $G$ avhenger av materialets kvalitet og miljøforhold: høy fuktighet, aldring eller 
+skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren beskriver dermed 
+tap som skyldes ufullkommen isolasjon mellom lederen og jord.
 \clearpage
 \subsubsection{Utledning av telegraflikningen}
 Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$, og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm.
