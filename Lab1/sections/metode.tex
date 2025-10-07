@@ -1,19 +1,14 @@
 \section{Metode}
 
-For å analysere og simulere telegrafligningen og dens effekter på signaloverføring i transmisjonslinjer, benyttet vi følgende metoder:
+\subsection{Oversikt}
+Vi kombinerer numerisk modellering av transmisjonslinjen med laboratoriemålinger, og sammenlikner frekvens- og tidsdomene-respons for å validere modellen. Vi simulerer i Python og utfører målinger med funksjonsgenerator og oscilloskop. Data presenteres under modellering og resultater. For å analysere og simulere telegrafligningen og dens effekter på signaloverføring i transmisjonslinjer, benyttet vi følgende metoder: \\
+
 
 \begin{itemize}
-    
     \item \textbf{Numerisk simulering:} \textcolor{red}{Vi implementerte telegrafligningen i et numerisk simuleringsverktøy (f.eks. MATLAB eller Python) for å modellere signaloverføring over en gitt lengde av transmisjonslinjen. Dette inkluderte å simulere impulsresponsen og overføringsfunksjonen.}
     \item \textbf{Parameterstudie:} \textcolor{red}{Vi varierte parametrene R, L, G, og C for å observere deres individuelle og kollektive effekter på signaldemping og forvrengning. Dette hjalp oss med å identifisere hvilke faktorer som har størst innvirkning på signalintegriteten.}
     \item \textbf{Labaratoriestudie:}\textcolor{red}{ Vi gjennomførte eksperimenter med faktiske kabler og måleutstyr for å validere våre simuleringer. Dette inkluderte måling av signalrespons ved forskjellige frekvenser og sammenligning med teoretiske prediksjoner.}
 \end{itemize}
-\textcolor{red}{NYTT FORSLAG TIL METODE}
-
-\subsection{Oversikt}
-Vi kombinerer numerisk modellering av transmisjonslinjen med laboratoriemålinger, og sammenlikner frekvens- og tidsdomene-respons for å validere modellen. Metodepipeline:
-(i) simulering i Python/MATLAB, (ii) måling på kabel, (iii) signalprosessering,
-(iv) parameterestimering, (v) sammenligning mot kriterier.
 
 \subsection{Numerisk modell}
 \paragraph{Modellantakelser.}
@@ -22,28 +17,48 @@ Vi modellerer kabelen som en lineær, tidsinvariant linje med fordelte parametre
 \gamma(\omega)=\sqrt{(R+j\omega L)(G+j\omega C)},\qquad
 H(\omega)=e^{-\gamma(\omega)\,\ell}.
 \]
-I basis-analysen antar vi ren gjennomgang $H(\omega)$ (ingen refleksjoner); kilde- og lastimpedanser adresseres i et separat delkapittel (ABCD) dersom aktuelt.
 
 \paragraph{Frekvensavhengigheter.}
-Resistans skaleres med skinneffekt $R(f)=R_0\sqrt{f/f_\mathrm{ref}}$ (for $f>0$), og dielektriske tap modelleres ved
-$G(\omega)=\omega C \tan\delta$. Disse parameterne hentes/justeres fra datablad og brukes som startverdier i tilpasning.
+Resistans skaleres med skinneffekt $R(f)$ (for $f>0$), og dielektriske tap modelleres ved
+$G(f)$. Disse parameterne hentes/justeres fra datablad og brukes som startverdier i tilpasning.
 
 \paragraph{Inngangssignal og representasjon.}
-Vi representerer pulstoget med Fourier-rekke $f(t)=\Re\{\sum_n c_n e^{jn\omega_0 t}\}$ (periode $T$, duty $d$) og lar hver harmoniske dempes av $H(n\omega_0)$. Antall ledd $N_\text{harm}$ og tidsoppløsning $(N_t)$ velges etter konvergenstester (dobling/halvering) for å sikre stabil amplitude/risetid innen en toleranse på SIX.
+Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T=1/f_\mathrm{ref} = 100 \mathrm{ns}$ og grunnvinkelhastighet $\omega_0 = 2\pi / T$. Siden duty-cycle er 50\% består spekteret av kun oddetalls harmoniske. Tidsfunksjonen representeres med Fourier-rekken.
+\begin{equation}
+    V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{n=1,3,5,...}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
+\end{equation} 
 
 \paragraph{Implementasjonsdetaljer.}
-Python $3.x$ med NumPy/Matplotlib. Kode og versjoner vedlegges (repo/appendiks). Vi dokumenterer alle faste parametre ($R_0,L,C,\tan\delta,f_\mathrm{ref}$) og kabel-lengder.
+Python $3.x$ med bibliotekene NumPy og Matplotlib. Kode og versjoner vedlegges. Vi dokumenterer alle faste parametre ($R_0,L,C,\tan\delta,f_\mathrm{ref}$) og kabel-lengder.
+
+
 
 \subsection{Laboratoriestudie}
-\paragraph{Utstyr og oppkobling.}
-Funksjonsgenerator (modell/versjon), oscilloskop (båndbredde, sampling, vertikal oppløsning), termineringsmotstand(er), referanse-koaks, testkabel (kategori, lengde). Vi gir koblingsskisse, jordingspraksis og kabellengder for de-embedding.
+\paragraph{Gjennomførelse}
+Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator (modell?) til å generere et firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$, som sendes gjennom en koaksialkabel av kjent lengde. På mottakersiden bruker vi et oscilloskop for å sammenlikne data av en kort, direktekobling (referanse) og gjennom en lengre koaksialkabel.
+\paragraph{Hensikt.} Hensikten med laberatorieforsøket er å undersøke hvordan signalets attributer som amplitude og form endres når det overføres gjennom en transmisjonslinje, og å validere den numeriske modellen ved å sammenligne målte data med simuleringsresultater og teoretiske prediksjoner basert på telegrafligningen. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
 
-\paragraph{Signaler og innstillinger.}
-Tidsdomene (trinn/kvadratpuls/PRBS) og eventuelt swept-sine. For oscilloskop: samplingsfrekvens, antall punkter, antall averages, båndbreddefilter, trigger. Miljødata (temp/fukt) logges.
+\paragraph{Utstyr og oppsett.}
+Utstyret i forsøket er følgende:
+\begin{itemize}
+    \item \textbf{Funksjonsgenerator:} Modell og spesifikasjoner (frekvensområde, oppløsning, nøyaktighet).
+    \item \textbf{Oscilloskop:} Modell og spesifikasjoner (båndbredde, samplingsrate, oppløsning).
+    \item \textbf{Kabler:} Type (koaksial), lengder (f.eks. 1m, 10m, 50m), og relevante parametre ($R_0,L,C,\tan\delta$ fra datablad).
+    \item \textbf{Miljø:} Temperatur og andre forhold som kan påvirke målingene.
+\end{itemize}
 
-\paragraph{Måleprosedyre.}
-(1) Kalibrer prober/koaks. (2) Mål referanse (direktekobling) for systemidentifikasjon.
-(3) Mål gjennom kabel ved samme oppsett. (4) Repeter $n$ ganger for å estimere repetérbarhet.
+\paragraph{Måleprosedyrer.}
+Måleprosedyrene inkluderer:
+\begin{itemize}
+    \item Kalibrering av funksjonsgenerator og oscilloskop.
+    \item Oppsett av firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$.
+    \item Måling av inngangssignal (referanse) ved kort kabel.
+    \item Måling av utgangssignal etter transmisjonslinjen for ulike kabellengder.
+    \item Kabel-lengder (1m, 10m, 50m). ????
+    \item Gjentatte målinger for å vurdere konsistens og usikkerhet.
+\end{itemize}
+
+
 
 \subsection{Databehandling og estimering}
 \paragraph{Frekvensrespons.}
@@ -61,12 +76,14 @@ Vi sammenligner $|H(\omega)|$, fase/gruppeforsinkelse, risetid og oversving i ti
 RMS-avvik $\leq X$ dB over $f_1 - f_2$, risetidsavvik $\leq Y$. Avvik diskuteres mot usikkerhetsbudsjettet.
 
 \subsection{Reproduserbarhet}
-Vi publiserer rådata, skript, faste parametre og seeds. Maskinvare/firmware og OS-versjoner oppgis. \\ \textcolor{red}{MULIG VI MÅ ENDRE NOE HER}
+Vi publiserer rådata, skript, faste parametre og seeds. Maskinvare/firmware og OS-versjoner oppgis.
+
+\textcolor{red}{har kommentert ut de gamle forslagene, se om de er relevante for oss eller ikke \\ må isåfall integreres i teksten over på et vis}
 
 
 
 
-
+\iffalse
 \subsection{Numerisk simulering}
 For å kunne presentere resultatene fra denne rapporten velger vi å simulere telegrafligningen numerisk. Dette gjøres ved å bruke en differensiallikning som beskriver spenningen og strømmen i en transmisjonslinje. Telegrafligningen kan uttrykkes som to koblede førsteordens differensiallikninger. \\ Koden for denne simuleringen lager et firkant-pulstog og deretter beregner Fourier-rekka numerisk. Hver harmoniske tilfelle av fourier-transformasjonen blir deretter sendt gjennom transmisjonslinjen ved å bruke overføringsfunksjonen. Signalet vi simulerer vil oppleve transmisjonstap med RLGC. Koden viser amplitudespekteret etter kabelen og tidsdomenesignalet etter ulike kabellengder, hhv. 10m, 50m og 100m. \\ koden er vedlagt i vedlegg \ref{appendix:code}. \textcolor{red}{SKAL VÆRE EN HENVENDELSE TIL VEDLEGG} \\ Koden er strukturert og fungerer følgende:
 
@@ -86,3 +103,4 @@ Labaratoriestudien ble utført ved å koble opp en funksjonsgenerator til et osc
     \item Kapasitans per lengdeenhet (C): 52 $\mathrm{pF}/\mathrm{m}$
 \end{itemize}
 Vi sendte et \textcolor{red}{type (kvadratisk, raskt?)} signal med en frekvens på \textcolor{red}{x Hz} fra en funksjonsgenerator gjennom en Ethernet-kabel og målte signalet ved mottakersiden med oscilloskopet. Vi registrerte både inngangs- og utgangssignalet for å analysere demping og forvrengning. Signalet ble sammenlignet med det av en direktekobling med koaksialkabel. Dette var for å ha en referanse for å vurdere effekten av transmisjonslinjen, og knytte den utledede teorien opp til praktiske observasjoner på labaratoriet. Resultatene fra målingene ble deretter sammenlignet med de numeriske simuleringene for å validere modellens nøyaktighet.
+\fi
