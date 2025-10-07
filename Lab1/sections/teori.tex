@@ -108,18 +108,16 @@ Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinje
     \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}
     \label{fig:transmission_line_segment}   
 \end{figure}\\
-Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
+Ved å anvende Kirchhoffs spenningslov (se ligning (1)) på segmentet får vi:
 \[
     u(x,t) - u(x+\Delta x,t) = R \Delta x \cdot i(x,t) + L \Delta x \cdot \frac{\partial i(x,t)}{\partial t} .
 \]
-
 Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen langs linjen slik det ble vist tidligere ved Kirchhoffs spenningslov.
-
-Tilsvarende, ved å bruke Kirchhoffs strømlov, får vi:
+\\
+\\Tilsvarende, ved å bruke Kirchhoffs strømlov (se ligning (2)), får vi:
 \[
     i(x,t) - i(x+\Delta x,t) = -G \Delta x \cdot u(x,t) - C \Delta x \cdot \frac{\partial u(x,t)}{\partial t} .
-\]
-
+\] 
 Ved å kombinere disse to relasjonene, der vi deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
