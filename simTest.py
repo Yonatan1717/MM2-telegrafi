@@ -13,11 +13,9 @@ N_harm = 200        # antall harmoniske på hver side (totalt 2N+1)
 lengths_m = [10, 50, 100]
 
 # RLGC ~ typisk tvunnet parkabel (approx—tilpass datasheet)
-L = 0.5e-6          # H/m
-C = 50e-12          # F/m
-R0 = 0.08           # ohm/m @ f_ref (effektiv pr. par)
+L = 525e-9          # H/m
+C = 52e-12          # F/m
 tan_delta = 2e-3    # dielektrisk loss tangent
-f_ref = 1e6         # Hz, referanse for R(f) skalering
 V0 = 5              # V, amplitudeskala (brukes ikke i normalisering)
 # Frekvensakse til H-plot
 f_max = 200e6
@@ -25,7 +23,7 @@ Nf = 4000
 
 # Tidsprøver for rekonstruksjon
 Nt = 5000
-t_cycles = 3.0      # tegn en periode
+t_cycles = 1.0      # tegn en periode
 
 
 
@@ -33,26 +31,32 @@ t_cycles = 3.0      # tegn en periode
 j = 1j
 pi = np.pi
 
-def R_f(f):
-    """Skinneffekt: R ~ R0 * sqrt(f/f_ref) for f>0, og R(0)=0."""
+def R_f(f, rho=1.72e-8, mu=4*np.pi*1e-7, r=0.255e-3, conductors=2):
+    """
+    R(f) for skinneffekt.
+    r: lederradius (m). conductors: antall seriekoblede ledere (2 for tvinnet par/coax retur).
+    """
+    a = r
+    Rdc_per = rho/(np.pi*a*a)          # ohm/m for en leder (DC)
+    fs = rho/(np.pi*mu*a*a)            # Hz
     f = np.asarray(f, dtype=float)
-    R = np.zeros_like(f)
-    pos = f > 0
-    R[pos] = R0 * np.sqrt(f[pos] / f_ref)
-    return R
+    print(fs)
+    Rac_one = np.where(f < fs, Rdc_per, Rdc_per*np.sqrt(f/fs))
+    return conductors*Rac_one          # total serie-R per meter
+
 
 def G_f(f):
     """Dielektrisk tap: G = ω C tanδ (G(0)=0)."""
     omega = 2*pi*np.asarray(f, dtype=float)
+    print(tan_delta*C*2*pi)
     return omega * C * tan_delta
 
 def gamma_f(f):
     """gamma(f) = sqrt((R + jωL)(G + jωC))."""
     f = np.asarray(f, dtype=float)
-    omega = 2*pi*f
     R = R_f(f)
     G = G_f(f)
-    return np.sqrt((R + j*omega*L) * (G + j*omega*C))
+    return np.sqrt((R + j*2*pi*f*L) * (G + j*2*pi*f*C))
 
 def H_f(f, length):
     """Overføringsfunksjon H(f, l) = exp(-gamma*l) med H(0)=1."""
@@ -119,6 +123,8 @@ ax1.set_title('Harmoniske (kun odd n) og amplituder etter kabelen')
 ax1.legend()
 ax1.grid(True, alpha=0.3)
 
+
+
 #Tidsdomene: en periode pr. lengde
 fig2, ax2 = plt.subplots(figsize=(9,5))
 t_in, x_in = rekonTidsSignal(T, n, c, Hn=None, Nt=Nt, t_cycles=t_cycles)
@@ -131,7 +137,7 @@ for Lm in lengths_m:
 
 ax2.set_xlabel('Tid (ns)')
 ax2.set_ylabel('Spenning (norm.)')
-ax2.set_title('Én periode av pulstoget etter ulike kabellengder')
+ax2.set_title('en periode av pulstoget etter ulike kabellengder')
 ax2.grid(True, alpha=0.3)
 ax2.legend()
 
