@@ -168,7 +168,6 @@ fig_lp = plt.figure(figsize=(10,6))
 ax_lp = fig_lp.add_subplot(121, projection='3d')
 ax_hp = fig_lp.add_subplot(122, projection='3d')
 
-# Velg ~30 f_cut opp til 100 MHz (eller N_harm*f0)
 f_top = min(N_harm * f0, 100e6)
 n_max_list = np.linspace(1, int(f_top/f0), cuts, dtype=int)
 n_max_list = np.where(n_max_list % 2 == 0, n_max_list+1, n_max_list)  # odd
