@@ -24,13 +24,13 @@ Resistans skaleres med skinneffekt $R(f)$ (for $f>0$), og dielektriske tap model
 $G(f)$. Disse parameterne hentes/justeres fra datablad og brukes som startverdier i tilpasning.
 
 \paragraph{Inngangssignal og representasjon.}
-Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T=1/f_\mathrm{ref} = 100 \mathrm{ns}$ og grunnvinkelhastighet $\omega_0 = 2\pi / T$. Siden duty-cycle er 50\% består spekteret av kun oddetalls harmoniske. Tidsfunksjonen representeres med Fourier-rekken.
+Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T = 2 \mu s$ og grunnvinkelhastighet $\omega_0 = 2\pi / T$. Siden duty-cycle er 50\% består spekteret av kun oddetalls harmoniske. Tidsfunksjonen representeres med Fourier-rekken.
 \begin{equation}
-    V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{n=1,3,5,...}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
+    V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
 \end{equation} 
 
 
-
+\clearpage
 \subsection{Laboratoriestudie}
 \paragraph{Gjennomførelse}
 Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$, som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data av en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.

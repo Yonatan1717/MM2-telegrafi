@@ -91,6 +91,7 @@ t_out = np.array([r[0] for r in rows_out])
 v_out = np.array([r[1] + vpos_out for r in rows_out])
 
 TIME_WINDOW_S = 2e-6
+PAD_RATIO = 0.1  # 10% padding around the window
 
 t_min_common = max(float(t_in.min()), float(t_out.min())) if t_out.size else float(t_in.min())
 t_max_common = min(float(t_in.max()), float(t_out.max())) if t_out.size else float(t_in.max())
@@ -123,7 +124,8 @@ ax1.set_ylabel('Voltage (V)')
 ax1.set_title('Vin vs Vout (time domain) — 2 µs window')
 ax1.grid(True)
 ax1.legend()
-ax1.set_xlim(t0, t1)
+tp = PAD_RATIO * TIME_WINDOW_S
+ax1.set_xlim(t0 - tp, t1 + tp)
 
 
 freq_csv_file = "C:\\Users\\yonat\\Documents\\Tesla-main\\MM2-telegrafi\\data\\shortCableData5m\\in\\freq.CSV"
