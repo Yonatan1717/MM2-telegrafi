@@ -24,6 +24,7 @@ Nf = 4000
 # Tidsprøver for rekonstruksjon
 Nt = 5000
 t_cycles = 1.0      # tegn en periode
+mode = "kunn_fase"  # "full", "kunn_fase", "kunn_forsinkelse", "kunn_tap"
 
 
 
@@ -54,14 +55,31 @@ def gamma_f(f):
     f = np.asarray(f, dtype=float)
     R = R_f(f)
     G = G_f(f)
-    return np.real(np.sqrt((R + j*2*pi*f*L) * (G + j*2*pi*f*C)))
+    gamma = np.sqrt((R + j*2*pi*f*L) * (G + j*2*pi*f*C))
+    return gamma
 
-def H_f(f, length):
-    """Overføringsfunksjon H(f, l) = exp(-gamma*l) med H(0)=1."""
+def H_f(f, length, mode="full"):
     f = np.asarray(f, dtype=float)
-    H = np.exp(-gamma_f(f) * length)
+    if mode == "full":
+        gamma = gamma_f(f)                      # α + jβ (med tap)
+        gamma_eff = gamma
+    elif mode == "kunn_fase":                  # bruk bare β fra faktisk gamma
+        beta = np.imag(gamma_f(f))              # β(f)
+        gamma_eff = 1j*beta
+    elif mode == "kunn_forsinkelse":              # ideell, tapsfri og ikke-dispersiv
+        omega = 2*np.pi*f
+        beta0 = omega*np.sqrt(L*C)              # β0 = ω√(LC)
+        gamma_eff = 1j*beta0
+    elif mode == "kunn_tap":                  # bruk bare α fra faktisk gamma
+        alpha = np.real(gamma_f(f))             # α(f)
+        gamma_eff = alpha
+    else:
+        raise ValueError("Ukjent mode")
+
+    H = np.exp(-gamma_eff*length)
     H[f == 0.0] = 1.0
     return H
+
 
 def fourierRekkeCoeffs(T, duty, N):
     """ 
@@ -104,7 +122,7 @@ amps_in = np.abs(c)
 Hn_by_len = {}
 for Lm in lengths_m:
     # behold full lengde (brukes senere i tidsdomenet), men evaluer på |f|
-    Hn_by_len[Lm] = H_f(np.abs(harm_freqs), Lm)
+    Hn_by_len[Lm] = H_f(harm_freqs, Lm, mode=mode)
 
 fig1, ax1 = plt.subplots(figsize=(9,5))
 ax1.stem(freqs_odd_MHz, amps_in[odd_pos_idx],
@@ -124,21 +142,84 @@ ax1.grid(True, alpha=0.3)
 
 
 #Tidsdomene: en periode pr. lengde
-fig2, ax2 = plt.subplots(figsize=(9,5))
+# en referanseberegning
+# --- valg av forsinkelsesmodell ---
+df_rel = 0.05                 # for group_at_f0: +/-5% rundt f0
+
+def tau_per_meter(mode="ideal"):
+    if mode == "ideal":
+        return np.sqrt(L*C)   # τ/L = √(LC)
+    elif mode == "group_at_f0":
+        f0 = 1.0 / T
+        df = df_rel * f0
+        f_minus, f_plus = f0 - df, f0 + df
+        beta_minus, beta_plus = np.imag(gamma_f([f_minus, f_plus]))
+        omega_minus, omega_plus = 2*np.pi*np.array([f_minus, f_plus])
+        d_beta_d_omega = (beta_plus - beta_minus) / (omega_plus - omega_minus)  # s/m
+        return d_beta_d_omega              # τ/L = dβ/dω
+    else:
+        raise ValueError("Ukjent delay_mode")
+
+# referanse
+cmap = plt.cm.get_cmap('tab10', len(lengths_m))   # evt. 'tab20'
+color_of = {Lm: cmap(i) for i, Lm in enumerate(lengths_m)}
+ref_style = dict(color='0.45', alpha=0.35, lw=1.0)  # grå referanse
+
+# --- Referanse ---
 t_in, x_in = rekonTidsSignal(T, n, c, Hn=None, Nt=Nt, t_cycles=t_cycles)
-ax2.plot(t_in*1e9, x_in, 'k', lw=1.5, label='Inn (referanse)')
 
-for Lm in lengths_m:
-    Hn = Hn_by_len[Lm]
-    t_out, x_out = rekonTidsSignal(T, n, c, Hn=Hn, Nt=Nt, t_cycles=t_cycles)
-    t_out_shifted = t_out  # juster for forsinkelse
-    ax2.plot(t_out_shifted*1e9, x_out, lw=1.6, label=f'{Lm} m')
+fig, axes = plt.subplots(
+    nrows=len(lengths_m), ncols=1, sharex=True, sharey=True,
+    figsize=(9, 2.2*len(lengths_m))
+)
+axes = np.atleast_1d(axes)
 
-ax2.set_xlabel('Tid (ns)')
-ax2.set_ylabel('Spenning (norm.)')
-ax2.set_title('en periode av pulstoget etter ulike kabellengder')
-ax2.grid(True, alpha=0.3)
-ax2.legend()
+if mode in ("kunn_forsinkelse", "kunn_fase"):
+    # forsinkelse pr. meter
+    tau_per_m = tau_per_meter()  # s/m
+
+    for ax, Lm in zip(axes, lengths_m):
+        Hn = Hn_by_len[Lm]
+        t_out, x_out = rekonTidsSignal(T, n, c, Hn=Hn, Nt=Nt, t_cycles=t_cycles)
+
+        # signaler
+        ax.plot(t_in*1e9, x_in, **ref_style, label='Inn (ref.)')
+        ax.plot(t_out*1e9, x_out, lw=1.6, color=color_of[Lm], label=f'{Lm} m')
+
+        # forsinkelsesmarkør (mod T så den havner i vinduet)
+        tau = tau_per_m * Lm                       # s
+        tmark_ns = (tau % (t_cycles*T)) * 1e9      # ns
+        ax.axvline(tmark_ns, ls='--', lw=1.0, color=color_of[Lm])
+
+        ymax = ax.get_ylim()[1]
+        ax.text(
+            tmark_ns, ymax*0.92, fr'$\tau \approx {tau*1e9:.1f}\,$ns',
+            rotation=0, ha='left', va='baseline', fontsize=10,
+            color=color_of[Lm]
+        )
+
+        ax.grid(True, alpha=0.3)
+        ax.set_ylabel('Spenning (norm.)')
+        ax.legend(loc='upper right')
+else:
+    for ax, Lm in zip(axes, lengths_m):
+        Hn = Hn_by_len[Lm]
+        t_out, x_out = rekonTidsSignal(T, n, c, Hn=Hn, Nt=Nt, t_cycles=t_cycles)
+
+        ax.plot(t_in*1e9, x_in, **ref_style, label='Inn (referanse)')
+        ax.plot(t_out*1e9, x_out, lw=1.6, color=color_of[Lm], label=f'{Lm} m')
+
+        ax.grid(True, alpha=0.3)
+        ax.set_ylabel('Spenning (norm.)')
+        ax.legend(loc='upper right')
+
+axes[-1].set_xlabel('Tid (ns)')
+fig.suptitle('En periode av pulstoget etter ulike kabellengder', y=0.98)
+fig.align_ylabels(axes)
+fig.tight_layout()
+
+
+
 
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
@@ -155,7 +236,7 @@ t3 = np.linspace(0, T, 800, endpoint=False)
 w0 = 2*np.pi/T
 expo3 = np.exp(1j * np.outer(n*w0, t3))
 f0 = 1.0/T
-cuts = 15  # antall kutt i waterfall
+cuts = 13  # antall kutt i waterfall
 
 mask_odd = (n % 2 != 0) & (n != 0)
 
