@@ -1,16 +1,17 @@
 \section{Metode}
 
+\subsection{Mål og hypoteser.}
+\textbf{Formål:} analysere hvordan en transmisjonslinje (koaksialkabel) påvirker et pulstog i tids- og frekvensdomenet, og validere en RLCG-modell basert på telegrafligningen, numerisk simulering og laboratoriemålinger. Den estimerte overføringsfunksjonen predikerer målt demping og fase innenfor forhåndsdefinerte akseptgrenser. Overføringsfunksjonen:
+
+\[
+H(\omega) = e^{-\gamma(\omega)\ell} = e^{-\sqrt{(R+j\omega L)(G+j\omega C)}\,\ell}
+\]
+
 \subsection{Oversikt}
-Vi kombinerer numerisk modellering av transmisjonslinjen med laboratoriemålinger, og sammenlikner frekvens- og tidsdomene-respons for å validere modellen. Vi simulerer i Python og utfører målinger med funksjonsgenerator og oscilloskop. Data presenteres under modellering og resultater. For å analysere og simulere telegrafligningen og dens effekter på signaloverføring i transmisjonslinjer, benyttet vi følgende metoder: \\
+Metoden vi bruker i denne rapporten består av to hoveddeler: numerisk simulering og laboratoriestudie. Den numeriske simuleringen innebærer å modellere transmisjonslinjen ved hjelp av telegrafligningen. Vi bruker Python for å implementere denne modellen og generere simuleringsdata. I laboratoriestudien gjennomfører vi praktiske målinger ved å sende et firkant-pulstog gjennom en koaksialkabel av kjent lengde og registrere inngangs- og utgangssignaler ved hjelp av et oscilloskop. Vi sammenligner deretter de målte dataene med de simulerte resultatene for å validere modellen.
 
-
-\begin{itemize}
-    \item \textbf{Numerisk simulering:} \textcolor{red}{Vi implementerte telegrafligningen i et numerisk simuleringsverktøy (f.eks. MATLAB eller Python) for å modellere signaloverføring over en gitt lengde av transmisjonslinjen. Dette inkluderte å simulere impulsresponsen og overføringsfunksjonen.}
-    \item \textbf{Parameterstudie:} \textcolor{red}{Vi varierte parametrene R, L, G, og C for å observere deres individuelle og kollektive effekter på signaldemping og forvrengning. Dette hjalp oss med å identifisere hvilke faktorer som har størst innvirkning på signalintegriteten.}
-    \item \textbf{Labaratoriestudie:}\textcolor{red}{ Vi gjennomførte eksperimenter med faktiske kabler og måleutstyr for å validere våre simuleringer. Dette inkluderte måling av signalrespons ved forskjellige frekvenser og sammenligning med teoretiske prediksjoner.}
-\end{itemize}
-
-\subsection{Numerisk modell}
+\subsection{Numerisk simulering og modellering}
+For å simulere telegrafligningen numerisk brukte vi Python med relevante biblioteker for numerisk beregning. Koden er vedlagt i vedlegg \ref{appendix:code}.
 \paragraph{Modellantakelser.}
 Vi modellerer kabelen som en lineær, tidsinvariant linje med fordelte parametre $R(f),L,C,G(f)$ per meter og bruker
 \[
@@ -28,79 +29,25 @@ Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T=1/f
     V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{n=1,3,5,...}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
 \end{equation} 
 
-\paragraph{Implementasjonsdetaljer.}
-Python $3.x$ med bibliotekene NumPy og Matplotlib. Kode og versjoner vedlegges. Vi dokumenterer alle faste parametre ($R_0,L,C,\tan\delta,f_\mathrm{ref}$) og kabel-lengder.
-
 
 
 \subsection{Laboratoriestudie}
 \paragraph{Gjennomførelse}
-Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator (modell?) til å generere et firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$, som sendes gjennom en koaksialkabel av kjent lengde. På mottakersiden bruker vi et oscilloskop for å sammenlikne data av en kort, direktekobling (referanse) og gjennom en lengre koaksialkabel.
-\paragraph{Hensikt.} Hensikten med laberatorieforsøket er å undersøke hvordan signalets attributer som amplitude og form endres når det overføres gjennom en transmisjonslinje, og å validere den numeriske modellen ved å sammenligne målte data med simuleringsresultater og teoretiske prediksjoner basert på telegrafligningen. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
+Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$, som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data av en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.
+
+\paragraph{Hensikt.} Hensikten med laberatorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
 
 \paragraph{Utstyr og oppsett.}
 Utstyret i forsøket er følgende:
 \begin{itemize}
-    \item \textbf{Funksjonsgenerator:} Modell og spesifikasjoner (frekvensområde, oppløsning, nøyaktighet).
-    \item \textbf{Oscilloskop:} Modell og spesifikasjoner (båndbredde, samplingsrate, oppløsning).
-    \item \textbf{Kabler:} Type (koaksial), lengder (f.eks. 1m, 10m, 50m), og relevante parametre ($R_0,L,C,\tan\delta$ fra datablad).
-    \item \textbf{Miljø:} Temperatur og andre forhold som kan påvirke målingene.
+    \item \textbf{Funksjonsgenerator.} Genererer firkant-pulstog med justerbar frekvens og amplitude. Firkant-pulstoget ble konfigurert til periodetid $T = 2 \mu s$ (frekvens $f_\mathrm{ref} = 500 \mathrm{kHz}$) med 50\% duty-cycle og amplitude på $2.5V_{pp}$. Startfasen ble satt til $0\deg$ for å sikre at signalet starter ved null.
+    \item \textbf{Oscilloskop.} FFT-funksjonalitet for frekvensanalyse.
+    \item \textbf{Kabler.} Koaksialkabel med lengder på 5m og 30m.
 \end{itemize}
 
 \paragraph{Måleprosedyrer.}
-Måleprosedyrene inkluderer:
-\begin{itemize}
-    \item Kalibrering av funksjonsgenerator og oscilloskop.
-    \item Oppsett av firkant-pulstog med 50\% duty-cycle og frekvens $f_\mathrm{ref} = 10 \mathrm{MHz}$.
-    \item Måling av inngangssignal (referanse) ved kort kabel.
-    \item Måling av utgangssignal etter transmisjonslinjen for ulike kabellengder.
-    \item Kabel-lengder (1m, 10m, 50m). ????
-    \item Gjentatte målinger for å vurdere konsistens og usikkerhet.
-\end{itemize}
+Måleprosedyrene inkluderer kalibrering av funksjonsgenerator og oscilloskop, oppsett av firkant-pulstog, og måling av inngangs- og utgangssignaler for hver kabellengde. På oscilloskopet målte vi $V_{in}$ og $V_{out}$ for hver kabellengde, og registrerte dataene for videre analyse. Her benyttet vi oss også av FFT (Fast Fourier Transform) for å analysere frekvensspekteret til signalene. Vi gjennomfører gjentatte målinger for å vurdere konsistens og usikkerhet.
 
-
-
-\subsection{Databehandling og estimering}
-\paragraph{Frekvensrespons.}
-Estimér $H_\text{målt}(\omega)$ fra tidsserier via FFT (vindustype, segmentlengde, overlap, Welch-averaging). De-embedd referanseledninger ved å dividere ut referansemåling.
-
-\paragraph{Parameterestimering.}
-Tilpass $R_0, L, C, \tan\delta$ ved å minimere
-\[
-\min_\theta \sum_{\omega\in\Omega} \left|\log H_\text{målt}(\omega) + \gamma(\theta;\omega)\,\ell\right|^2,
-\]
-og rapporter usikkerhet (bootstrap/repetisjoner + instrumentspesifikasjoner).
-
-\subsection{Metrikker og akseptkriterier}
-Vi sammenligner $|H(\omega)|$, fase/gruppeforsinkelse, risetid og oversving i tidsdomene. Akseptkriterier:
-RMS-avvik $\leq X$ dB over $f_1 - f_2$, risetidsavvik $\leq Y$. Avvik diskuteres mot usikkerhetsbudsjettet.
-
-\subsection{Reproduserbarhet}
-Vi publiserer rådata, skript, faste parametre og seeds. Maskinvare/firmware og OS-versjoner oppgis.
-
-\textcolor{red}{har kommentert ut de gamle forslagene, se om de er relevante for oss eller ikke \\ må isåfall integreres i teksten over på et vis}
-
-
-
-
-\iffalse
-\subsection{Numerisk simulering}
-For å kunne presentere resultatene fra denne rapporten velger vi å simulere telegrafligningen numerisk. Dette gjøres ved å bruke en differensiallikning som beskriver spenningen og strømmen i en transmisjonslinje. Telegrafligningen kan uttrykkes som to koblede førsteordens differensiallikninger. \\ Koden for denne simuleringen lager et firkant-pulstog og deretter beregner Fourier-rekka numerisk. Hver harmoniske tilfelle av fourier-transformasjonen blir deretter sendt gjennom transmisjonslinjen ved å bruke overføringsfunksjonen. Signalet vi simulerer vil oppleve transmisjonstap med RLGC. Koden viser amplitudespekteret etter kabelen og tidsdomenesignalet etter ulike kabellengder, hhv. 10m, 50m og 100m. \\ koden er vedlagt i vedlegg \ref{appendix:code}. \textcolor{red}{SKAL VÆRE EN HENVENDELSE TIL VEDLEGG} \\ Koden er strukturert og fungerer følgende:
-
-
-
-\subsection{Parameterstudie}
-
-Dette avsnittet beskriver hvordan vi gjennomførte en parameterstudie for å undersøke effekten av de ulike parametrene i telegrafligningen på signaloverføring i en transmisjonslinje. Vi fokuserte på fire hovedparametere: motstand (R), induktans (L), konduktans (G), og kapasitans (C). Dette forsøket ble utført ved å variere hver parameter individuelt mens de andre ble holdt konstante, for å isolere deres spesifikke effekter på signaldemping og forvrengning. \\ Dette studiet ble utført ved hjelp av numeriske simuleringer i et verktøy som MATLAB eller Python. Vi modellerte en transmisjonslinje med en fast lengde og sendte et standardisert signal gjennom linjen, mens vi målte utgangssignalet for hver kombinasjon av parameterverdier. \\ \textcolor{red}{Vi startet med å definere en basislinje for hver parameter basert på typiske verdier for en standard Ethernet-kabel. Deretter varierte vi hver parameter over et realistisk spekter: DETTE I RØDT SKAL ENDRES TIL VÅRT FAKTISK FORSØK}
-
-\subsection{Labaratoriestudie}
-
-Labaratoriestudien ble utført ved å koble opp en funksjonsgenerator til et oscilloskop gjennom en kjent lengde av Ethernet-kabel. Vi brukte en Cat-5 kabel med spesifikasjoner som følger:
-\begin{itemize}
-    \item Motstand per lengdeenhet (R): 0.188 $\Omega/\mathrm{m}$
-    \item Induktans per lengdeenhet (L): 0.25 $\mu \mathrm{H}/\mathrm{m}$
-    \item Konduktans per lengdeenhet (G): 0.10 $\mathrm{mS}/\mathrm{m}$
-    \item Kapasitans per lengdeenhet (C): 52 $\mathrm{pF}/\mathrm{m}$
-\end{itemize}
-Vi sendte et \textcolor{red}{type (kvadratisk, raskt?)} signal med en frekvens på \textcolor{red}{x Hz} fra en funksjonsgenerator gjennom en Ethernet-kabel og målte signalet ved mottakersiden med oscilloskopet. Vi registrerte både inngangs- og utgangssignalet for å analysere demping og forvrengning. Signalet ble sammenlignet med det av en direktekobling med koaksialkabel. Dette var for å ha en referanse for å vurdere effekten av transmisjonslinjen, og knytte den utledede teorien opp til praktiske observasjoner på labaratoriet. Resultatene fra målingene ble deretter sammenlignet med de numeriske simuleringene for å validere modellens nøyaktighet.
-\fi
+\subsubsection{FFT - Fast Fourier Transform}
+For å analysere tidsseriene bruker vi Fast Fourier Transform (FFT) for å konvertere signalene fra tidsdomenet til frekvensdomenet. Dette gir oss muligheten til å studere frekvensresponsen til systemet mer detaljert. Oscilloskopet benytter derfor FFT internt for å vise frekvensspekteret av de målte signalene.
+FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og dens invers. Den reduserer beregningstiden betydelig sammenlignet med direkte beregning av DFT, spesielt for store datasett. FFT-algoritmen fungerer ved å dele opp en stor DFT i flere mindre DFT-er, som deretter kombineres for å gi det endelige resultatet. Dette gjør det mulig å analysere signaler raskt og effektivt, noe som er spesielt nyttig i sanntidsapplikasjoner som oscilloskopmålinger. \\ Vi benytter FFT fordi imotsetning til en mer vanlig algoritme som DFT, som har en beregningstid på $O(N^2)$, har FFT en beregningstid på $O(N \log N)$. Dette gjør FFT mye raskere og mer effektiv for store datasett, noe som er avgjørende for sanntidsanalyse av signaler i vårt eksperiment.
