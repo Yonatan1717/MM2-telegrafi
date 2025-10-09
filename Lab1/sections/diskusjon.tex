@@ -1,7 +1,26 @@
 \section{Diskusjon}
+Målet med prosjektet var å modellere og simulere en transmisjonslinje, og sammenligne dette med målinger gjort i laboratoriet. Sammenhengen mellom teori og praksis er generelt god: for korte kabler (5m) observeres minimale forskjeller mellom inn- og utgangssignalet, mens lengre kabler (30m) viser en gradvis reduksjon i amplitude og en svak avrunding av pulsene i tidsdomenet. Dette samsvarer med de teoretiske forventningene fra RLCG-modellen, hvor resistive og dielektriske tap øker med frekvens og dermed påvirker de høyfrekvente komponentene mest.
 \subsection{Feilkilder}
 Målet med prosjektet var å modellere og simulere en transmisjonslinje, og sammenligne dette med målinger gjort i lab. Vi har i denne delen diskutert mulige feilkilder som kan ha påvirket resultatene våre.
+
+\subsection{Feilkilder og usikkerhet}
+Selv om resultatene er i tråd med forventningene, finnes det flere forhold som kan ha påvirket nøyaktigheten: \textcolor{red}{disse punktene kan også gjøres om til egne underkapitler under 6.2}
+\begin{itemize}
+\item \textbf{Modellantakelser:} Simuleringen forutsetter ideell terminering og ser bort fra refleksjoner. I praksis kan små refleksjoner oppstå i kontakter eller overganger, noe som kan påvirke signalet. \textcolor{red}{skal dette ligge under 6.2.1?}
+\item \textbf{Forskjeller i kabeltype:} Koaksialkabelen som ble brukt i laboratoriet har andre egenskaper enn en Cat5e-kabel, spesielt når det gjelder impedans \textcolor{red}{++}
+\item \textbf{Måleutstyr:} Støy, kalibrering \textcolor{red}{++}
+\item \textbf{Numeriske begrensninger:} I simuleringen er kun et begrenset antall harmoniske inkludert. Dette kan påvirke hvor presist tidsdomenesignalet gjenskapes, særlig for korte pulser.
+\end{itemize}
+
 \subsubsection{Teoretiske antakelser}
 I vår modelleringer har vi gjort flerer antagelser som kan avvike fra virkeligheten slik det er med fleste modeller. 
 \subsubsection{Sim vs Målinger}
-I vår simuleringer har vi basert det på Ethernet-kabler av typen Cat5e. Dette er en vanlig type kabel som ofte brukes i nettverk. I labben brukte vi en koaksialkabel som har andre egenskaper enn Cat5e. Dette kan være en feilkilde som kan gi avvik mellom simulering og målinger. Koaksialkabel har f.eks. en annen karakteristiske impedansen enn Cat5e, noe som kan påvirke refleksjoner og signaloverføring. I tillegg kan koaksialkabel egenskaper som gjør 
+I vår simuleringer har vi basert det på Ethernet-kabler av typen Cat5e. Dette er en vanlig type kabel som ofte brukes i nettverk. I labben brukte vi en koaksialkabel som har andre egenskaper enn Cat5e. Dette kan være en feilkilde som kan gi avvik mellom simulering og målinger. Koaksalkabel har f.eks. en annen karakteristiske impedans enn Cat5e, noe som kan påvirke refleksjoner og signaloverføring. I tillegg kan koaksialkabel egenskaper som gjør 
+
+\subsection{Videre arbeid}
+For å bygge videre på prosjektet finnes det flere muligheter for å redusere usikkerhetene og utforske nye problemstillinger:
+\begin{itemize}
+    \item Fremtidige forsøk kan gjennomføres med faktiske Ethernet-kabler (Cat5e eller Cat6) for å undersøke hvordan tvinnede par, krysstaleffekter og isolasjonsmaterialer påvirker signaloverføringen.
+    \item Mer avanserte modeller kan utvikles som inkluderer refleksjoner, ikke-lineariteter og temperaturavhengige parametre for å bedre fange opp virkelige forhold.
+    \item Flere målinger med varierende frekvenser, pulsbredder og kabellengder kan gi et mer omfattende datasett for validering av modellen.
+\end{itemize}
