@@ -14,20 +14,20 @@ kretsnettverk.
 sløyfe er lik null. Dette uttrykker energibevaring: den elektriske energien som brukes opp i motstander 
 og spoler, må være lik den energien som tilføres av spenningskilder. I telegrafligningen brukes KVL 
 til å uttrykke hvordan spenningen endrer seg langs et lite element av ledningen. Spenningsfallet 
-langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som vist i likningen \eqref{eq:KVL}.
+langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som vist i ligningen \eqref{eq:KVL}.
 \\[1em]
 \textbf{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
 er lik summen av de som går ut. Dette er et uttrykk for ladningsbevaring. I telegrafligningen brukes 
 KCL til å beskrive hvordan strømmen endrer seg langs ledningen, når en del av strømmen lekker til jord 
-gjennom konduktans og kapasitans. Dette gir likningen \eqref{eq:KCL}.\\[1em]
+gjennom konduktans og kapasitans. Dette gir ligningen \eqref{eq:KCL}.\\[1em]
 Ved å kombinere Kirchhoffs lover kan man beskrive hvordan både spenning og strøm endrer seg 
 langs ledningen over tid. Dette er utgangspunktet for telegrafligningen, som gir 
 en fullstendig matematisk modell for hvordan signaler forplanter seg, dempes og forvrenges når de beveger 
 seg gjennom en elektrisk leder.
 
-\subsection{Fourierrekker}
+\subsection{Fourier-rekker}
 
-Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Ethernet-signaler kan sees på som en sekvens av pulser (bitstrøm), som i praksis kan betraktes som et periodisk pulstog. Dette gjør at Fourierrekker er et naturlig verktøy for å analysere slike signaler i frekvensdomenet, siden pulstoget kan uttrykkes som en sum av sinus- og cosinuskomponenter.\\[1em]
+Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Ethernet-signaler kan sees på som en sekvens av pulser (bitstrøm), som i praksis kan betraktes som et periodisk pulstog. Dette gjør at Fourier-rekker er et naturlig verktøy for å analysere slike signaler i frekvensdomenet, siden pulstoget kan uttrykkes som en sum av sinus- og cosinuskomponenter.\\[1em]
 En periodisk funksjon $f(t)$ med periode $T$ kan uttrykkes som en Fourier-rekke:
 \begin{equation}
 f(t) = a_0 + \sum_{n=1}^{\infty} \left( a_n \cos\left(\frac{2\pi n t}{T}\right) + b_n \sin\left(\frac{2\pi n t}{T}\right) \right)
@@ -38,7 +38,7 @@ a_0 &= \frac{1}{T} \int_{0}^{T} f(t) \, dt \\
 a_n &= \frac{2}{T} \int_{0}^{T} f(t) \cos\left(\frac{2\pi n t}{T}\right) dt \\
 b_n &= \frac{2}{T} \int_{0}^{T} f(t) \sin\left(\frac{2\pi n t}{T}\right) dt
 \end{align*}
-I Kompleks form:
+I kompleks form:
 \begin{equation}
 f(t) = \sum_{n=-\infty}^{\infty} c_n e^{j \frac{2\pi n t}{T}}, \quad \text{der} \quad c_n = \frac{1}{T} \int_{-T/2}^{T/2} f(t) e^{-j \frac{2\pi n t}{T}} dt, \quad c_0 = \frac{1}{T} \int_{-T/2}^{T/2} f(t) dt
 \end{equation}
@@ -62,7 +62,7 @@ Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modelle
 \begin{equation}
     f_{out}(t) = \sum_{n=-\infty}^{\infty} H\left(\frac{n}{T}\right) c_n e^{j \frac{2\pi n t}{T}}
 \end{equation}
-\subsection{Telegraflikningen og transmisjonslinjer}
+\subsection{Telegrafligningen og transmisjonslinjer}
 En transmisjonslinje kan beskrives ved fire per-enhet-lengde parametre:
 \begin{itemize}
     \item $R$ \, [$\Omega$/m] \,-- Motstand (ledertap),
@@ -98,8 +98,8 @@ Verdien av $G$ avhenger av materialets kvalitet og miljøforhold: høy fuktighet
 skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren beskriver dermed 
 tap som skyldes ufullkommen isolasjon mellom lederen og jord.
 \clearpage
-\subsubsection{Utledning av telegraflikningen}
-Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm \cite{TelegraflikningenPDF}.
+\subsubsection{Utledning av telegrafligningen}
+Telegrafligningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm \cite{TelegrafligningenPDF}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
@@ -124,7 +124,7 @@ Når man deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, 
     \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t}.
     \label{eq:KCL}
 \end{equation}
-Ved å kombinere disse to relasjonene, ved å derivere den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
+Ved å kombinere disse to relasjonene, ved å derivere den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegrafligningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \]
@@ -160,7 +160,7 @@ Her har vi valgt tre elementer:
 \end{itemize}
 Dette kalles en \emph{harmonisk ansats}. Den er valgt fordi vi vet fra Fourier-teori at alle signaler 
 kan bygges opp som en sum av slike harmoniske komponenter. Når vi kjenner kabelens respons på en frekvens, 
-kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegraflikningen \eqref{eq:telegraflikningen}:
+kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegrafligningen \eqref{eq:telegrafligningen}:
 \[    
     V_{tt} + (\aH + \bH)V_{t} + \aH \bH V = c^2 V_{xx}.
 \]
@@ -219,9 +219,9 @@ Et vilkårlig innsignal kan skrives som en Fourier-rekke:
 \[
 f_{\text{in}}(t) = \sum_n c_n e^{j\omega_n t}.
 \]
-etter kabelen vil hver komponent være påvirket av $H(\omega_n,l)$, og vi får
+etter kabelen vil hver komponent være påvirket av $H(\omega_n,\ell)$, og vi får
 \[
-f_{\text{out}}(t) = \sum_n H(\omega_n,l)\,c_n e^{j\omega_n t}.
+f_{\text{out}}(t) = \sum_n H(\omega_n,\ell)\,c_n e^{j\omega_n t}.
 \]
 Dermed virker kabelen som et frekvensavhengig filter: lave frekvenser slipper nesten uendret gjennom, 
 mens høye frekvenser dempes kraftig. For firkantsignaler betyr dette at de skarpe kantene, 
@@ -339,7 +339,7 @@ Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakte
 \subsection{Kobling til pulstog}
 Et periodisk innsignal med Fourierkoeffisienter \(c_n\) filtreres som
 \[
-f_{\text{out}}(t)=\Re\!\left\{\sum_{n=-N}^{N} c_n\,H(\omega_n,l)\,e^{j\omega_n t}\right\}.
+f_{\text{out}}(t)=\Re\!\left\{\sum_{n=-N}^{N} c_n\,H(\omega_n,\ell)\,e^{j\omega_n t}\right\}.
 \]
 Demping (via \(\alpha\)) fjerner spesielt de høye leddene \(\Rightarrow\) langsommere kanter.\\
 Dispersjon via: 
