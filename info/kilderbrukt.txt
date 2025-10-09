@@ -5,7 +5,6 @@ Info:
     transmisjonslinje og propagasjonskonstanten: https://dn790009.ca.archive.org/0/items/electromagnetic-field-theory/William%20H.%20Hayt%2C%20Jr.%20and%20John%20A.%20Buck%20-%20Engineering%20Electromagnetics-McGraw-Hill%20Education%20%282018%29.pdf
     utledelse telegraflikning: telegraflikningen.pdf
     propegasjon: https://people.engr.tamu.edu/spalermo/ecen689/lecture3_ee689_tlines.pdf
-    Verdi for C: https://en.wikipedia.org/wiki/Category_5_cable
     Implementing a Variable-Length Cat5e Cable Equalizer: https://www.ti.com/lit/an/sboa125/sboa125.pdf?ts=1759787274591&ref_url=https%253A%252F%252Fwww.google.com%252F#:~:text=Table%201%20shows%20the%20typical%20electrical%20characteristics%20of%20Cat5e%20cable.&text=Applying%20Equation%201%20to%20the,is%20equal%20to%20100.5%CE%A9.
 Figurer:
     fig1: 
