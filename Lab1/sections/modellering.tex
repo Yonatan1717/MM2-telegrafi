@@ -13,14 +13,14 @@ Vi bestemmer først Fourier-rekken til firkantpulsen for å finne frekvenskompon
     V_{in}(t) = c_0 + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n e^{j n \omega_0 t}, \quad hvor \quad \omega_0 = \frac{2\pi}{T}
 \]
 Merk at siden vi vet at duty cycle er 50\%, vil bare oddetalls harmoniske være tilstede i Fourier-rekken.
-Koefisientene $c_n$ kan beregnes som:
+Koeffisientene $c_n$ kan beregnes som:
 \[
     c_0 = \frac{1}{T} \int_{-T/2}^{T/2} V(t) dt = \frac{5}{2}
 \]
 \[
     c_n = \frac{1}{T} \int_{-T/2}^{T/2} V(t) e^{-j n \omega_0 t} dt =  \frac{5}{j 2 n \pi} (1 - (-1)^n)
 \]
-Vi for dermed at:
+Vi får dermed at:
 \[
     V_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
@@ -56,18 +56,18 @@ Fra formlen \eqref{eq:dielectric_loss} for dielektriske tap, får vi at:
 
 \noindent Vi har nå alt vi trenger for å finne overføringsfunksjonen til mediet:
 \[
-    H(f, l) = e^{-\gamma(f) l}, \quad hvor \quad \gamma(f) = \sqrt{(R(f) + j 2\pi f L)(G(f) + j 2\pi f C)}
+    H(f, \ell) = e^{-\gamma(f) \ell}, \quad hvor \quad \gamma(f) = \sqrt{(R(f) + j 2\pi f L)(G(f) + j 2\pi f C)}
 \]
-Her er $l$ lengden på mediet (kabelen) og $\gamma(f)$ er propagasjonskonstanten som avhenger av frekvensen.
-Vi kan nå finne ut hvordan hver frekvenskomponent i firkantpulsen blir dempet ved å multiplisere hver komponent med $H(f, l)$:
+Her er $\ell$ lengden på mediet (kabelen) og $\gamma(f)$ er propagasjonskonstanten som avhenger av frekvensen.
+Vi kan nå finne ut hvordan hver frekvenskomponent i firkantpulsen blir dempet ved å multiplisere hver komponent med $H(f, \ell)$:
 \[
-    V_{out}(t) = c_0H(0, l) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n H(n f_0, l) e^{j n \omega_0 t}
+    V_{out}(t) = c_0H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n H(n f_0, \ell) e^{j n \omega_0 t}
 \]
 Som i denne situasjonen gir:
 \[
-    V_{out}(t) = \frac{5}{2}H(0, l) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, l) e^{j n \omega_0 t}    
+    V_{out}(t) = \frac{5}{2}H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, \ell) e^{j n \omega_0 t}    
 \]
-For å simulere dette numerisk, kan vi bruke Python til å beregne $H(f, l)$ for en rekke frekvenser og deretter rekonstruere tidsdomenesignalet ved hjelp av den inverse Fourier-transformasjonen.
+For å simulere dette numerisk, kan vi bruke Python til å beregne $H(f, \ell)$ for en rekke frekvenser og deretter rekonstruere tidsdomenesignalet ved hjelp av den inverse Fourier-transformasjonen.
 Vi kan da plotte både inngangssignalet og utgangssignalet for å visualisere effekten av dempingen i mediet.
 \clearpage
 \subsection{Modeller}
@@ -105,7 +105,7 @@ Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente k
 \subsection{Modell 2 (demping i frekvensdomenet i tidsdomenet)}
 I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summere Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen, og ikke faseendringen. Altså ser vi på:
 \[
-    H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
+    H(f, \ell) = e^{-\alpha(f) \ell}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
 \]
 Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer avrundet etter å ha passert gjennom mediet, noe som bekrefter at høyfrekvente komponenter dempes mer enn lavfrekvente komponenter. Dette resulterer i en signifikant endring i signalets form, spesielt over lengre avstander.
 \begin{figure}[h]
@@ -119,7 +119,7 @@ Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer a
 \subsection{Modell 3 (kun faseendring)}
 I den tredje modellen ser vi på hvordan tidsdomenesignalet endres når vi kun tar hensyn til faseendringen i mediet, og ignorerer dempingen. Altså ser vi på:
 \[
-    H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = Im(\gamma(f))
+    H(f, \ell) = e^{-j\beta(f) \ell}, \quad hvor \quad \beta(f) = Im(\gamma(f))
 \]
 Resultatet er vist i figur \ref{fig:modell3}. Vi ser at firkantpulsen blir mer vrengete etter å ha passert gjennom mediet, men beholder sin generelle form. Dette illustrerer hvordan faseendringen påvirker signalets tidsdomenesignal uten å endre dets amplitude. Alle frekvenskomponenter opplever forskjellige faseforsinkelser, noe som fører til en forvrengning av signalets form.
 \begin{figure}[h]
@@ -133,7 +133,7 @@ Resultatet er vist i figur \ref{fig:modell3}. Vi ser at firkantpulsen blir mer v
 \subsection{Modell 4 (Ideell, ikke-dispersiv modell)}
 I den fjerde modellen ser vi på hvordan tidsdomenesignalet endres når vi antar at mediet er ideelt, uten demping og uten dispersjon. Altså ser vi på:
 \[
-    H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = \omega\sqrt{LC}
+    H(f, \ell) = e^{-j\beta(f) \ell}, \quad hvor \quad \beta(f) = \omega\sqrt{LC}
 \]
 Resultatet er vist i figur \ref{fig:modell4}. Vi ser at firkant
 pulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
@@ -148,7 +148,7 @@ pulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekref
 \subsection{Modell 5 (full modell)}
 I den femte modellen ser vi på hvordan tidsdomenesignalet endres når vi tar hensyn til både demping og faseendring i mediet. Altså ser vi på:
 \[
-    H(f, l) = e^{-\gamma(f) l}, \quad hvor \quad \gamma(f) = \alpha(f) + j\beta(f)
+    H(f, \ell) = e^{-\gamma(f) \ell}, \quad hvor \quad \gamma(f) = \alpha(f) + j\beta(f)
 \]
 Resultatet er vist i figur \ref{fig:modell5}. Vi ser at firkantpulsen blir både dempet og forsinket i tid etter å ha passert gjennom mediet. Dette gir en mer realistisk representasjon av hvordan signalet påvirkes i et ekte medium, hvor både demping og faseendring spiller en rolle. Over lengre avstander blir signalet stadig mer forvrengt, noe som illustrerer viktigheten av å ta hensyn til begge aspekter for å forstå signalets oppførsel.
 \begin{figure}[h]
