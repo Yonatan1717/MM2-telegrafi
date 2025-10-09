@@ -20,14 +20,14 @@ Vi modellerer kabelen som en lineær, tidsinvariant linje med fordelte parametre
 H(\omega)=e^{-\gamma(\omega)\,\ell}
 \]
 
-\noindent Verdier for RGLC vil være følgende: \\
+\noindent Verdier for $R, G, L, C$ er: \\
 $R(f) = 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \qquad [\Omega / \mathrm{m}]$. \\
 $L = 525 \mathrm{nH/m}$ \\
 $C = 52 \mathrm{pF/m}$ \\
 $G(f) = 2\pi f C \tan(\delta)$, \qquad $\tan(\delta) = 0.002$, \qquad [S/m]
 
 \paragraph{Simuleringens modellering.}
-Vi modellerer 5 forskjellige situasjoner for å forstå hvordan forskjellige medier påvirker signalet som propagerer gjennom. Lengdene på mediet er 10m, 50m, 100m og 1000m. Simuleringen tar utgangspunkt i formelen:
+Vi modellerer fem forskjellige situasjoner for å forstå hvordan forskjellige medier påvirker signalet som propagerer gjennom. Lengdene på mediet er 10m, 50m, 100m og 1000m. Simuleringen tar utgangspunkt i formelen:
 \[
 \gamma (f) = \alpha(f) + j\beta(f), \qquad \gamma(f) = \gamma(\omega)|_{\omega = 2\pi f}
 \]
@@ -38,7 +38,7 @@ Vi modellerer 5 forskjellige situasjoner for å forstå hvordan forskjellige med
     \item \textbf{Kun faseendring:} Ignorer demping ved å sette $\alpha = 0$.
     \item \textbf{Ideell, tapsfri og ikke-dispersiv modell:} Mediet er ideelt, uten demping og uten dispersjon.
     \item \textbf{Full modell:} Inkluderer både demping og faseendring. Simuleringen tilnærmer seg virkeligheten.
-    \item \textbf{Waterfall plott:} Simulerer hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet.
+    \item \textbf{Waterfall-plott:} Simulerer hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet.
 \end{itemize}
 
 \subsubsection{Inngangssignal og representasjon}
@@ -50,7 +50,7 @@ Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T = 2
 \subsection{Laboratoriestudie}
 \subsubsection{Gjennomførelse} Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data med en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.
 
-\subsubsection{Hensikt} Hensikten med laberatorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
+\subsubsection{Hensikt} Hensikten med laboratorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
 
 \subsubsection{Utstyr og oppsett}
 Utstyret i forsøket er følgende:
