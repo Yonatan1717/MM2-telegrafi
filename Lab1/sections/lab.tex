@@ -1,20 +1,20 @@
 \section{Lab resultater og analyse}
-% I laben vi gjennomførte, undersøkte vi hvordan et firkant-pulstog påvirkes når det sendes gjennom en koaksialkabel av 2 lengder 5m og 30m. Ideellt sett skulle man hatt brukt Ethernet-kabeler, men pga manglende tilgang brukte vi koaksialkabeler. Noe som var tilstrekkelig for å illustrere fenomenene vi ønsket å studere.
+I laben vi gjennomførte, undersøkte vi hvordan et firkant-pulstog påvirkes når det sendes gjennom en koaksialkabel av 2 lengder 5m og 30m. Ideellt sett skulle man hatt brukt Ethernet-kabeler, men pga manglende tilgang brukte vi koaksialkabeler. Noe som var tilstrekkelig for å illustrere fenomenene vi ønsket å studere.
 
-% \subsection{Utstyr/innstillinger}
-% Utstyret vi brukte i laben inkluderte:
-% \begin{itemize}
-%     \item Funksjonsgenerator: For å generere firkant-pulstoget med ønsket periode, amplitude og startfase.
-%     \begin{itemize}
-%         \item Periode: $T = 2 \mu s$ 
-%         \item Amplitude: $2.5V_{pp}$
-%         \item Startfase: $0\si{\degree}$ (slik at signalet starter ved null)
-%         \item Duty-cycle: 50\%
-%         \item Signalform: Firkant
-%     \end{itemize}
-%     \item Oscilloskop: For å måle inngangs-, utgangssignaler og FFT.
-%     \item Koaksialkabeler: To kabler med lengder på 5m og 30m (impedans 50 ohm).
-% \end{itemize}
+\subsection{Utstyr/innstillinger}
+Utstyret vi brukte i laben inkluderte:
+\begin{itemize}
+    \item Funksjonsgenerator: For å generere firkant-pulstoget med ønsket periode, amplitude og startfase.
+    \begin{itemize}
+        \item Periode: $T = 2 \mu s$ 
+        \item Amplitude: $2.5V_{pp}$
+        \item Startfase: $0\si{\degree}$ (slik at signalet starter ved null)
+        \item Duty-cycle: 50\%
+        \item Signalform: Firkant
+    \end{itemize}
+    \item Oscilloskop: For å måle inngangs-, utgangssignaler og FFT.
+    \item Koaksialkabeler: Tre kabler med lengder på 5m og 30m (impedans 50 ohm).
+\end{itemize}
 \subsection{5m koaksialkabel}
 \subsubsection{Tidsdomenet}
 Figur \ref{fig:lab5m_time} viser inngangs- og utgangssignalene for 5m koaksialkabel i tidsdomenet. Utgangssignalet er tilnærmet identisk med inngangssignalet, med kun minimal demping og faseforskyvning. Dette indikerer en nesten ideell, ikke-dispersiv oppførsel, der signalet hovedsakelig påvirkes av en tidsforsinkelse uten merkbar forvrengning eller tap. Dette er forventet, ettersom kabelen er relativt kort og dermed introduserer svært små tap.
@@ -25,8 +25,8 @@ Figur \ref{fig:lab5m_time} viser inngangs- og utgangssignalene for 5m koaksialka
         \caption{Inngangs- og utgangssignaler for 5m koaksialkabel i tidsdomenet.}}
     \label{fig:lab5m_time}
 \end{figure}
-\subsubsection{Frekvensdomenet}
-Figur \ref{fig:lab5m_freq} viser FFT av inngangs- og utgangssignaler for 5m koaksialkabel i frekvensdomenet. Vi ser at de harmoniske komponentene er tilnærmet uendret, med minimal demping. Dette indikerer at kabelen har liten effekt på signalets frekvensspekter, noe som er forventet for en kort kabel.
+\subsubsection{Frekvensdomenet} 
+Figur \Ref{fig:lab5m_freq} viser FFT av inngangs- og utgangssignaler for 5m koaksialkabel i frekvensdomenet. Vi ser at de harmoniske komponentene er tilnærmet uendret, med minimal demping. Dette indikerer at kabelen har liten effekt på signalets frekvensspekter, noe som er forventet for en kort kabel.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/labShortFreq.png}
