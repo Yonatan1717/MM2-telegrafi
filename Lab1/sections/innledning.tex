@@ -6,21 +6,23 @@ for rask kommunikasjon over store avstander, ble raskt bygget ut både i Europa 
 som ledningsnettene ble lengre, oppsto praktiske problemer: signalene ble svakere, de ble 
 forsinket, og de kunne endre form. For å løse disse utfordringene måtte man utvikle en matematisk 
 modell som tok hensyn til de fysiske egenskapene til en elektrisk ledning.
-
+\\[1em]
 Oliver Heaviside, en britisk fysiker og ingeniør, brukte Maxwells ligninger som utgangspunkt og 
 formulerte på slutten av 1800-tallet det som i dag kalles \textit{telegrafligningen}. Den beskriver 
-hvordan spenning og strøm endrer seg i tid og rom langs en elektrisk linje, ved å inkludere 
-resistans, induktans, kapasitans og konduktans. Telegrafligningen ble et viktig teoretisk verktøy 
+hvordan spenning og strøm endrer seg i tid og rom langs en elektrisk linje, idét 
+resistans, induktans, kapasitans og konduktans inkluderes i modellen. Telegrafligningen ble et viktig teoretisk verktøy 
 for å forstå og forbedre kvaliteten på telegraf- og telefonlinjer, og den la grunnlaget for hele 
-transmisjonslinjeteorien som fortsatt brukes i moderne elektronikk og telekommunikasjon.
-
+transmisjonslinjeteorien som fortsatt brukes i moderne elektronikk og telekommunikasjon \cite{geeksforgeeks_telegrapher}.
+\\[1em]
 I dag er de samme prinsippene fortsatt aktuelle. Ethernetkabler, coaxialkabler og telefonlinjer kan modelleres 
-som transmisjonslinjer, der signalet påvirkes av tap og dispersjon. \textcolor{red}{Ethernet-standarden setter en 
+som transmisjonslinjer, der signalet påvirkes av tap og dispersjon. Ethernet-standarden setter en 
 maksimal kabellengde på 100 meter for å sikre at signalet kan overføres uten for store tap og 
-forvrengninger. Coaxialkablers maksimale lengde uten stort tap av signalkvalitet vil også variere basert på frekvensene som brukes.} På samme måte mister lange telefonkabler kvalitet, spesielt når de brukes til høyere 
+forvrengninger. Koaxialkablers maksimale lengde uten stort tap av signalkvalitet vil også variere basert på frekvensene 
+som brukes. På samme måte mister lange telefonkabler kvalitet, spesielt når de brukes til høyere 
 frekvenser som i bredbånd (DSL). Begge disse fenomenene kan forklares gjennom telegrafligningen.
-
+\\[1em]
 I denne rapporten tar vi derfor utgangspunkt i telegrafligningen som matematisk modell og gjennom numerisk
-modellering og simulering, og laboratorietester undersøker vi hvordan signaler oppfører seg i korte og 
+modellering og laboratorietester, undersøker vi hvordan signaler oppfører seg i korte og 
 lange ledningsnettverk ved forskjellige frekvenser. Vi vil også se på hvordan ulike parametere påvirker 
-signalets kvalitet, og hvordan \textcolor{red}{dette kan relateres til praktiske anvendelser i moderne kommunikasjonssystemer.}
+signalets kvalitet, med demping, faseendring og forvrengning som sentrale temaer. Dette gir oss en bedre forståelse av
+hvordan elektriske signaler oppfører seg i praksis. 
