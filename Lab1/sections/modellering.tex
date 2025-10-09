@@ -1,6 +1,6 @@
 \section{Modellering}
 \subsection{Situasjon}
-I den første modellen demonstererr vi dempingen som de forskjellig frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
+I den første modellen demonstrerer vi dempingen som de forskjellig frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
 Vi tar utgangspunkt i en firkantpuls med periode $T$:
 \[
     V_{in}(t) = \begin{cases}
@@ -24,9 +24,9 @@ Vi for dermed at:
 \[
     V_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
-For å modellere dempingen i mediet, antar vi en en tilnærment lik realistiske tilnærminger for R, G, L og C.
+For å modellere dempingen i mediet, antar vi parametre som gir relaistisk tilnærming til virkelige kabelverdier for R, G, L og C.
 Vi antar at mediet er en Cat5e kabel med følgende parametere:
-Fra formel \eqref{eq:skin-effekt} for vi at R er gitt ved:
+Fra formel \eqref{eq:skin-effekt} får vi at R er gitt ved:
 \[
     R(f) = R_{DC} \cdot \sqrt{\frac{f}{f_{s}}}, \quad hvor \quad f_{s} = \frac{\rho_{cu}}{\pi \mu_{cu} r^2}, \quad R_{DC} = n_s \cdot \frac{\rho_{cu}}{\pi r^2}, \quad (merk\ at \quad \omega = 2\pi f)
 \]
@@ -92,17 +92,18 @@ For å forstå hvordan forskjellige aspekter av mediets egenskaper påvirker sig
     \item \textbf{Waterfall plott:} For å visualisere hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (modell 6).
 \end{itemize}
 \clearpage
-\subsection{Modell 1 (kunn demping i frekvensdomenet)}
+\subsection{Modell 1 (kun demping i frekvensdomenet)}
 Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente komponenter blir betydelig dempet, noe som resulterer i en mer avrundet firkantpuls ved utgangen. Dette illustrerer hvordan mediet fungerer som et lavpassfilter, hvor de høyere frekvensene reduseres mer enn de lavere frekvensene.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering1.png}
-    \caption{Frekvensdomeneanalyse av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}
+    \textit{
+        \caption{Frekvensdomeneanalyse av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}}
     \label{fig:modell1}
 \end{figure}
 \clearpage
 \subsection{Modell 2 (demping i frekvensdomenet i tidsdomenet)}
-I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summerer Fourier-rekkene for de dempede harmoniske. Her har vi kunn tatt hensyn til amplitudendringen og ikke faseendringen. alstå ser vi på:
+I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summere Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen, og ikke faseendringen. Altså ser vi på:
 \[
     H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
 \]
@@ -110,11 +111,12 @@ Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer a
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering2.png}
-    \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}
+    \textit{
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}}
     \label{fig:modell2}
 \end{figure}
 \clearpage
-\subsection{Modell 3 (kunn faseendring)}
+\subsection{Modell 3 (kun faseendring)}
 I den tredje modellen ser vi på hvordan tidsdomenesignalet endres når vi kun tar hensyn til faseendringen i mediet, og ignorerer dempingen. Altså ser vi på:
 \[
     H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = Im(\gamma(f))
@@ -123,7 +125,8 @@ Resultatet er vist i figur \ref{fig:modell3}. Vi ser at firkantpulsen blir mer v
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering3.png}
-    \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et medium med kun faseendring.}
+    \textit{
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et medium med kun faseendring.}}
     \label{fig:modell3}
 \end{figure}
 \clearpage
@@ -133,11 +136,12 @@ I den fjerde modellen ser vi på hvordan tidsdomenesignalet endres når vi antar
     H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = \omega\sqrt{LC}
 \]
 Resultatet er vist i figur \ref{fig:modell4}. Vi ser at firkant
-pulsen opprettholder sin oppringelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
+pulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering4.png}
-    \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et ideelt ikke-dispersivt medium over forskjellige lengder.}
+    \textit{
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et ideelt ikke-dispersivt medium over forskjellige lengder.}}
     \label{fig:modell4}
 \end{figure}
 \clearpage
@@ -150,12 +154,13 @@ Resultatet er vist i figur \ref{fig:modell5}. Vi ser at firkantpulsen blir både
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering5.png}
-    \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et realistisk medium over forskjellige lengder.}
+    \textit{
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et realistisk medium over forskjellige lengder.}}
     \label{fig:modell5}
 \end{figure}
 \clearpage
-\subsection{Modell 6 (waterfall plot)}
-For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den enen kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
+\subsection{Modell 6 (Waterfall plot)}
+For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to \textit{Waterfall} plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den ene kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
 \begin{itemize}
     \item \textbf{Lavpassfilter (LP):} Her summerer vi alle frekvenskomponenter fra fundamentalfrekvensen $f_0$ opp til en økende grensefrekvens $f_{cut}$. Dette viser hvordan tidsdomenesignalet utvikler seg når vi inkluderer flere lavfrekvente komponenter.
     \[
@@ -171,7 +176,8 @@ Dette er vist i figur \ref{fig:modell6}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering6.png}
-    \caption{Waterfall plot som viser hvordan tidsdomenesignalet endres når flere frekvenskomponenter inkluderes opp/ned til forskjellige grensefrekvenser (plottet er for 50m kabel).}
+    \textit{
+        \caption{Waterfall plot som viser hvordan tidsdomenesignalet endres når flere frekvenskomponenter inkluderes opp/ned til forskjellige grensefrekvenser (plottet er for 50m kabel).}}
     \label{fig:modell6}
 \end{figure}\\
 Vi ser at når vi inkluderer flere frekvenskomponenter, blir tidsdomenesignalet mer detaljert og nærmere den opprinnelige firkantpulsen. Dette illustrerer viktigheten av høyfrekvente komponenter for å bevare signalets form. For lavpassfilteret ser vi at signalet gradvis nærmer seg firkantpulsen når flere lavfrekvente komponenter inkluderes. For høypassfilteret ser vi at signalet blir mer avrundet når flere høyfrekvente komponenter inkluderes, noe som bekrefter at høyfrekvente komponenter er avgjørende for å opprettholde skarpe overganger i tidsdomenesignalet.

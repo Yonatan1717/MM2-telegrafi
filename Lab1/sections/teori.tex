@@ -6,7 +6,7 @@
 \subsection{Kirchhoffs lover}
 
 Grunnlaget for telegrafligningen ligger i Kirchhoffs lover, som beskriver hvordan spenning og strøm 
-fordeler seg i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
+fordeles i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
 for energi og ladning, og de brukes til å beskrive forholdet mellom elektriske størrelser i ethvert 
 kretsnettverk.
 
@@ -71,7 +71,7 @@ Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligninge
 \]
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
-Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
+Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig for mottakeren.
 
 
 \subsubsection{R - Resistans}
@@ -87,7 +87,7 @@ Kapasitans per lengde $[\mathrm{F}/\mathrm{m}]$ er elektrisk lagring av energi i
 $G$ [$\mathrm{S/m}$] er \textit{konduktansen per lengdeenhet} til jord, ofte kalt 
 \textit{shunt-konduktansen}. Den modellerer lekkasjestrøm gjennom kabelens isolasjon og står 
 parallelt med kapasitansen $C$ i den ekvivalente linjemodellen. En større $G$ gir økt demping 
-fordi mer energi tapes i dielektrikumet. 
+fordi mer energi går tapt i dielektrikumet. 
 
 Verdien av $G$ avhenger av materialets kvalitet og miljøforhold: høy fuktighet, aldring eller 
 skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren beskriver dermed 
@@ -98,14 +98,15 @@ Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinje
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
-    \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}
+    \textit{
+        \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}}
     \label{fig:transmission_line_segment}   
 \end{figure}\\
 Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
 \[
     u(x,t) - u(x+\Delta x,t) = R \Delta x \cdot i(x,t) + L \Delta x \cdot \frac{\partial i(x,t)}{\partial t} .
 \]
-Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen:
+Når man deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, får vi uttrykket for spenningsendringen:
 \begin{equation}
     \frac{\partial u(x,t)}{\partial x} = -R i(x,t) - L \frac{\partial i(x,t)}{\partial t}.
     \label{eq:KVL}
@@ -118,7 +119,7 @@ Når vi deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, f
     \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t}.
     \label{eq:KCL}
 \end{equation}
-Ved å kombinere disse to relasjonene, der vi deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
+Ved å kombinere disse to relasjonene, ved å deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \]
@@ -264,7 +265,8 @@ I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{Media/frekvensdoment_tidsdoment.png}
-    \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}
+    \textit{
+        \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}}
     \label{fig:eyediagram}
 \end{figure}
 \subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
@@ -286,7 +288,7 @@ Den sier noe om hvor mye en smal båndbredde rundt frekvensen \(\omega\) forsink
 \[
 v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta_p(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta_p(\omega)}{d\omega} \quad [\mathrm{s/m}]
 \]
-\noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er netteopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. 
+\noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er nettopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. 
 \clearpage
 \noindent Dette får direkte konsekvenser for pulsform og øyediagram.\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
@@ -321,4 +323,4 @@ En koaksialkabel er en praktisk realisering av transmisjonslinjemodellen. Den be
 
 \subsection{Oppsummering og kobling til prosjektet}
 
-Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette er avgjørende for å forstå hvorfor det er en anbefalt grense for Ethernet-kabler. I det videre arbeidet skal vi først gjennomføre praktiske målinger, og deretter \textcolor{red}{numeriske simuleringer} (kanskje), slik at begge kan sammenlignes med de teoretiske resultatene for å se hvordan modellen stemmer med virkeligheten.
+Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan coaxialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at de kan sammenlignes med de teoretiske resultatene for å se hvordan modellene stemmer med virkeligheten.
