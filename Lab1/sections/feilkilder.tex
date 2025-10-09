@@ -1,0 +1,11 @@
+\section{Feilkilder}
+Det opprinnelige målet med prosjektet var å modellere og simulere en transmisjonslinje og sammenligne dette med målinger gjort i laboratoriet. I dette kapitlet diskuterer vi feilkilder som kan ha påvirket resultatene.
+
+\subsection{Teoretiske antakelser}
+Som i de fleste modeller har vi gjort idealiserende antakelser som kan avvike fra virkeligheten. Vi antar at den karakteristiske impedansen $Z_0$ er tilnærmet konstant over frekvensområdet, selv om $Z_0(f)$ i praksis kan variere og skape refleksjoner og forvrengning. Videre antar vi fravær av eksterne elektromagnetiske forstyrrelser. Kabelen antas perfekt terminert (kilde- og lastimpedans matcher $Z_0$); ellers kan refleksjoner gi stående bølger. Modellen forutsetter lineær og tidsinvariant oppførsel; ved høye nivåer kan ikke-lineære effekter forekomme. Disse forenklingene gjør modellen håndterlig, men kan påvirke samsvaret mellom simulering og praksis.
+
+\subsection{Måleusikkerhet}
+Måleusikkerhet kan også påvirke resultatene. Utilstrekkelig kalibrering av oscilloskop og funksjonsgenerator kan forskyve nivå og fase. Kontaktkvalitet og tilkoblinger er kritiske; dårlige eller ustabile overganger introduserer støy og refleksjoner. Elektromagnetisk støy i laboratoriemiljøet kan påvirke målingene, særlig i nærvær av annet elektronisk utstyr. Repeterte målinger, stabile tilkoblinger og et kontrollert målemiljø reduserer disse usikkerhetene.
+
+\subsection{Forslag til forbedringer}
+Med mer tid for å øke nøyaktigheten bør vi bruke samme kabeltype i både simulering og målinger, slik at laboratoriedata ikke bare bekrefter prinsippet, men også kan sammenlignes kvantitativt med modellen. Tilkoblingene bør oppgraderes med høykvalitetskontakter og sikre, lavimpedante overganger. Målingene gjennomføres i et miljø med minimal elektromagnetisk støy. For å redusere tilfeldige feil gjentas målingene, og middelverdi med standardavvik rapporteres. For mer presise frekvensdomenemålinger benyttes en spektrumanalysator fremfor oscilloskopets FFT-funksjon.

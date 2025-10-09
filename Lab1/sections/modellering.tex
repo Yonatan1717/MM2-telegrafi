@@ -24,7 +24,7 @@ Vi for dermed at:
 \[
     V_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
-For å modellere dempingen i mediet, antar vi parametre som gir realistisk tilnærming til virkelige kabelverdier for R, G, L og C.
+For å modellere dempingen i mediet, antar vi parametre som gir realistisk tilnærming til virkelige kabelverdier for RLCG.
 Vi antar at mediet er en Cat5e kabel med følgende parametere:
 Fra formel \eqref{eq:skin-effekt} får vi at R er gitt ved:
 \[
@@ -67,11 +67,11 @@ Som i denne situasjonen gir:
 \[
     V_{out}(t) = \frac{5}{2}H(0, l) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, l) e^{j n \omega_0 t}    
 \]
-For å simulere dette numerisk, kan vi bruke Python til å beregne $H(f, l)$ for en rekke frekvenser og deretter rekonstruere tidsdomenesignalet ved hjelp av den inverse Fourier-transformasjonen.
+For å simulere dette numerisk, kan vi bruke Python til å beregne $H(f, l)$ for en rekke frekvenser og deretter rekonstruere tidsdomenesignalet ved å summere de dempede frekvenskomponentene i Fourier-rekken.
 Vi kan da plotte både inngangssignalet og utgangssignalet for å visualisere effekten av dempingen i mediet.
 \clearpage
 \subsection{Modeller}
-For å forstå hvordan forskjellige aspekter av mediets egenskaper påvirker signalet, har vi laget flere modeller der vi varierer hvilke deler av den propagasjonskonstanten $\gamma(f)$ vi tar hensyn til. Modellene er basert på 10m, 50m, 100m og 1000m. Vi har følgende modeller:
+For å forstå hvordan forskjellige aspekter av mediets egenskaper påvirker signalet, har vi laget flere modeller der vi varierer hvilke deler av den propagasjonskonstanten $\gamma(f)$ vi tar hensyn til. Modellene er basert på 10m, 50m, 100m og 1000m. Vi har følgende modeller:\\
 \begin{itemize}
     \item \textbf{Kun demping:} I disse modellene tar vi kun hensyn til dempingen i mediet, og ignorerer faseendringen. Dette viser hvordan signalets amplitude påvirkes uten å endre dets form (modell 1 og 2).
     \[
@@ -93,41 +93,41 @@ For å forstå hvordan forskjellige aspekter av mediets egenskaper påvirker sig
 \end{itemize}
 \clearpage
 \subsection{Modell 1 (kun demping i frekvensdomenet)}
-Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente komponenter blir betydelig dempet, noe som resulterer i en mer avrundet firkantpuls ved utgangen. Dette illustrerer hvordan mediet fungerer som et lavpassfilter, hvor de høyere frekvensene reduseres mer enn de lavere frekvensene.
+Demping av signalet er vist i \emph{figur \ref{fig:modell1}}. Vi ser at høyfrekvente komponenter blir betydelig dempet, noe som resulterer i en mer avrundet firkantpuls ved utgangen. Dette illustrerer hvordan mediet fungerer som et lavpassfilter, hvor de høyere frekvensene reduseres mer enn de lavere frekvensene.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering1.png}
     \textit{
-        \caption{Frekvensdomeneanalyse av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}}
-    \label{fig:modell1}
+        \caption{Frekvensdomeneanalyse av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}    \label{fig:modell1}
+}
 \end{figure}
 \clearpage
 \subsection{Modell 2 (demping i frekvensdomenet i tidsdomenet)}
 I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summere Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen, og ikke faseendringen. Altså ser vi på:
 \[
-    H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
+    H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re\{\gamma(f)\}
 \]
-Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer avrundet etter å ha passert gjennom mediet, noe som bekrefter at høyfrekvente komponenter dempes mer enn lavfrekvente komponenter. Dette resulterer i en signifikant endring i signalets form, spesielt over lengre avstander.
+Resultatet er vist i \emph{figur \ref{fig:modell2}}. Vi ser at firkantpulsen blir mer avrundet etter å ha passert gjennom mediet, noe som bekrefter at høyfrekvente komponenter dempes mer enn lavfrekvente komponenter. Dette resulterer i en signifikant endring i signalets form, spesielt over lengre avstander.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering2.png}
     \textit{
-        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}}
-    \label{fig:modell2}
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et dempende medium over forskjellige lengder.}\label{fig:modell2}
+}
 \end{figure}
 \clearpage
 \subsection{Modell 3 (kun faseendring)}
 I den tredje modellen ser vi på hvordan tidsdomenesignalet endres når vi kun tar hensyn til faseendringen i mediet, og ignorerer dempingen. Altså ser vi på:
 \[
-    H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = Im(\gamma(f))
+    H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = Im\{\gamma(f)\}
 \]
-Resultatet er vist i figur \ref{fig:modell3}. Vi ser at firkantpulsen blir mer vrengete etter å ha passert gjennom mediet, men beholder sin generelle form. Dette illustrerer hvordan faseendringen påvirker signalets tidsdomenesignal uten å endre dets amplitude. Alle frekvenskomponenter opplever forskjellige faseforsinkelser, noe som fører til en forvrengning av signalets form.
+Resultatet er vist i \emph{figur \ref{fig:modell3}}. Vi ser at firkantpulsen blir mer vrengete etter å ha passert gjennom mediet, men beholder sin generelle form. Dette illustrerer hvordan faseendringen påvirker signalets tidsdomenesignal uten å endre dets amplitude. Alle frekvenskomponenter opplever forskjellige faseforsinkelser, noe som fører til en forvrengning av signalets form.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering3.png}
     \textit{
-        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et medium med kun faseendring.}}
-    \label{fig:modell3}
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et medium med kun faseendring.}\label{fig:modell3}}
+    
 \end{figure}
 \clearpage
 \subsection{Modell 4 (Ideell, ikke-dispersiv modell)}
@@ -135,14 +135,14 @@ I den fjerde modellen ser vi på hvordan tidsdomenesignalet endres når vi antar
 \[
     H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = \omega\sqrt{LC}
 \]
-Resultatet er vist i figur \ref{fig:modell4}. Vi ser at firkant
+Resultatet er vist i \emph{figur \ref{fig:modell4}}. Vi ser at firkantpulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
 pulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering4.png}
     \textit{
-        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et ideelt ikke-dispersivt medium over forskjellige lengder.}}
-    \label{fig:modell4}
+        \caption{Tidsdomenesignalet av firkantpuls etter å ha passert gjennom et ideelt ikke-dispersivt medium over forskjellige lengder.}\label{fig:modell4}}
+    
 \end{figure}
 \clearpage
 \subsection{Modell 5 (full modell)}
@@ -150,7 +150,7 @@ I den femte modellen ser vi på hvordan tidsdomenesignalet endres når vi tar he
 \[
     H(f, l) = e^{-\gamma(f) l}, \quad hvor \quad \gamma(f) = \alpha(f) + j\beta(f)
 \]
-Resultatet er vist i figur \ref{fig:modell5}. Vi ser at firkantpulsen blir både dempet og forsinket i tid etter å ha passert gjennom mediet. Dette gir en mer realistisk representasjon av hvordan signalet påvirkes i et ekte medium, hvor både demping og faseendring spiller en rolle. Over lengre avstander blir signalet stadig mer forvrengt, noe som illustrerer viktigheten av å ta hensyn til begge aspekter for å forstå signalets oppførsel.
+Resultatet er vist i \emph{figur \ref{fig:modell5}}. Vi ser at firkantpulsen blir både dempet og forsinket i tid etter å ha passert gjennom mediet. Dette gir en mer realistisk representasjon av hvordan signalet påvirkes i et ekte medium, hvor både demping og faseendring spiller en rolle. Over lengre avstander blir signalet stadig mer forvrengt, noe som illustrerer viktigheten av å ta hensyn til begge aspekter for å forstå signalets oppførsel.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering5.png}
@@ -173,7 +173,7 @@ For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påv
     \]
     \item \textbf{Antall kutt:} For å få en jevnere overgang i waterfall plottene, har vi økt antall kutt (cuts) til 13. Dette gir en mer detaljert visualisering av hvordan signalet endres med forskjellige grensefrekvenser.
 \end{itemize}
-Dette er vist i figur \ref{fig:modell6}.
+Dette er vist i \emph{figur \ref{fig:modell6}}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering6.png}

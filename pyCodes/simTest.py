@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # Pulstog
 T = 2e-6          # periode (s)  -> f0 = 10 MHz
 duty = 0.5          # 0..1
-N_harm = 200      # antall harmoniske på hver side (totalt 2N+1)
+N_harm = 200     # antall harmoniske på hver side (totalt 2N+1)
 
 # Kabellengder (m)
 lengths_m = [10, 50, 100, 1000]
@@ -24,7 +24,7 @@ Nf = 4000
 # Tidsprøver for rekonstruksjon
 Nt = 5000
 t_cycles = 1.0      # tegn en periode
-mode = "kunn_fase"  # "full", "kunn_fase", "kunn_forsinkelse", "kunn_tap"
+mode = "full"  # "full", "kunn_fase", "kunn_forsinkelse", "kunn_tap"
 
 
 

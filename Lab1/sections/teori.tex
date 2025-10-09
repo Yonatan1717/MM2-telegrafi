@@ -42,12 +42,20 @@ I Kompleks form:
 \begin{equation}
 f(t) = \sum_{n=-\infty}^{\infty} c_n e^{j \frac{2\pi n t}{T}}, \quad \text{der} \quad c_n = \frac{1}{T} \int_{-T/2}^{T/2} f(t) e^{-j \frac{2\pi n t}{T}} dt, \quad c_0 = \frac{1}{T} \int_{-T/2}^{T/2} f(t) dt
 \end{equation}
-I dette prosjektet vil vi bruke Fourier-analyse for å dekomponere Ethernet-signaler i sine frekvenskomponenter, slik at vi kan studere hvordan hver komponent påvirkes av transmisjonslinjens egenskaper.
-Ved å gjennomføre målinger for forskjellige kabellengder, kan vi sammenligne de målte dataene med de teoretiske prediksjonene basert på Fourier-analyse og telegraflikningen.
-Vi får da overføringsfunksjonen for kabelen.
-\begin{equation}
-    H(f) = \frac{V_{out}(f)}{V_{in}(f)}
-\end{equation}
+I dette prosjektet modellerer vi en Cat5e-transmisjonslinje ved hjelp av Fourier-analyse
+og en frekvensavhengig RLCG-modell. For et periodisk pulstog \(f(t)\) med periode \(T\)
+(\(f_0=1/T\)) bruker vi Fourier-rekken \(\{c_n\}\) slik at hver harmoniske ved
+\(f_n=nf_0\) kan analyseres separat. Hver komponent skaleres og fases av linjen gjennom
+overføringsfunksjonen \(H(f)\). For en jevn linje med lengde \(\ell\) og korrekt terminering
+gjelder
+\[
+H(f)=e^{-\gamma(f)\,\ell},\qquad \gamma(f)=\alpha(f)+j\beta(f).
+\]
+Dermed er
+\[
+H(f)=\frac{V_{\text{out}}(f)}{V_{\text{in}}(f)},\quad
+V_{\text{out}}(f)=H(f)\,V_{\text{in}}(f).
+\]
 Som beskriver hvordan signalet endres i frekvensdomenet når det passerer gjennom kabelen.
 Denne analysen hjelper oss å forstå hvordan ulike frekvenskomponenter dempes og forvrenges, noe som er avgjørende for å forklare begrensningen på kabelens lengde.
 Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen.
@@ -66,9 +74,6 @@ Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligninge
 \begin{equation}
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \end{equation}
-\[
-    u_{tt} + \left(\alpha + \beta\right)u_t + \alpha\beta\,u = c^2 u_{xx}, \qquad \alpha=\frac{R}{L}, \qquad \beta=\frac{G}{C}, \qquad c = \frac{1}{\sqrt{LC}} ,
-\]
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
 Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig for mottakeren.
@@ -99,8 +104,8 @@ Telegraflikningen kan utledes ved å analysere en liten del av transmisjonslinje
     \centering
     \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
     \textit{
-        \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}}
-    \label{fig:transmission_line_segment}   
+        \caption{Elementært segment av en transmisjonslinje med per-enhet-lengde parametere.}\label{fig:transmission_line_segment}   }
+    
 \end{figure}\\
 Ved å anvende Kirchhoffs spenningslov på segmentet får vi:
 \[
@@ -126,19 +131,19 @@ Ved å kombinere disse to relasjonene, ved å derivere den første med hensyn p�
 \clearpage
 \noindent Dette kan vi skrive som:
 \begin{equation}
-    u_{tt} + (\alpha + \beta)u_t + \alpha \beta u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
+    u_{tt} + (\aH + \bH)u_t + \aH \bH u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
     \label{eq:telegraflikningen}
 \end{equation}
 der vi definerer:
 \[
-    \alpha = \frac{R}{L}, \qquad \beta = \frac{G}{C} .
+    \aH = \frac{R}{L}, \qquad \bH = \frac{G}{C} .
 \]
-Dette er en dampet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $R$, $L$, $C$, og $G$.
+Dette er en dempet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $RLCG$.
 
 
 \subsubsection{Propagerende løsning og overføringsfunksjon}
 
-I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $R, L, G, C$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen
+I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen
 \begin{equation}
 V(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
 \label{eq:harm-ansatz}
@@ -157,7 +162,7 @@ Dette kalles en \emph{harmonisk ansats}. Den er valgt fordi vi vet fra Fourier-t
 kan bygges opp som en sum av slike harmoniske komponenter. Når vi kjenner kabelens respons på en frekvens, 
 kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegraflikningen \eqref{eq:telegraflikningen}:
 \[    
-    V_{tt} + (\alpha + \beta)V_{t} + \alpha \beta V = c^2 V_{xx}.
+    V_{tt} + (\aH + \bH)V_{t} + \aH \bH V = c^2 V_{xx}.
 \]
 Ser vi at den tidslige avledningen bare gir faktorer av $j\omega$:
 \[
@@ -169,19 +174,19 @@ og den romlige avledningen gir faktorer av $\gamma$:
 \]
 Som gir oss:
 \[    
--\omega^2 V + j\omega(\alpha+\beta)V + \alpha \beta V = c^2 \gamma^2 V.
+-\omega^2 V + j\omega(\aH+\bH)V + \aH \bH V = c^2 \gamma^2 V.
 \]
 Vi kan forkorte med $V$ (som er forskjellig fra null) og får:
 \[
-c^2 \gamma^2(\omega) = \alpha \beta - \omega^2 + j\omega(\alpha+\beta).
+c^2 \gamma^2(\omega) = \aH \bH - \omega^2 + j\omega(\aH+\bH).
 \]
 \clearpage
 \noindent Dette er en såkalt \emph{dispersjonsrelasjon}, som forteller hvilke kombinasjoner av 
 frekvens $\omega$ og bølgetall $\gamma$ som er mulige. Vi kan løse for $\gamma$ og får
 \[
-\gamma(\omega) = \frac{1}{c}\sqrt{\alpha\beta - \omega^2 + j\omega(\alpha+\beta)}.
+\gamma(\omega) = \frac{1}{c}\sqrt{\aH\bH - \omega^2 + j\omega(\aH+\bH)}.
 \]
-Setter vi inn definisjonene på $\alpha,\beta$ og $c$, kan dette skrives på den standardformen
+Setter vi inn definisjonene på $\aH,\bH$ og $c$, kan dette skrives på den standardformen
 som brukes i transmisjonslinjeteori:
 \begin{equation}
 \;\gamma(\omega) = \sqrt{(R+j\omega L)(G+j\omega C)}\;
@@ -191,23 +196,23 @@ Dette uttrykket viser tydelig hvordan både ledertap ($R$) og dielektriske tap (
 til at signalet dempes, mens $L$ og $C$ bestemmer hastigheten til bølgen. Vi kan også uttrykke $\gamma$
 i form av sin reelle og imaginære del:
 \[
-\gamma(\omega) = \alpha_p(\omega) + j\beta_p(\omega).
+\gamma(\omega) = \alpha(\omega) + j\beta(\omega).
 \]
-Her har $\alpha_p(\omega)$ enheten Np/m (neper per meter) og forteller hvor raskt amplituden 
-avtar med lengden, mens $\beta_p(\omega)$ har enheten rad/m og forteller hvor raskt fasen 
-øker langs kabelen. Fra $\beta_p$ kan vi utlede bølgens fasehastighet:
-\[v_p = \frac{\omega}{\beta_p}\]
+Her har $\alpha(\omega)$ enheten Np/m (neper per meter) og forteller hvor raskt amplituden 
+avtar med lengden, mens $\beta(\omega)$ har enheten rad/m og forteller hvor raskt fasen 
+øker langs kabelen. Fra $\beta$ kan vi utlede bølgens fasehastighet:
+\[v_p = \frac{\omega}{\beta}\]
 og dermed hvor stor tidsforsinkelse signalet får etter en viss lengde.\\[1em]
 Hvis vi nå ser på en kabel av lengde $l$, vil en harmonisk komponent ved frekvens $\omega$ 
 endres med faktoren
 \begin{equation}
-H(\omega,l) = e^{-\gamma(\omega)l} = e^{-\alpha_p(\omega)l}\,e^{-j\beta_p(\omega)l}
+H(\omega,l) = e^{-\gamma(\omega)l} = e^{-\alpha(\omega)l}\,e^{-j\beta(\omega)l}
 \end{equation}
 Dette er kabelens \emph{overføringsfunksjon}. 
 Den kan forstås slik:
 \begin{itemize}
-    \item \textbf{$e^{-\alpha_p l}$}: amplituden reduseres eksponentielt med lengden, 
-    \item \textbf{$e^{-j\beta_p l}$}: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
+    \item \textbf{$e^{-\alpha l}$}: amplituden reduseres eksponentielt med lengden, 
+    \item \textbf{$e^{-j\beta l}$}: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
 \end{itemize}
 Så langt har vi bare sett på en harmonisk bølge. Men i praksis er alle signaler satt sammen av mange slike bølger. 
 Et vilkårlig innsignal kan skrives som en Fourier-rekke:
@@ -229,15 +234,15 @@ Det er nettopp dette vi kan observere i laboratoriet når vi sender firkantpulse
 \subsection{Demping (amplituderespons)}
 Demping beskrives av realdelen av propagasjonskonstanten:
 \[ 
-  \alpha_p(\omega)=\Re\{\gamma(\omega)\}
+  \alpha(\omega)=\Re\{\gamma(\omega)\}
 \]
 Den sier noe om hvor stor faktor hver frekvenskomponent dempes i amplitude. Denne faktoren er definert som størrelsen av overføringsfunksjonen:
 \[
-|H(\omega,l)|=e^{-\alpha_p(\omega)\,l}, \qquad |H(\omega,l)|_{\mathrm{dB}} = 20\log_{10}|H| = -8.686\,\alpha_p(\omega)\,l
+|H(\omega,l)|=e^{-\alpha(\omega)\,l}, \qquad |H(\omega,l)|_{\mathrm{dB}} = 20\log_{10}|H| = -8.686\,\alpha(\omega)\,l
 \]
 Når $c_n$ er Fourier-koeffisienten til n-te harmoniske komponent, er amplituden til denne komponenten etter kabelen gitt ved:
 \[
-|c_n^{out}| = |H(\omega_n,l)| \cdot |c _n| = e^{-\alpha_p(\omega_n) l} |c_n|
+|c_n^{out}| = |H(\omega_n,l)| \cdot |c _n| = e^{-\alpha(\omega_n) l} |c_n|
 \]
 Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
@@ -250,13 +255,13 @@ Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
     \[
     R(\omega)\ \propto\ \sqrt{\omega}
     \]
-  Ut fra propagasjonskonstanten \eqref{eq:prop-konstant} følger at $\alpha_p(\omega)$ vokser omtrent som $\sqrt{\omega}$.\\
+  Ut fra propagasjonskonstanten \eqref{eq:prop-konstant} følger at $\alpha(\omega)$ vokser omtrent som $\sqrt{\omega}$.\\
   \item \textbf{Dielektriske tap}: Et virkelig dielektrikum er ikke tapsfritt: polarisasjonen henger litt etter feltet (faseforsinkelse), noe som kan modelleres med \emph{loss tangent} \(\tan\delta\). For små tap får vi den nyttige tilnærmingen
   \begin{equation}
   G(\omega)\ =\ \omega\,C\,\tan\delta \quad \Rightarrow \quad G(\omega)\ \propto\ \omega
     \label{eq:dielectric_loss}
   \end{equation}
-  slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha_p(\omega)\) og dermed til økende demping med \(\omega\).\\
+  slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha(\omega)\) og dermed til økende demping med \(\omega\).\\
 \end{itemize}
 \clearpage
 
@@ -266,46 +271,69 @@ I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i 
     \centering
     \includegraphics[width=0.9\textwidth]{Media/frekvensdoment_tidsdoment.png}
     \textit{
-        \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}}
-    \label{fig:eyediagram}
+        \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret.}\label{fig:eyediagram}}
+    
 \end{figure}
 \subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
 Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten):
 \[
-    \beta_p(\omega)=\Im\{\gamma(\omega)\}
+    \beta(\omega)=\Im\{\gamma(\omega)\}
 \]
 Den sier noe om hvor mye hver frekvenskomponent forskyves i fase.
 Fasen til kabelen er gitt ved:
 \[
-\varphi(\omega,l) = -\beta_p(\omega)\,l
+\varphi(\omega,l) = -\beta(\omega)\,l
 \]
 Fra fasen kan vi finne \emph{gruppeforsinkelse} og \emph{gruppehastighet}.
 \emph{Gruppeforsinkelse} er definert som:
 \[
-\tau_g(\omega,l) = \varphi'(\omega,l) = -\frac{d}{d\omega}\varphi(\omega,l) = l\,\frac{d\beta_p(\omega)}{d\omega}
+\tau_g(\omega,l) = \varphi'(\omega,l) = -\frac{d}{d\omega}\varphi(\omega,l) = l\,\frac{d\beta(\omega)}{d\omega}
 \]
 Den sier noe om hvor mye en smal båndbredde rundt frekvensen \(\omega\) forsinkes i tid etter å ha passert kabelen. \emph{Gruppehastighet} er definert som:
 \[
-v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta_p(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta_p(\omega)}{d\omega} \quad [\mathrm{s/m}]
+v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta(\omega)}{d\omega} \quad [\mathrm{s/m}]
 \]
 \noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er nettopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. 
 \clearpage
 \noindent Dette får direkte konsekvenser for pulsform og øyediagram.\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
-  \item \textbf{Ingen dispersjon:} Hvis \(\frac{d\beta_p}{d\omega} \) er konstant (lineær fase), får alle frekvenskomponenter samme tidsforsinkelse \(\Rightarrow\) ingen pulsbredding (ingen horisontal øyelukking).\\
-  \item \textbf{Dispersjon:} Når \(\frac{d\beta_p}{d\omega}\) varierer med frekvens (ikke-lineær fase), får ulike frekvenskomponenter ulik tidsforsinkelse \(\Rightarrow\) pulsbredding (horisontal øyelukking). I lavtap-tilfellet er ofte 
+  \item \textbf{Ingen dispersjon:} Hvis \(\frac{d\beta}{d\omega} \) er konstant (lineær fase), får alle frekvenskomponenter samme tidsforsinkelse \(\Rightarrow\) ingen pulsbredding (ingen horisontal øyelukking).\\
+  \item \textbf{Dispersjon:} Når \(\frac{d\beta}{d\omega}\) varierer med frekvens (ikke-lineær fase), får ulike frekvenskomponenter ulik tidsforsinkelse \(\Rightarrow\) pulsbredding (horisontal øyelukking). I lavtap-tilfellet er ofte 
   \[
-    \beta_p(\omega)\approx \omega\sqrt{LC}\quad,\quad slik\quad at \quad \tau_{g}'(\omega)=\frac{d\beta_p}{d\omega}\approx \sqrt{LC}\quad,\quad v_g(\omega)\approx \frac{1}{\sqrt{LC}}
+    \beta(\omega)\approx \omega\sqrt{LC}\quad,\quad slik\quad at \quad \tau_{g}'(\omega)=\frac{d\beta}{d\omega}\approx \sqrt{LC}\quad,\quad v_g(\omega)\approx \frac{1}{\sqrt{LC}}
   \]
   (nær konstant): da blir formen mest påvirket av demping, ikke fase-dispersjon.\\
 \end{itemize}
 \textbf{Spesialtilfelle (forvrengningsfri linje):}\\
 Heaviside-betingelsen:
 \[
-    \alpha = \beta \quad \Rightarrow \quad \frac{R}{L}=\frac{G}{C}
+    \aH = \bH \quad \Rightarrow \quad \frac{R}{L}=\frac{G}{C}
 \]
-gir \(\beta_p(\omega)\) lineær i \(\omega\)
-(konstant \(\tau_g'\)) og \(\alpha_p(\omega)\) frekvensuavhengig. Da fås ingen dispersiv forvrengning (kun lik demping av alle frekvenser).
+gir \(\beta(\omega)\) lineær i \(\omega\)
+(konstant \(\tau_g'\)) og \(\alpha(\omega)\) frekvensuavhengig. Da fås ingen dispersiv forvrengning (kun lik demping av alle frekvenser).
+
+\subsection{Karakteristisk impedans}
+En transmisjonslinjes karakteristiske impedans \(Z_0\) er definert som forholdet mellom spenning og strøm for en bølge som forplanter seg langs linjen uten refleksjoner. Den er gitt ved:
+\[
+Z_0(\omega) = \sqrt{\frac{R + j\omega L}{G + j\omega C}} = \frac{V_+}{I_+}
+\]
+Denne impedansen er generelt kompleks og frekvensavhengig, noe som betyr at både resistive (RG) og reaktive komponenter (LC) påvirker signalet. For høye frekvenser, hvor \(j\omega L\) og \(j\omega C\) dominerer over \(R\) og \(G\), nærmer den karakteristiske impedansen seg:
+\[
+    R << \omega L, \quad G << \omega C \quad \Rightarrow \quad Z_0(\omega) \approx \sqrt{\frac{L}{C}}
+\]
+Dette er den ideelle karakteristiske impedansen for en tapsfri linje. I praksis må transmisjonslinjer ofte matches til kildens og lastens impedans for å minimere refleksjoner som gir stående bølger. Refleksjones koffesienten ved en last er gitt ved:
+\[
+    \Gamma = \frac{Z_L - Z_0}{Z_L + Z_0}, \quad hvor \quad Z_L \quad er \quad lastimpedansen.
+\]
+\[
+    Z_0 = Z_L, \quad \Rightarrow \quad \Gamma = 0 \quad (ingen\ \ refleksjon)
+\]
+Om vi har en mismatch, vil vi få en løsning som er en superposisjon av frem- og tilbakegående bølger gitt ved:
+\[
+    V(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}
+\]
+Noe som kan føre til interferens og forvrengning av signalet. Dette er spesielt kritisk i høyfrekvente applikasjoner som RF- og mikrobølgekommunikasjon, hvor selv små refleksjoner kan ha betydelig innvirkning på signalintegriteten. Derfor er det viktig å designe transmisjonslinjer med riktig karakteristisk impedans og å bruke passende termineringer for å sikre optimal ytelse.
+Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$.
 
 
 \subsection{Kobling til pulstog}
@@ -313,14 +341,14 @@ Et periodisk innsignal med Fourierkoeffisienter \(c_n\) filtreres som
 \[
 f_{\text{out}}(t)=\Re\!\left\{\sum_{n=-N}^{N} c_n\,H(\omega_n,l)\,e^{j\omega_n t}\right\}.
 \]
-Demping (via \(\alpha_p\)) fjerner spesielt de høye leddene \(\Rightarrow\) langsommere kanter.\\
+Demping (via \(\alpha\)) fjerner spesielt de høye leddene \(\Rightarrow\) langsommere kanter.\\
 Dispersjon via: 
-\[\frac{d\beta_p}{d\omega}\] 
+\[\frac{d\beta}{d\omega}\] 
 tidsforskyver leddene relativt \(\Rightarrow\) pulsbredding.
 
 \subsection{Koaksialkabelen (brukt i lab) som transmisjonslinje}
-En koaksialkabel er en praktisk realisering av transmisjonslinjemodellen. Den består av en indre leder omgitt av et isolerende dielektrikum og en ytre leder som fungerer som skjerm. Denne oppbygningen gir god skjerming mot elektromagnetisk støy og jevn feltfordeling, noe som gjør kabelen egnet for høyfrekvente signaler. I laboratoriet brukes koaksialkabler for å undersøke hvordan signaler dempes og forvrenges over lengde, slik at de teoretiske resultatene fra telegrafligningen kan sammenlignes med praktiske målinger.
+En koaksialkabel er en praktisk realisering av transmisjonslinjemodellen. Den består av en indre leder omgitt av et isolerende dielektrikum og en ytre leder som fungerer som skjerm. Denne oppbygningen gir god skjerming mot elektromagnetisk støy og jevn feltfordeling, noe som gjør kabelen egnet for høyfrekvente signaler. I laboratoriet brukes koaksialkabler for å undersøke hvordan signaler dempes og forvrenges over lengde.
 
 \subsection{Oppsummering og kobling til prosjektet}
 
-Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan koaxialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at de kan sammenlignes med de teoretiske resultatene for å se hvordan modellene stemmer med virkeligheten.
+Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan koaxialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at vi kan modellerer effekten av demping og dispersjon på signaler i kabler numerisk og bruke måledata til å validere prinsippene.

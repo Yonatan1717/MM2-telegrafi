@@ -1,17 +1,19 @@
 \section{Metode}
 
 \subsection{Mål og hypoteser}
-\textbf{Formål:} analysere hvordan en transmisjonslinje (koaksialkabel) påvirker et pulstog i tids- og frekvensdomenet, og validere en RLCG-modell basert på telegrafligningen, numerisk simulering og laboratoriemålinger. Den estimerte overføringsfunksjonen predikerer målt demping og fase innenfor forhåndsdefinerte akseptgrenser. Overføringsfunksjonen:
-
+\textbf{Formål:} Hovedmålet er å utvikle og analysere en frekvensavhengig RLCG-modell for Cat5e
+(tvinnet parkabel) ved hjelp av Fourier-analyse. Vi beregner overføringsfunksjonen:
 \[
 H(\omega) = e^{-\gamma(\omega)\ell} = e^{-\sqrt{(R+j\omega L)(G+j\omega C)}\,\ell}
 \]
+En enkel laboratoriemåling på koaks (5 m og 30 m) brukes kun som \emph{kvalitativ
+prinsippbekreftelse}. 1:1 verifikasjon av Cat5e-modellen er utenfor omfanget.
 
 \subsection{Oversikt}
 Metoden vi bruker i denne rapporten består av to hoveddeler: numerisk simulering og laboratoriestudie. Den numeriske simuleringen innebærer å modellere transmisjonslinjen ved hjelp av telegrafligningen. Vi bruker Python for å implementere denne modellen og generere simuleringsdata. I laboratoriestudien gjennomfører vi praktiske målinger av hvordan et pulstog påvirkes når det sendes gjennom en koaksialkabel av forskjellige lengder. Vi bruker en funksjonsgenerator til å generere pulstoget og et oscilloskop for å måle inngangs- og utgangssignaler.
 
 \subsection{Numerisk simulering og modellering}
-For å simulere telegrafligningen numerisk brukte vi Python med relevante biblioteker for numerisk beregning. Koden er vedlagt i vedlegg \ref{appendix:code}.
+For å simulere telegrafligningen numerisk brukte vi Python med relevante biblioteker for numerisk beregning. Koden er vedlagt i vedlegg \hyperlink{vedlegg}{\textcolor{blue}{1}}.
 
 \paragraph{Modellantakelser.}
 Vi modellerer kabelen som en lineær, tidsinvariant linje med fordelte parametre $R(f),L,C,G(f)$ per meter. Merk at $R$ og $G$ er frekvensavhengige for å modellere henholdsvis skinneffekt og dielektriske tap. Vi antar at kabelen er terminert med en last som matcher karakteristisk impedans, slik at vi kan se bort fra refleksjoner, i tillegg er verdier for $L$ og $C$ hentet fra datablad. Vi bruker funksjonen:
@@ -20,25 +22,39 @@ Vi modellerer kabelen som en lineær, tidsinvariant linje med fordelte parametre
 H(\omega)=e^{-\gamma(\omega)\,\ell}
 \]
 
-\noindent Verdier for RGLC vil være følgende: \\
-$R(f) = 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}} \qquad [\Omega / \mathrm{m}]$. \\
-$L = 525 \mathrm{nH/m}$ \\
-$C = 52 \mathrm{pF/m}$ \\
-$G(f) = 2\pi f C \tan(\delta)$, \qquad $\tan(\delta) = 0.002$, \qquad [S/m]
+\noindent Verdier for $RLCG$ er vist i tabell \ref{tab:parameters}: \\
+\begin{table}[htbp] % [h]ere, [t]op, [b]ottom, [p]age of floats
+    \centering % Centers the table on the page
+    
+    \label{tab:my_table} % Label for cross-referencing
 
+    \begin{tabular}{l c r} % Defines three columns: left-aligned, centered, right-aligned
+        \toprule % Top line from booktabs package
+        Parameter & Verdi & Enhet\\ % Column headers
+        \midrule % Middle line from booktabs package
+         $R(f)$ & $\approx 0.17 \cdot \sqrt{\frac{f}{67 \cdot 10^3}}$ &  $\Omega / \mathrm{m}$ \\[.3em]
+         $L$ & $525$ & $\mathrm{nH/m}$ \\[.3em]
+         $C$ & $52$ & $\mathrm{pF/m}$ \\[.3em]
+         $G(f)$ & $0.65f$ &  $\mathrm{pS/m}$ \\[.3em]
+         $\tan \delta$ & $\approx 0.002$ &  $--$ \\[.3em]
+        \bottomrule % Bottom line from booktabs package
+    \end{tabular}
+    \caption{Parameterverdier for $RLCG$-modellen (enheter for $f$ er Hz)} % Table caption
+    \label{tab:parameters} % Label for cross-referencing
+\end{table}
 \paragraph{Simuleringens modellering.}
 Vi modellerer 5 forskjellige situasjoner for å forstå hvordan forskjellige medier påvirker signalet som propagerer gjennom. Lengdene på mediet er 10m, 50m, 100m og 1000m. Simuleringen tar utgangspunkt i formelen:
 \[
-\gamma (f) = \alpha(f) + j\beta(f), \qquad \gamma(f) = \gamma(\omega)|_{\omega = 2\pi f}
+\gamma (f) = \alpha(f) + j\beta(f)
 \]
 
-\noindent Vi simulerer følgende modeller:
+\noindent Vi simulerer følgende modeller:\\
 \begin{itemize}
-    \item \textbf{Kun demping:} Ignorer faseendring ved å sette $\beta = 0$.
-    \item \textbf{Kun faseendring:} Ignorer demping ved å sette $\alpha = 0$.
-    \item \textbf{Ideell, tapsfri og ikke-dispersiv modell:} Mediet er ideelt, uten demping og uten dispersjon.
-    \item \textbf{Full modell:} Inkluderer både demping og faseendring. Simuleringen tilnærmer seg virkeligheten.
-    \item \textbf{Waterfall plott:} Simulerer hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet.
+    \item \textbf{Kun demping:} Ignorer faseendring ved å sette $\beta = 0$.\\
+    \item \textbf{Kun faseendring:} Ignorer demping ved å sette $\alpha = 0$.\\
+    \item \textbf{Ideell, tapsfri og ikke-dispersiv modell:} Mediet er ideelt, uten demping og uten dispersjon.\\
+    \item \textbf{Full modell:} Inkluderer både demping og faseendring. Simuleringen tilnærmer seg virkeligheten.\\
+    \item \textbf{Waterfall plott:} Simulerer hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet.\\
 \end{itemize}
 
 \subsubsection{Inngangssignal og representasjon}
@@ -46,22 +62,22 @@ Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T = 2
 \begin{equation}
     V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{\substack{n=-N_{\mathrm{harm}}\\ n\ \text{oddetall}}}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
 \end{equation} 
+\clearpage
 
 \subsection{Laboratoriestudie}
 \subsubsection{Gjennomførelse} Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data med en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.
 
-\subsubsection{Hensikt} Hensikten med laberatorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
-
+\subsubsection{Hensikt} Hensikten med laboratorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å analysere.
 \subsubsection{Utstyr og oppsett}
-Utstyret i forsøket er følgende:
+Utstyret i forsøket er følgende:\\
 \begin{itemize}
-    \item \textbf{Funksjonsgenerator.} Genererer firkant-pulstog med justerbar frekvens og amplitude. Firkant-pulstoget ble konfigurert til periodetid $T = 2 \mu s$ (frekvens $f_\mathrm{ref} = 500 \mathrm{kHz}$) med 50\% duty-cycle og amplitude på $2.5V_{pp}$. Startfasen ble satt til $0\si{\degree}$ for å sikre at signalet starter ved null.
-    \item \textbf{Oscilloskop.} FFT-funksjonalitet for frekvensanalyse.
+    \item \textbf{Funksjonsgenerator.} Genererer firkant-pulstog med justerbar frekvens og amplitude. Firkant-pulstoget ble konfigurert til periodetid $T = 2 \mu s$ (frekvens $f_\mathrm{ref} = 500 \mathrm{kHz}$) med 50\% duty-cycle og amplitude på $2.5V_{pp}$ (dette må korigeres med offset i analysen). Startfasen ble satt til $0\si{\degree}$ for å sikre at signalet starter ved null.\\
+    \item \textbf{Oscilloskop.} FFT-funksjonalitet for frekvensanalyse (0-25 MHz).\\
     \item \textbf{Kabler.} Koaksialkabel med lengder på 5m og 30m.
 \end{itemize}
 
 \subsubsection{Måleprosedyrer}
 Måleprosedyrene inkluderer kalibrering av funksjonsgenerator og oscilloskop, oppsett av firkant-pulstog, og måling av inngangs- og utgangssignaler for hver kabellengde. På oscilloskopet målte vi $V_{in}$ og $V_{out}$ for hver kabellengde, og registrerte dataene for videre analyse. Her benyttet vi oss også av FFT (Fast Fourier Transform) for å analysere frekvensspekteret til signalene. Vi gjennomfører gjentatte målinger for å vurdere konsistens og usikkerhet.
 
-\subsubsection{FFT - Fast Fourier Transform}
-Vi benytter Fast Fourier Transform (FFT) på oscilloskopet for å konvertere tidsserier til frekvensdomenet og dermed studere systemets frekvensrespons. FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og brukes blant annet i oscilloskopet for å vise frekvensspekteret. I motsetning til direkte DFT-beregning med kjøretid $O(N^2)$, har FFT kjøretid $O(N\log N)$, noe som muliggjør rask og effektiv analyse av store datasett og sanntidsmålinger.
+% \subsubsection{FFT - Fast Fourier Transform}
+% Vi benytter Fast Fourier Transform (FFT) på oscilloskopet for å konvertere tidsserier til frekvensdomenet og dermed studere systemets frekvensrespons. FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og brukes blant annet i oscilloskopet for å vise frekvensspekteret. I motsetning til direkte DFT-beregning med kjøretid $O(N^2)$, har FFT kjøretid $O(N\log N)$, noe som muliggjør rask og effektiv analyse av store datasett og sanntidsmålinger.
