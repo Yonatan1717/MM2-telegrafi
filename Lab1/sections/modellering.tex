@@ -1,6 +1,6 @@
 \section{Modellering}
 \subsection{Situasjon}
-I den første modellen demonstrerer vi dempingen som de forskjellig frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
+I den første modellen demonstrerer vi dempingen som de forskjellige< frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
 Vi tar utgangspunkt i en firkantpuls med periode $T$:
 \[
     V_{in}(t) = \begin{cases}
@@ -24,7 +24,7 @@ Vi for dermed at:
 \[
     V_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
-For å modellere dempingen i mediet, antar vi parametre som gir relaistisk tilnærming til virkelige kabelverdier for R, G, L og C.
+For å modellere dempingen i mediet, antar vi parametre som gir realistisk tilnærming til virkelige kabelverdier for R, G, L og C.
 Vi antar at mediet er en Cat5e kabel med følgende parametere:
 Fra formel \eqref{eq:skin-effekt} får vi at R er gitt ved:
 \[
@@ -63,7 +63,7 @@ Vi kan nå finne ut hvordan hver frekvenskomponent i firkantpulsen blir dempet v
 \[
     V_{out}(t) = c_0H(0, l) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n H(n f_0, l) e^{j n \omega_0 t}
 \]
-Som i hvor situasjon gir:
+Som i denne situasjonen gir:
 \[
     V_{out}(t) = \frac{5}{2}H(0, l) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, l) e^{j n \omega_0 t}    
 \]
@@ -177,7 +177,7 @@ Dette er vist i figur \ref{fig:modell6}.
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering6.png}
     \textit{
-        \caption{Waterfall plot som viser hvordan tidsdomenesignalet endres når flere frekvenskomponenter inkluderes opp/ned til forskjellige grensefrekvenser (plottet er for 50m kabel).}}
+        \caption{Waterfall plot som viser hvordan tidsdomenesignalet endres når flere frekvenskomponenter inkluderes opp til/ned til forskjellige grensefrekvenser (plottet er for 50m kabel).}}
     \label{fig:modell6}
 \end{figure}\\
 Vi ser at når vi inkluderer flere frekvenskomponenter, blir tidsdomenesignalet mer detaljert og nærmere den opprinnelige firkantpulsen. Dette illustrerer viktigheten av høyfrekvente komponenter for å bevare signalets form. For lavpassfilteret ser vi at signalet gradvis nærmer seg firkantpulsen når flere lavfrekvente komponenter inkluderes. For høypassfilteret ser vi at signalet blir mer avrundet når flere høyfrekvente komponenter inkluderes, noe som bekrefter at høyfrekvente komponenter er avgjørende for å opprettholde skarpe overganger i tidsdomenesignalet.

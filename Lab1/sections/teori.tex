@@ -1,7 +1,7 @@
 
 \section{Teori}
 
-    \textbf{Motivasjon og sammenheng:} \textcolor{red}{For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, bruker vi telegrafligningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap, dispersjon.}
+    \textbf{Motivasjon og sammenheng:} \textcolor{red}{For å forstå hvorfor det er en grense på 100 meter for Ethernet-kabler, og hvordan signaler dempes og forvrenges i slike kabler, bruker vi telegrafligningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere tap og dispersjon.}
 
 \subsection{Kirchhoffs lover}
 
@@ -119,7 +119,7 @@ Når man deler begge sider av ligningen på $\Delta x$ og lar $\Delta x \to 0$, 
     \frac{\partial i(x,t)}{\partial x} = -G u(x,t) - C \frac{\partial u(x,t)}{\partial t}.
     \label{eq:KCL}
 \end{equation}
-Ved å kombinere disse to relasjonene, ved å deriverer den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
+Ved å kombinere disse to relasjonene, ved å derivere den første med hensyn på $x$ og den andre med hensyn på $t$, og deretter eliminere $i(x,t)$, får vi telegraflikningen for spenningen:
 \[
     u_{tt} + \left(\frac{R}{L} + \frac{G}{C}\right)u_t + \left(\frac{RG}{LC}\right)\,u = \left(\frac{1}{LC}\right) u_{xx}
 \]
@@ -129,7 +129,7 @@ Ved å kombinere disse to relasjonene, ved å deriverer den første med hensyn p
     u_{tt} + (\alpha + \beta)u_t + \alpha \beta u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
     \label{eq:telegraflikningen}
 \end{equation}
-der vi har definert:
+der vi definerer:
 \[
     \alpha = \frac{R}{L}, \qquad \beta = \frac{G}{C} .
 \]
