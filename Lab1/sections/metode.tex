@@ -41,18 +41,18 @@ Vi modellerer 5 forskjellige situasjoner for å forstå hvordan forskjellige med
     \item \textbf{Waterfall plott:} Simulerer hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet.
 \end{itemize}
 
-\paragraph{Inngangssignal og representasjon.}
+\subsubsection{Inngangssignal og representasjon}
 Vi modellerer pulstoget som en 50\% duty-cycle firkantpuls med periodetid $T = 2 \mu s$ og grunnvinkelhastighet $\omega_0 = 2\pi / T$. Siden duty-cycle er 50\% består spekteret av kun oddetalls harmoniske. Tidsfunksjonen representeres med Fourier-rekken.
 \begin{equation}
-    V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
+    V_{\mathrm{in}}(t) = \frac{5}{2} + \sum_{\substack{n=-N_{\mathrm{harm}}\\ n\ \text{oddetall}}}^{N_{\mathrm{harm}}}\frac{5}{jn\pi} e^{jn\omega_0 t}
 \end{equation} 
 
 \subsection{Laboratoriestudie}
-\paragraph{Gjennomførelse.} Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data med en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.
+\subsubsection{Gjennomførelse} Dette er vårt praktiske forsøk for å studere og analysere telegrafligningen i virkeligheten. Vi bruker en funksjonsgenerator til å generere et firkant-pulstog som sendes gjennom en koaksialkabel av kjente forskjellige lengder. På mottakersiden bruker vi et oscilloskop for å sammenlikne data med en kort, direktekoblet koaksialkabel (referanse) og gjennom en lengre koaksialkabel.
 
-\paragraph{Hensikt.} Hensikten med laberatorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
+\subsubsection{Hensikt} Hensikten med laberatorieforsøket er å undersøke hvordan signalet endres når det overføres gjennom en transmisjonslinje over forskjellige lengder. Ved høyere frekvenser forventes amplitudetap, faseforskyvning og forvrengning av signalet, som vi ønsker å kvantifisere og analysere.
 
-\paragraph{Utstyr og oppsett.}
+\subsubsection{Utstyr og oppsett}
 Utstyret i forsøket er følgende:
 \begin{itemize}
     \item \textbf{Funksjonsgenerator.} Genererer firkant-pulstog med justerbar frekvens og amplitude. Firkant-pulstoget ble konfigurert til periodetid $T = 2 \mu s$ (frekvens $f_\mathrm{ref} = 500 \mathrm{kHz}$) med 50\% duty-cycle og amplitude på $2.5V_{pp}$. Startfasen ble satt til $0\si{\degree}$ for å sikre at signalet starter ved null.
@@ -60,8 +60,8 @@ Utstyret i forsøket er følgende:
     \item \textbf{Kabler.} Koaksialkabel med lengder på 5m og 30m.
 \end{itemize}
 
-\paragraph{Måleprosedyrer.}
+\subsubsection{Måleprosedyrer}
 Måleprosedyrene inkluderer kalibrering av funksjonsgenerator og oscilloskop, oppsett av firkant-pulstog, og måling av inngangs- og utgangssignaler for hver kabellengde. På oscilloskopet målte vi $V_{in}$ og $V_{out}$ for hver kabellengde, og registrerte dataene for videre analyse. Her benyttet vi oss også av FFT (Fast Fourier Transform) for å analysere frekvensspekteret til signalene. Vi gjennomfører gjentatte målinger for å vurdere konsistens og usikkerhet.
 
-\paragraph{FFT - Fast Fourier Transform.}
+\subsubsection{FFT - Fast Fourier Transform}
 Vi benytter Fast Fourier Transform (FFT) på oscilloskopet for å konvertere tidsserier til frekvensdomenet og dermed studere systemets frekvensrespons. FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og brukes blant annet i oscilloskopet for å vise frekvensspekteret. I motsetning til direkte DFT-beregning med kjøretid $O(N^2)$, har FFT kjøretid $O(N\log N)$, noe som muliggjør rask og effektiv analyse av store datasett og sanntidsmålinger.
