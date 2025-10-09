@@ -6,7 +6,7 @@
 \subsection{Kirchhoffs lover}
 
 Grunnlaget for telegrafligningen ligger i Kirchhoffs lover, som beskriver hvordan spenning og strøm 
-fordeler seg i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
+fordeles i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
 for energi og ladning, og de brukes til å beskrive forholdet mellom elektriske størrelser i ethvert 
 kretsnettverk.
 
@@ -71,7 +71,7 @@ Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligninge
 \]
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
-Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig av mottakeren.
+Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig for mottakeren.
 
 
 \subsubsection{R - Resistans}
@@ -87,7 +87,7 @@ Kapasitans per lengde $[\mathrm{F}/\mathrm{m}]$ er elektrisk lagring av energi i
 $G$ [$\mathrm{S/m}$] er \textit{konduktansen per lengdeenhet} til jord, ofte kalt 
 \textit{shunt-konduktansen}. Den modellerer lekkasjestrøm gjennom kabelens isolasjon og står 
 parallelt med kapasitansen $C$ i den ekvivalente linjemodellen. En større $G$ gir økt demping 
-fordi mer energi tapes i dielektrikumet. 
+fordi mer energi går tapt i dielektrikumet. 
 
 Verdien av $G$ avhenger av materialets kvalitet og miljøforhold: høy fuktighet, aldring eller 
 skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren beskriver dermed 

@@ -92,7 +92,7 @@ For å forstå hvordan forskjellige aspekter av mediets egenskaper påvirker sig
     \item \textbf{Waterfall plott:} For å visualisere hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (modell 6).
 \end{itemize}
 \clearpage
-\subsection{Modell 1 (kunn demping i frekvensdomenet)}
+\subsection{Modell 1 (kun demping i frekvensdomenet)}
 Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente komponenter blir betydelig dempet, noe som resulterer i en mer avrundet firkantpuls ved utgangen. Dette illustrerer hvordan mediet fungerer som et lavpassfilter, hvor de høyere frekvensene reduseres mer enn de lavere frekvensene.
 \begin{figure}[h]
     \centering
@@ -102,7 +102,7 @@ Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente k
 \end{figure}
 \clearpage
 \subsection{Modell 2 (demping i frekvensdomenet i tidsdomenet)}
-I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summerer Fourier-rekkene for de dempede harmoniske. Her har vi kunn tatt hensyn til amplitudendringen og ikke faseendringen. alstå ser vi på:
+I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summerer Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen og ikke faseendringen. alstå ser vi på:
 \[
     H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
 \]
@@ -114,7 +114,7 @@ Resultatet er vist i figur \ref{fig:modell2}. Vi ser at firkantpulsen blir mer a
     \label{fig:modell2}
 \end{figure}
 \clearpage
-\subsection{Modell 3 (kunn faseendring)}
+\subsection{Modell 3 (kun faseendring)}
 I den tredje modellen ser vi på hvordan tidsdomenesignalet endres når vi kun tar hensyn til faseendringen i mediet, og ignorerer dempingen. Altså ser vi på:
 \[
     H(f, l) = e^{-j\beta(f) l}, \quad hvor \quad \beta(f) = Im(\gamma(f))
