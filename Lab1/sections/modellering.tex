@@ -102,7 +102,7 @@ Demping av signalet er vist i figur \ref{fig:modell1}. Vi ser at høyfrekvente k
 \end{figure}
 \clearpage
 \subsection{Modell 2 (demping i frekvensdomenet i tidsdomenet)}
-I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summerer Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen, og ikke faseendringen. Altså ser vi på:
+I den andre modellen ser vi på hvordan tidsdomenesignalet endres etter å ha passert gjennom mediet. Vi rekonstruerer tidsdomenesignalet ved å summere Fourier-rekkene for de dempede harmoniske. Her har vi kun tatt hensyn til amplitudendringen, og ikke faseendringen. Altså ser vi på:
 \[
     H(f, l) = e^{-\alpha(f) l}, \quad hvor \quad \alpha(f) = Re(\gamma(f))
 \]
@@ -155,7 +155,7 @@ Resultatet er vist i figur \ref{fig:modell5}. Vi ser at firkantpulsen blir både
 \end{figure}
 \clearpage
 \subsection{Modell 6 (waterfall plot)}
-For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den enen kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
+For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to "waterfall" plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den ene kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
 \begin{itemize}
     \item \textbf{Lavpassfilter (LP):} Her summerer vi alle frekvenskomponenter fra fundamentalfrekvensen $f_0$ opp til en økende grensefrekvens $f_{cut}$. Dette viser hvordan tidsdomenesignalet utvikler seg når vi inkluderer flere lavfrekvente komponenter.
     \[
