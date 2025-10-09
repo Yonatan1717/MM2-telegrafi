@@ -1,14 +1,14 @@
 \section{Metode}
 
 \subsection{Mål og hypoteser.}
-\textbf{Formål:} analysere hvordan en transmisjonslinje (koaksialkabel) påvirker et pulstog i tids- og frekvensdomenet, og validere en RLCG-modell basert på telegrafligningen, numerisk simulering og laboratoriemålinger. Den estimerte overføringsfunksjonen predikerer målt demping og fase innenfor forhåndsdefinerte akseptgrenser. Overføringsfunksjonen:
+\textbf{Formål:} Å analysere hvordan en transmisjonslinje (koaksialkabel) påvirker et pulstog i tids- og frekvensdomenet, og validere en RLCG-modell basert på telegrafligningen, numerisk simulering og laboratoriemålinger. Den estimerte overføringsfunksjonen predikerer målt demping og fase innenfor forhåndsdefinerte akseptgrenser. Overføringsfunksjonen:
 
 \[
 H(\omega) = e^{-\gamma(\omega)\ell} = e^{-\sqrt{(R+j\omega L)(G+j\omega C)}\,\ell}
 \]
 
 \subsection{Oversikt}
-Metoden vi bruker i denne rapporten består av to hoveddeler: numerisk simulering og laboratoriestudie. Den numeriske simuleringen innebærer å modellere transmisjonslinjen ved hjelp av telegrafligningen. Vi bruker Python for å implementere denne modellen og generere simuleringsdata. I laboratoriestudien gjennomfører vi praktiske målinger ved å sende et firkant-pulstog gjennom en koaksialkabel av kjent lengde og registrere inngangs- og utgangssignaler ved hjelp av et oscilloskop. Vi sammenligner deretter de målte dataene med de simulerte resultatene for å validere modellen.
+Metoden vi bruker i denne rapporten består av to hoveddeler: numerisk simulering og laboratoriestudie. Den numeriske simuleringen innebærer å modellere transmisjonslinjen ved hjelp av telegrafligningen. Vi bruker Python for å implementere denne modellen og generere simuleringsdata. I laboratoriestudien gjennomfører vi praktiske målinger ved å sende et firkantpulstog gjennom en koaksialkabel av kjent lengde og registrere inngangs- og utgangssignaler ved hjelp av et oscilloskop. Vi sammenligner deretter de målte dataene med de simulerte resultatene for å validere modellen.
 
 \subsection{Numerisk simulering og modellering}
 For å simulere telegrafligningen numerisk brukte vi Python med relevante biblioteker for numerisk beregning. Koden er vedlagt i vedlegg \ref{appendix:code}.
@@ -50,4 +50,4 @@ Måleprosedyrene inkluderer kalibrering av funksjonsgenerator og oscilloskop, op
 
 \subsubsection{FFT - Fast Fourier Transform}
 For å analysere tidsseriene bruker vi Fast Fourier Transform (FFT) for å konvertere signalene fra tidsdomenet til frekvensdomenet. Dette gir oss muligheten til å studere frekvensresponsen til systemet mer detaljert. Oscilloskopet benytter derfor FFT internt for å vise frekvensspekteret av de målte signalene.
-FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og dens invers. Den reduserer beregningstiden betydelig sammenlignet med direkte beregning av DFT, spesielt for store datasett. FFT-algoritmen fungerer ved å dele opp en stor DFT i flere mindre DFT-er, som deretter kombineres for å gi det endelige resultatet. Dette gjør det mulig å analysere signaler raskt og effektivt, noe som er spesielt nyttig i sanntidsapplikasjoner som oscilloskopmålinger. \\ Vi benytter FFT fordi imotsetning til en mer vanlig algoritme som DFT, som har en beregningstid på $O(N^2)$, har FFT en beregningstid på $O(N \log N)$. Dette gjør FFT mye raskere og mer effektiv for store datasett, noe som er avgjørende for sanntidsanalyse av signaler i vårt eksperiment.
+FFT er en effektiv algoritme for å beregne den diskrete Fourier-transformasjonen (DFT) og dens invers. Den reduserer beregningstiden betydelig sammenlignet med direkte beregning av DFT, spesielt for store datasett. FFT-algoritmen fungerer ved å dele opp en stor DFT i flere mindre DFT-er, som deretter kombineres for å gi det endelige resultatet. Dette gjør det mulig å analysere signaler raskt og effektivt, noe som er spesielt nyttig i sanntidsapplikasjoner som oscilloskopmålinger. \\ Vi benytter FFT fordi i motsetning til en mer vanlig algoritme som DFT, som har en beregningstid på $O(N^2)$, har FFT en beregningstid på $O(N \log N)$. Dette gjør FFT mye raskere og mer effektiv for store datasett, noe som er avgjørende for sanntidsanalyse av signaler i vårt eksperiment.
