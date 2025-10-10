@@ -47,18 +47,18 @@ og en frekvensavhengig RLCG-modell. For et periodisk pulstog \(f(t)\) med period
 (\(f_0=1/T\)) bruker vi Fourier-rekken \(\{c_n\}\) slik at hver harmoniske ved
 \(f_n=nf_0\) kan analyseres separat. Hver komponent skaleres og fases av linjen gjennom
 overføringsfunksjonen \(H(f)\). For en jevn linje med lengde \(\ell\) og korrekt terminering
-gjelder
+gjelder:
 \[
 H(f)=e^{-\gamma(f)\,\ell},\qquad \gamma(f)=\alpha(f)+j\beta(f).
 \]
-Dermed er
+Dermed er:
 \[
 H(f)=\frac{V_{\text{out}}(f)}{V_{\text{in}}(f)},\quad
 V_{\text{out}}(f)=H(f)\,V_{\text{in}}(f).
 \]
 Som beskriver hvordan signalet endres i frekvensdomenet når det passerer gjennom kabelen.
 Denne analysen hjelper oss å forstå hvordan ulike frekvenskomponenter dempes og forvrenges, noe som er avgjørende for å forklare begrensningen på kabelens lengde.
-Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen.
+Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen \cite{engineering_mathematics}.
 \begin{equation}
     f_{out}(t) = \sum_{n=-\infty}^{\infty} H\left(\frac{n}{T}\right) c_n e^{j \frac{2\pi n t}{T}}
 \end{equation}
@@ -99,7 +99,7 @@ skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren
 tap som skyldes ufullkommen isolasjon mellom lederen og jord.
 \clearpage
 \subsubsection{Utledning av telegrafligningen}
-Telegrafligningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm \cite{TelegrafligningenPDF}.
+Telegrafligningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm \cite{TelegraflikningenPDF}.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{Media/telegraflinje.png}
@@ -143,7 +143,7 @@ Dette er en dempet bølgeligning som beskriver hvordan spenningen forplanter seg
 
 \subsubsection{Propagerende løsning og overføringsfunksjon}
 
-I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen
+I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen \cite{HaytBuck2018}
 \begin{equation}
 V(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
 \label{eq:harm-ansatz}
@@ -203,23 +203,23 @@ avtar med lengden, mens $\beta(\omega)$ har enheten rad/m og forteller hvor rask
 øker langs kabelen. Fra $\beta$ kan vi utlede bølgens fasehastighet:
 \[v_p = \frac{\omega}{\beta}\]
 og dermed hvor stor tidsforsinkelse signalet får etter en viss lengde.\\[1em]
-Hvis vi nå ser på en kabel av lengde $l$, vil en harmonisk komponent ved frekvens $\omega$ 
-endres med faktoren
+Hvis vi nå ser på en kabel av lengde $\ell$, vil en harmonisk komponent ved frekvens $\omega$ 
+endres med faktoren:
 \begin{equation}
-H(\omega,l) = e^{-\gamma(\omega)l} = e^{-\alpha(\omega)l}\,e^{-j\beta(\omega)l}
+H(\omega,\ell) = e^{-\gamma(\omega)\ell} = e^{-\alpha(\omega)\ell}\,e^{-j\beta(\omega)\ell}
 \end{equation}
-Dette er kabelens \emph{overføringsfunksjon}. 
+Dette er kabelens \emph{overføringsfunksjon} \cite{wikipedia_telegrapher}. 
 Den kan forstås slik:
 \begin{itemize}
-    \item \textbf{$e^{-\alpha l}$}: amplituden reduseres eksponentielt med lengden, 
-    \item \textbf{$e^{-j\beta l}$}: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
+    \item \textbf{$e^{-\alpha \ell}$}: amplituden reduseres eksponentielt med lengden, 
+    \item \textbf{$e^{-j\beta \ell}$}: signalet forskyves i fase, tilsvarende en tidsforsinkelse.\\[1em]
 \end{itemize}
 Så langt har vi bare sett på en harmonisk bølge. Men i praksis er alle signaler satt sammen av mange slike bølger. 
 Et vilkårlig innsignal kan skrives som en Fourier-rekke:
 \[
 f_{\text{in}}(t) = \sum_n c_n e^{j\omega_n t}.
 \]
-etter kabelen vil hver komponent være påvirket av $H(\omega_n,\ell)$, og vi får
+Etter kabelen vil hver komponent være påvirket av $H(\omega_n,\ell)$, og vi får:
 \[
 f_{\text{out}}(t) = \sum_n H(\omega_n,\ell)\,c_n e^{j\omega_n t}.
 \]
@@ -232,36 +232,36 @@ Det er nettopp dette vi kan observere i laboratoriet når vi sender firkantpulse
 
 \clearpage
 \subsection{Demping (amplituderespons)}
-Demping beskrives av realdelen av propagasjonskonstanten:
+Demping beskrives av realdelen av propagasjonskonstanten \cite{HaytBuck2018}:
 \[ 
   \alpha(\omega)=\Re\{\gamma(\omega)\}
 \]
 Den sier noe om hvor stor faktor hver frekvenskomponent dempes i amplitude. Denne faktoren er definert som størrelsen av overføringsfunksjonen:
 \[
-|H(\omega,l)|=e^{-\alpha(\omega)\,l}, \qquad |H(\omega,l)|_{\mathrm{dB}} = 20\log_{10}|H| = -8.686\,\alpha(\omega)\,l
+|H(\omega,\ell)|=e^{-\alpha(\omega)\,\ell}, \qquad |H(\omega,\ell)|_{\mathrm{dB}} = 20\log_{10}|H| = -8.686\,\alpha(\omega)\,\ell
 \]
 Når $c_n$ er Fourier-koeffisienten til n-te harmoniske komponent, er amplituden til denne komponenten etter kabelen gitt ved:
 \[
-|c_n^{out}| = |H(\omega_n,l)| \cdot |c _n| = e^{-\alpha(\omega_n) l} |c_n|
+|c_n^{out}| = |H(\omega_n,\ell)| \cdot |c _n| = e^{-\alpha(\omega_n) \ell} |c_n|
 \]
 Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
 \begin{itemize}[leftmargin=2.8em,style=nextline]
-  \item \textbf{Skinneffekt}: Når frekvensen øker, presses strømmen mot overflaten av lederen. Det effektive tverrsnittet blir mindre, og den elektriske motstanden per lengde øker. For runde ledere (og godt approksimert i praksis) gjelder:
+  \item \textbf{Skinneffekt}: Når frekvensen øker, presses strømmen mot overflaten av lederen. Det effektive tverrsnittet blir mindre, og den elektriske motstanden per lengde øker. For runde ledere (og godt approksimert i praksis) gjelder :
     \begin{equation}
         R(\omega) = R_{DC} \cdot \sqrt{\frac{\omega}{\omega_{s}}}, \quad hvor \quad \omega_{s} = \frac{2 \rho}{ \mu r^2}, \quad R_{DC} = n_s \cdot \frac{\rho}{\pi r^2}
         \label{eq:skin-effekt}
     \end{equation}
-    Her er $\omega_{s}$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho$ er resistiviteten til lederne, $\mu$ er permabiliteten til lederen og $r$ er radiusen til lederen. Vi ser dermed at:
+    Her er $\omega_{s}$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho$ er resistiviteten til lederne, $\mu$ er permabiliteten til lederen og $r$ er radiusen til lederen \cite{PalermoLecture2023}. Vi ser dermed at:
     \[
     R(\omega)\ \propto\ \sqrt{\omega}
     \]
   Ut fra propagasjonskonstanten \eqref{eq:prop-konstant} følger at $\alpha(\omega)$ vokser omtrent som $\sqrt{\omega}$.\\
-  \item \textbf{Dielektriske tap}: Et virkelig dielektrikum er ikke tapsfritt: polarisasjonen henger litt etter feltet (faseforsinkelse), noe som kan modelleres med \emph{loss tangent} \(\tan\delta\). For små tap får vi den nyttige tilnærmingen
+  \item \textbf{Dielektriske tap}: Et virkelig dielektrikum er ikke tapsfritt: polarisasjonen henger litt etter feltet (faseforsinkelse), noe som kan modelleres med \emph{loss tangent} \(\tan\delta\). For små tap får vi den nyttige tilnærmingen:
   \begin{equation}
   G(\omega)\ =\ \omega\,C\,\tan\delta \quad \Rightarrow \quad G(\omega)\ \propto\ \omega
     \label{eq:dielectric_loss}
   \end{equation}
-  slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha(\omega)\) og dermed til økende demping med \(\omega\).\\
+  slik at tapet øker lineært med frekvens. Dette bidrar også til \(\alpha(\omega)\) og dermed til økende demping med \(\omega\) \cite{PalermoLecture2023}.\\
 \end{itemize}
 \clearpage
 
@@ -275,23 +275,23 @@ I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i 
     
 \end{figure}
 \subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
-Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten):
+Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten) \cite{HaytBuck2018}:
 \[
     \beta(\omega)=\Im\{\gamma(\omega)\}
 \]
 Den sier noe om hvor mye hver frekvenskomponent forskyves i fase.
 Fasen til kabelen er gitt ved:
 \[
-\varphi(\omega,l) = -\beta(\omega)\,l
+\varphi(\omega,\ell) = -\beta(\omega)\,\ell
 \]
 Fra fasen kan vi finne \emph{gruppeforsinkelse} og \emph{gruppehastighet}.
 \emph{Gruppeforsinkelse} er definert som:
 \[
-\tau_g(\omega,l) = \varphi'(\omega,l) = -\frac{d}{d\omega}\varphi(\omega,l) = l\,\frac{d\beta(\omega)}{d\omega}
+\tau_g(\omega,\ell) = \varphi'(\omega,\ell) = -\frac{d}{d\omega}\varphi(\omega,\ell) = \ell\,\frac{d\beta(\omega)}{d\omega}
 \]
 Den sier noe om hvor mye en smal båndbredde rundt frekvensen \(\omega\) forsinkes i tid etter å ha passert kabelen. \emph{Gruppehastighet} er definert som:
 \[
-v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,l)}{l} = \frac{d\beta(\omega)}{d\omega} \quad [\mathrm{s/m}]
+v_g(\omega) = \frac{1}{\tau_{g}'(\omega)} = \left(\frac{d\beta(\omega)}{d\omega}\right)^{-1}, \quad hvor \quad \tau_g'(\omega) = \frac{\tau_g(\omega,\ell)}{\ell} = \frac{d\beta(\omega)}{d\omega} \quad [\mathrm{s/m}]
 \]
 \noindent Den sier noe om hvor raskt en smal båndbredde rundt frekvensen \(\omega\) forplanter seg i kabelen. Det vi ser her er at \(\tau_g\) og \(v_g\) avhenger av frekvensen og det er nettopp dette som kalles \emph{dispersjon}. Vi kan tolke dette slik at ulike frekvenskomponenter av et signal forplanter seg med ulik hastighet. 
 \clearpage
@@ -313,10 +313,11 @@ gir \(\beta(\omega)\) lineær i \(\omega\)
 (konstant \(\tau_g'\)) og \(\alpha(\omega)\) frekvensuavhengig. Da fås ingen dispersiv forvrengning (kun lik demping av alle frekvenser).
 
 \subsection{Karakteristisk impedans}
-En transmisjonslinjes karakteristiske impedans \(Z_0\) er definert som forholdet mellom spenning og strøm for en bølge som forplanter seg langs linjen uten refleksjoner. Den er gitt ved:
+En transmisjonslinjes karakteristiske impedans \(Z_0\) er definert som forholdet mellom spenning og strøm for en bølge som forplanter seg langs linjen uten refleksjoner \cite{HaytBuck2018}. Den er gitt ved:
 \[
-Z_0(\omega) = \sqrt{\frac{R + j\omega L}{G + j\omega C}} = \frac{V_+}{I_+}
+Z_0(\omega) = \sqrt{\frac{R + j\omega L}{G + j\omega C}} = \frac{V_0^+}{I_0^+} 
 \]
+Her er \(V_0^+\) og \(I_0^+\) amplitudene til den fremadgående spenningen og strømmen.
 Denne impedansen er generelt kompleks og frekvensavhengig, noe som betyr at både resistive (RG) og reaktive komponenter (LC) påvirker signalet. For høye frekvenser, hvor \(j\omega L\) og \(j\omega C\) dominerer over \(R\) og \(G\), nærmer den karakteristiske impedansen seg:
 \[
     R << \omega L, \quad G << \omega C \quad \Rightarrow \quad Z_0(\omega) \approx \sqrt{\frac{L}{C}}
@@ -330,10 +331,11 @@ Dette er den ideelle karakteristiske impedansen for en tapsfri linje. I praksis 
 \]
 Om vi har en mismatch, vil vi få en løsning som er en superposisjon av frem- og tilbakegående bølger gitt ved:
 \[
-    V(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}
+    V(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}, \quad hvor \quad U_- = \Gamma U_+
 \]
-Noe som kan føre til interferens og forvrengning av signalet. Dette er spesielt kritisk i høyfrekvente applikasjoner som RF- og mikrobølgekommunikasjon, hvor selv små refleksjoner kan ha betydelig innvirkning på signalintegriteten. Derfor er det viktig å designe transmisjonslinjer med riktig karakteristisk impedans og å bruke passende termineringer for å sikre optimal ytelse.
-Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$.
+\clearpage
+\noindent Noe som kan føre til interferens og forvrengning av signalet. Dette er spesielt kritisk i høyfrekvente applikasjoner som RF- og mikrobølgekommunikasjon, hvor selv små refleksjoner kan ha betydelig innvirkning på signalintegriteten. Derfor er det viktig å designe transmisjonslinjer med riktig karakteristisk impedans og å bruke passende termineringer for å sikre optimal ytelse.
+Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$. I modellering antar vi at kabelen er korrekt terminert med sin karakteristiske impedans for å unngå refleksjoner og stående bølger.
 
 
 \subsection{Kobling til pulstog}
