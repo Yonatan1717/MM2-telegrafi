@@ -4,19 +4,16 @@
     \textbf{Motivasjon og sammenheng:} Målet er å få en dypere forståelse av hvordan elektriske signaler forplanter seg i ledningsnettverk. For å forstå utbredning av signaler i forskjellige transmisjonslinjer, bruker vi telegrafligningen. Denne beskriver hvordan elektriske signaler forplanter seg i transmisjonslinjer, og gir oss verktøyene til å analysere fenomener som demping, faseforskyvning og dispersjon. Dette er spesielt relevant for praktiske applikasjoner som Ethernet- og koaksialkabler, hvor signalets integritet over lengre avstander er avgjørende.
 
 \subsection{Kirchhoffs lover}
-
 Grunnlaget for telegrafligningen ligger i Kirchhoffs lover, som beskriver hvordan spenning og strøm 
 fordeles i elektriske kretser. Disse lovene er direkte basert på fysikkens bevaringsprinsipper 
 for energi og ladning, og de brukes til å beskrive forholdet mellom elektriske størrelser i ethvert 
 kretsnettverk.
-\\[1em]
-\textbf{Kirchhoffs spenningslov (KVL)} sier at summen av alle spenningsendringer rundt en lukket 
+\subsubsection{Kirchhoffs spenningslov (KVL)} sier at summen av alle spenningsendringer rundt en lukket 
 sløyfe er lik null. Dette uttrykker energibevaring: den elektriske energien som brukes opp i motstander 
 og spoler, må være lik den energien som tilføres av spenningskilder. I telegrafligningen brukes KVL 
 til å uttrykke hvordan spenningen endrer seg langs et lite element av ledningen. Spenningsfallet 
 langs et element avhenger av den ohmske motstanden og induktansen, og beskrives matematisk som vist i ligningen \eqref{eq:KVL}.
-\\[1em]
-\textbf{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
+\subsubsection{Kirchhoffs strømlov (KCL)} sier at summen av alle strømmene som går inn i et knutepunkt, 
 er lik summen av de som går ut. Dette er et uttrykk for ladningsbevaring. I telegrafligningen brukes 
 KCL til å beskrive hvordan strømmen endrer seg langs ledningen, når en del av strømmen lekker til jord 
 gjennom konduktans og kapasitans. Dette gir ligningen \eqref{eq:KCL}.\\[1em]
@@ -24,7 +21,7 @@ Ved å kombinere Kirchhoffs lover kan man beskrive hvordan både spenning og str
 langs ledningen over tid. Dette er utgangspunktet for telegrafligningen, som gir 
 en fullstendig matematisk modell for hvordan signaler forplanter seg, dempes og forvrenges når de beveger 
 seg gjennom en elektrisk leder.
-
+\clearpage
 \subsection{Fourier-rekker}
 
 Mange signaler kan brytes ned i sine frekvenskomponenter ved hjelp av Fourier-analyse. Dette er spesielt nyttig i signalbehandling og for å forstå hvordan ulike frekvenser påvirkes av transmisjonslinjen. Ethernet-signaler kan sees på som en sekvens av pulser (bitstrøm), som i praksis kan betraktes som et periodisk pulstog. Dette gjør at Fourier-rekker er et naturlig verktøy for å analysere slike signaler i frekvensdomenet, siden pulstoget kan uttrykkes som en sum av sinus- og cosinuskomponenter.\\[1em]
@@ -62,6 +59,7 @@ Setter vi inn overføringsfunksjonen i komplekse Fourier-rekken, kan vi modeller
 \begin{equation}
     f_{out}(t) = \sum_{n=-\infty}^{\infty} H\left(\frac{n}{T}\right) c_n e^{j \frac{2\pi n t}{T}}
 \end{equation}
+\clearpage
 \subsection{Telegrafligningen og transmisjonslinjer}
 En transmisjonslinje kan beskrives ved fire per-enhet-lengde parametre:
 \begin{itemize}
@@ -97,7 +95,6 @@ fordi mer energi går tapt i dielektrikumet.
 Verdien av $G$ avhenger av materialets kvalitet og miljøforhold: høy fuktighet, aldring eller 
 skadet isolasjon øker $G$, mens ideell isolasjon gir $G \approx 0$. Parameteren beskriver dermed 
 tap som skyldes ufullkommen isolasjon mellom lederen og jord.
-\clearpage
 \subsubsection{Utledning av telegrafligningen}
 Telegrafligningen kan utledes ved å analysere en liten del av transmisjonslinjen, som vist i figuren nedenfor. Vi betrakter et segment av linjen med lengde $\Delta x$,  og bruker Kirchhoffs spennings- og strømlov for å sette opp differensialligninger for spenning og strøm \cite{TelegraflikningenPDF}.
 \begin{figure}[h]
@@ -139,9 +136,7 @@ der vi definerer:
     \aH = \frac{R}{L}, \qquad \bH = \frac{G}{C} .
 \]
 Dette er en dempet bølgeligning som beskriver hvordan spenningen forplanter seg langs transmisjonslinjen, med demping og forvrengning bestemt av parametrene $RLCG$.
-
-
-\subsubsection{Propagerende løsning og overføringsfunksjon}
+\subsection{Propagerende løsning og overføringsfunksjon}
 
 I forrige del utledet vi telegrafligningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen \cite{HaytBuck2018}
 \begin{equation}
@@ -182,7 +177,7 @@ c^2 \gamma^2(\omega) = \aH \bH - \omega^2 + j\omega(\aH+\bH).
 \]
 \clearpage
 \noindent Dette er en såkalt \emph{dispersjonsrelasjon}, som forteller hvilke kombinasjoner av 
-frekvens $\omega$ og bølgetall $\gamma$ som er mulige. Vi kan løse for $\gamma$ og får
+frekvens $\omega$ og bølgetall $\gamma$ som er mulige. Vi kan løse for $\gamma$ og får:
 \[
 \gamma(\omega) = \frac{1}{c}\sqrt{\aH\bH - \omega^2 + j\omega(\aH+\bH)}.
 \]
@@ -231,7 +226,7 @@ Det er nettopp dette vi kan observere i laboratoriet når vi sender firkantpulse
 
 
 \clearpage
-\subsection{Demping (amplituderespons)}
+\subsubsection{Demping (amplituderespons)}
 Demping beskrives av realdelen av propagasjonskonstanten \cite{HaytBuck2018}:
 \[ 
   \alpha(\omega)=\Re\{\gamma(\omega)\}
@@ -274,7 +269,7 @@ I tid betyr det sløvere kanter og “droop” på platået (vertikal lukking i 
         \caption{Tids- og frekvensdomene av original og modifisert bølgeform. Pulsformen bestemmes av forholdet mellom frekvenskomponentene; er amplituder og relative faser like, blir tidskurven uendret \cite{figure2}.}\label{fig:eyediagram}}
     
 \end{figure}
-\subsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
+\subsubsection{Dispersjon (fase, gruppeforsinkelse og gruppehastighet)}
 Dispersjon beskrives av den imaginære delen av propagasjonskonstanten (fasekonstanten) \cite{HaytBuck2018}:
 \[
     \beta(\omega)=\Im\{\gamma(\omega)\}
@@ -311,14 +306,24 @@ Heaviside-betingelsen:
 \]
 gir \(\beta(\omega)\) lineær i \(\omega\)
 (konstant \(\tau_g'\)) og \(\alpha(\omega)\) frekvensuavhengig. Da fås ingen dispersiv forvrengning (kun lik demping av alle frekvenser).
-
+\subsubsection{Kobling til pulstog}
+Et periodisk innsignal med Fourierkoeffisienter \(c_n\) filtreres som
+\[
+f_{\text{out}}(t)=\Re\!\left\{\sum_{n=-N}^{N} c_n\,H(\omega_n,\ell)\,e^{j\omega_n t}\right\}.
+\]
+Demping (via \(\alpha\)) fjerner spesielt de høye leddene \(\Rightarrow\) langsommere kanter.\\
+Dispersjon via: 
+\[\frac{d\beta}{d\omega}\] 
+tidsforskyver leddene relativt \(\Rightarrow\) pulsbredding.
 \subsection{Karakteristisk impedans}
 En transmisjonslinjes karakteristiske impedans \(Z_0\) er definert som forholdet mellom spenning og strøm for en bølge som forplanter seg langs linjen uten refleksjoner \cite{HaytBuck2018}. Den er gitt ved:
 \[
 Z_0(\omega) = \sqrt{\frac{R + j\omega L}{G + j\omega C}} = \frac{V_0^+}{I_0^+} 
 \]
 Her er \(V_0^+\) og \(I_0^+\) amplitudene til den fremadgående spenningen og strømmen.
-Denne impedansen er generelt kompleks og frekvensavhengig, noe som betyr at både resistive (RG) og reaktive komponenter (LC) påvirker signalet. For høye frekvenser, hvor \(j\omega L\) og \(j\omega C\) dominerer over \(R\) og \(G\), nærmer den karakteristiske impedansen seg:
+Denne impedansen er generelt kompleks og frekvensavhengig, noe som betyr at både resistive (RG) og reaktive komponenter (LC) påvirker signalet. 
+\clearpage
+\noindent For høye frekvenser, hvor \(j\omega L\) og \(j\omega C\) dominerer over \(R\) og \(G\), nærmer den karakteristiske impedansen seg:
 \[
     R \ll \omega L, \quad G \ll \omega C \quad \Rightarrow \quad Z_0(\omega) \approx \sqrt{\frac{L}{C}}
 \]
@@ -333,24 +338,9 @@ Om vi har en mismatch, vil vi få en løsning som er en superposisjon av frem- o
 \[
     v(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}, \quad hvor \quad U_- = \Gamma U_+
 \]
-\clearpage
 \noindent Noe som kan føre til interferens og forvrengning av signalet. Dette er spesielt kritisk i høyfrekvente applikasjoner som RF- og mikrobølgekommunikasjon, hvor selv små refleksjoner kan ha betydelig innvirkning på signalintegriteten. Derfor er det viktig å designe transmisjonslinjer med riktig karakteristisk impedans og å bruke passende termineringer for å sikre optimal ytelse.
 Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet-kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$. I modellering antar vi at kabelen er korrekt terminert med sin karakteristiske impedans for å unngå refleksjoner og stående bølger.
-
-
-\subsection{Kobling til pulstog}
-Et periodisk innsignal med Fourierkoeffisienter \(c_n\) filtreres som
-\[
-f_{\text{out}}(t)=\Re\!\left\{\sum_{n=-N}^{N} c_n\,H(\omega_n,\ell)\,e^{j\omega_n t}\right\}.
-\]
-Demping (via \(\alpha\)) fjerner spesielt de høye leddene \(\Rightarrow\) langsommere kanter.\\
-Dispersjon via: 
-\[\frac{d\beta}{d\omega}\] 
-tidsforskyver leddene relativt \(\Rightarrow\) pulsbredding.
-
 \subsection{Koaksialkabelen (brukt i lab) som transmisjonslinje}
 En koaksialkabel er en praktisk realisering av transmisjonslinjemodellen. Den består av en indre leder omgitt av et isolerende dielektrikum og en ytre leder som fungerer som skjerm. Denne oppbygningen gir god skjerming mot elektromagnetisk støy og jevn feltfordeling, noe som gjør kabelen egnet for høyfrekvente signaler. I laboratoriet brukes koaksialkabler for å undersøke hvordan signaler dempes og forvrenges over lengde.
-
 \subsection{Oppsummering og kobling til prosjektet}
-
 Teorien forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan koaksialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at vi kan modellere effekten av demping og dispersjon på signaler i kabler numerisk og bruke måledata til å validere prinsippene.
