@@ -1,28 +1,28 @@
 \section{Modellering}
 \subsection{Situasjon}
-I den første modellen demonstrerer vi dempingen som de forskjellige< frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
+I den første modellen demonstrerer vi dempingen som de forskjellige frekvenskomponentene i et signal opplever når det sendes gjennom et medium. Dette gjøres ved å sende et signal med flere frekvenskomponenter gjennom en dempende funksjon, og deretter analysere hvordan de forskjellige komponentene blir påvirket.
 Vi tar utgangspunkt i en firkantpuls med periode $T$:
 \[
-    V_{in}(t) = \begin{cases}
+    v_{in}(t) = \begin{cases}
         5, & -\frac{T}{2} \leq t < 0 \\
         0, & 0 \leq t < \frac{T}{2} \\
     \end{cases}, \quad hvor \quad T = 2 \mu s,\qquad duty\ cycle = 50\%
 \]
 Vi bestemmer først Fourier-rekken til firkantpulsen for å finne frekvenskomponentene:
 \[
-    V_{in}(t) = c_0 + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n e^{j n \omega_0 t}, \quad hvor \quad \omega_0 = \frac{2\pi}{T}
+    v_{in}(t) = c_0 + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n e^{j n \omega_0 t}, \quad hvor \quad \omega_0 = \frac{2\pi}{T}
 \]
 Merk at siden vi vet at duty cycle er 50\%, vil bare oddetalls harmoniske være tilstede i Fourier-rekken.
 Koeffisientene $c_n$ kan beregnes som:
 \[
-    c_0 = \frac{1}{T} \int_{-T/2}^{T/2} V(t) dt = \frac{5}{2}
+    c_0 = \frac{1}{T} \int_{-T/2}^{T/2} v_{in}(t) dt = \frac{5}{2}
 \]
 \[
-    c_n = \frac{1}{T} \int_{-T/2}^{T/2} V(t) e^{-j n \omega_0 t} dt =  \frac{5}{j 2 n \pi} (1 - (-1)^n)
+    c_n = \frac{1}{T} \int_{-T/2}^{T/2} v_{in}(t) e^{-j n \omega_0 t} dt =  \frac{5}{j 2 n \pi} (1 - (-1)^n)
 \]
 Vi får dermed at:
 \[
-    V_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
+    v_{in}(t) = \frac{5}{2} + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} e^{j n \omega_0 t}
 \]
 For å modellere dempingen i mediet, antar vi parametre som gir realistisk tilnærming til virkelige kabelverdier for RLCG.
 Vi antar at mediet er en Cat5e kabel med følgende parametere:
@@ -61,11 +61,11 @@ Fra formlen \eqref{eq:dielectric_loss} for dielektriske tap, får vi at:
 Her er $\ell$ lengden på mediet (kabelen) og $\gamma(f)$ er propagasjonskonstanten som avhenger av frekvensen.
 Vi kan nå finne ut hvordan hver frekvenskomponent i firkantpulsen blir dempet ved å multiplisere hver komponent med $H(f, \ell)$:
 \[
-    V_{out}(t) = c_0H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n H(n f_0, \ell) e^{j n \omega_0 t}
+    v_{out}(t) = c_0H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} c_n H(n f_0, \ell) e^{j n \omega_0 t}
 \]
 Som i denne situasjonen gir:
 \[
-    V_{out}(t) = \frac{5}{2}H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, \ell) e^{j n \omega_0 t}    
+    v_{out}(t) = \frac{5}{2}H(0, \ell) + \sum_{\substack{n=-\infty\\ n\ \text{oddetall}}}^{\infty} \frac{5}{j n \pi} H(n f_0, \ell) e^{j n \omega_0 t}
 \]
 For å simulere dette numerisk, kan vi bruke Python til å beregne $H(f, \ell)$ for en rekke frekvenser og deretter rekonstruere tidsdomenesignalet ved å summere de dempede frekvenskomponentene i Fourier-rekken.
 Vi kan da plotte både inngangssignalet og utgangssignalet for å visualisere effekten av dempingen i mediet.
@@ -136,7 +136,6 @@ I den fjerde modellen ser vi på hvordan tidsdomenesignalet endres når vi antar
     H(f, \ell) = e^{-j\beta(f) \ell}, \quad hvor \quad \beta(f) = \omega\sqrt{LC}
 \]
 Resultatet er vist i \emph{figur \ref{fig:modell4}}. Vi ser at firkantpulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
-pulsen opprettholder sin opprinnelige form og blir forsinket i tid. Dette bekrefter at i et ideelt ikke-dispersivt medium, har alle frekvenskomponenter samme fasehastighet, noe som betyr at signalets form bevares uten noen forvrengning.
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{Media/modellering4.png}
@@ -160,7 +159,7 @@ Resultatet er vist i \emph{figur \ref{fig:modell5}}. Vi ser at firkantpulsen bli
 \end{figure}
 \clearpage
 \subsection{Modell 6 (Waterfall plot)}
-For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to \textit{Waterfall} plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (Visualisere bidraget fra hver komponent). Den ene kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
+For å få en bedre forståelse av hvordan forskjellige frekvenskomponenter påvirker tidsdomenesignalet, har vi laget to \textit{Waterfall} plot som viser hvordan signalet endres når vi inkluderer flere og flere frekvenskomponenter opp til en viss grensefrekvens (visualisere bidraget fra hver komponent). Den ene kalles lavpassfilter (LP) og den andre høypassfilter (HP). Prinsippet er det samme for begge plottene, men de summerer forskjellige sett av frekvenskomponenter:
 \\[1em]
 \begin{itemize}
     \item \textbf{Lavpassfilter (LP):} Her summerer vi alle frekvenskomponenter fra fundamentalfrekvensen $f_0$ opp til en økende grensefrekvens $f_{cut}$. Dette viser hvordan tidsdomenesignalet utvikler seg når vi inkluderer flere lavfrekvente komponenter.

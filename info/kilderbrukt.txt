@@ -13,3 +13,6 @@ Figurer:
     fig2: 
         kilde: https://docs.keysight.com/eesofapps/post-5-root-cause-of-eye-closure-678068340.html
         position/link (her): (file://./Lab1/Media/frekvensdoment_tidsdoment.png)
+
+
+https://courses.egr.uh.edu/ECE/ECE3317/SectionJackson/Class%20Notes/Notes%209%203317%20Transmission%20Lines%20(Frequency%20Domain).pdf

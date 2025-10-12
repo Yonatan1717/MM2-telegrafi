@@ -58,7 +58,7 @@ V_{\text{out}}(f)=H(f)\,V_{\text{in}}(f).
 \]
 Som beskriver hvordan signalet endres i frekvensdomenet når det passerer gjennom kabelen.
 Denne analysen hjelper oss å forstå hvordan ulike frekvenskomponenter dempes og forvrenges, noe som er avgjørende for å forklare begrensningen på kabelens lengde.
-Setter vi inn overførsingsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen \cite{engineering_mathematics}.
+Setter vi inn overføringsfunksjonen i komplekse Fourier-rekken, kan vi modellere hvordan hele signalet endres når det går gjennom kabelen \cite{engineering_mathematics}.
 \begin{equation}
     f_{out}(t) = \sum_{n=-\infty}^{\infty} H\left(\frac{n}{T}\right) c_n e^{j \frac{2\pi n t}{T}}
 \end{equation}
@@ -76,7 +76,7 @@ Ved å kombinere Kirchhoffs lover med disse parameterne utledes telegrafligninge
 \end{equation}
 der $u(x,t)$ er spenningen langs kabelen og $c$ er utbredelseshastigheten i kabelen.  
 Denne ligningen viser at et signal ikke bare forplanter seg med en hastighet bestemt av $L$ og $C$, men også blir dempet og forvrengt på grunn av $R$ og $G$. Resultatet er at høyfrekvente komponenter i signalet svekkes og spres mer enn lave frekvenser, noe som over tid fører til \emph{demping og dispersjon}.  
-Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100 meter er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig for mottakeren.
+Ethernet-signaler består ikke av rene sinusbølger, men av pulser med et bredt spekter av frekvenser. Mens Fourier-analyse kan hjelpe oss  å uttrykke signalet som en sum av ulike frekvenskomponenter, gir telegrafligningen oss verktøy til å studere hvordan hver enkelt komponent påvirkes. Dermed kan vi forklare hvorfor en grense på omtrent 100m er praktisk: etter denne lengden er tapet og forvrengningen så store at signalet ikke lenger kan tolkes pålitelig for mottakeren.
 
 
 \subsubsection{R - Resistans}
@@ -131,7 +131,7 @@ Ved å kombinere disse to relasjonene, ved å derivere den første med hensyn p�
 \clearpage
 \noindent Dette kan vi skrive som:
 \begin{equation}
-    u_{tt} + (\aH + \bH)u_t + \aH \bH u = c^2 u_{xx}, \qquad c = \frac{1}{\sqrt{LC}} ,
+    u_{tt} + (\aH + \bH)u_t + \aH \bH u = c^2 u_{xx},\quad (i \ tapsfri\ linje: c = \frac{1}{\sqrt{LC}}).
     \label{eq:telegraflikningen}
 \end{equation}
 der vi definerer:
@@ -143,9 +143,9 @@ Dette er en dempet bølgeligning som beskriver hvordan spenningen forplanter seg
 
 \subsubsection{Propagerende løsning og overføringsfunksjon}
 
-I forrige del utledet vi telegraflikningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen \cite{HaytBuck2018}
+I forrige del utledet vi telegrafligningen for spenning langs en kabel uttrykt ved de per-lengde-parametrene $RLCG$ som beskriver hvordan spenningen varierer både i tid og rom \eqref{eq:telegraflikningen}. Denne likningen er en såkalt bølgelikning med demping. Vi forventer derfor at løsningene skal ha bølgekarakter som oscillerer i tid og samtidig forplanter seg langs kabelen. For å fange dette opp antar vi en løsning på formen \cite{HaytBuck2018}
 \begin{equation}
-V(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
+v(x,t) = \Re\!\left\{ U e^{j\omega t - \gamma(\omega)x} \right\}.
 \label{eq:harm-ansatz}
 \end{equation}
 Her har vi valgt tre elementer:
@@ -160,23 +160,23 @@ Her har vi valgt tre elementer:
 \end{itemize}
 Dette kalles en \emph{harmonisk ansats}. Den er valgt fordi vi vet fra Fourier-teori at alle signaler 
 kan bygges opp som en sum av slike harmoniske komponenter. Når vi kjenner kabelens respons på en frekvens, 
-kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegrafligningen \eqref{eq:telegrafligningen}:
+kan vi utvide til vilkårlige signaler. Setter vi \eqref{eq:harm-ansatz} inn i telegrafligningen \eqref{eq:telegraflikningen}:
 \[    
-    V_{tt} + (\aH + \bH)V_{t} + \aH \bH V = c^2 V_{xx}.
+    v_{tt} + (\aH + \bH)v_{t} + \aH \bH v = c^2 v_{xx}.
 \]
 Ser vi at den tidslige avledningen bare gir faktorer av $j\omega$:
 \[
-    V_{t} = j\omega V, \quad V_{tt} = -\omega^2 V,
+    v_{t} = j\omega v, \quad v_{tt} = -\omega^2 v,
 \]
 og den romlige avledningen gir faktorer av $\gamma$:
 \[
-    V_{x} = -\gamma V, \quad V_{xx} = \gamma^2 V.
+    v_{x} = -\gamma v, \quad v_{xx} = \gamma^2 v.
 \]
 Som gir oss:
 \[    
--\omega^2 V + j\omega(\aH+\bH)V + \aH \bH V = c^2 \gamma^2 V.
+-\omega^2 v + j\omega(\aH+\bH)v + \aH \bH v = c^2 \gamma^2 v.
 \]
-Vi kan forkorte med $V$ (som er forskjellig fra null) og får:
+Vi kan forkorte med $v$ (som er forskjellig fra null) og får:
 \[
 c^2 \gamma^2(\omega) = \aH \bH - \omega^2 + j\omega(\aH+\bH).
 \]
@@ -251,7 +251,7 @@ Hvorfor signalet dempes kan forklares med to hovedmekanismer:\\
         R(\omega) = R_{DC} \cdot \sqrt{\frac{\omega}{\omega_{s}}}, \quad hvor \quad \omega_{s} = \frac{2 \rho}{ \mu r^2}, \quad R_{DC} = n_s \cdot \frac{\rho}{\pi r^2}
         \label{eq:skin-effekt}
     \end{equation}
-    Her er $\omega_{s}$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall lederer i serie (2 for tvinnapar), $\rho$ er resistiviteten til lederne, $\mu$ er permabiliteten til lederen og $r$ er radiusen til lederen \cite{PalermoLecture2023}. Vi ser dermed at:
+    Her er $\omega_{s}$ den skinneffektsfaktoren for runde ledere, $R_{DC}$ den DC motstanden per meter, $n_s$ tar hensyn til antall ledere i serie (2 for tvinnet par), $\rho$ er resistiviteten til lederen, $\mu$ er permeabiliteten til lederen og $r$ er radiusen til lederen \cite{PalermoLecture2023}. Vi ser dermed at:
     \[
     R(\omega)\ \propto\ \sqrt{\omega}
     \]
@@ -320,9 +320,9 @@ Z_0(\omega) = \sqrt{\frac{R + j\omega L}{G + j\omega C}} = \frac{V_0^+}{I_0^+}
 Her er \(V_0^+\) og \(I_0^+\) amplitudene til den fremadgående spenningen og strømmen.
 Denne impedansen er generelt kompleks og frekvensavhengig, noe som betyr at både resistive (RG) og reaktive komponenter (LC) påvirker signalet. For høye frekvenser, hvor \(j\omega L\) og \(j\omega C\) dominerer over \(R\) og \(G\), nærmer den karakteristiske impedansen seg:
 \[
-    R << \omega L, \quad G << \omega C \quad \Rightarrow \quad Z_0(\omega) \approx \sqrt{\frac{L}{C}}
+    R \ll \omega L, \quad G \ll \omega C \quad \Rightarrow \quad Z_0(\omega) \approx \sqrt{\frac{L}{C}}
 \]
-Dette er den ideelle karakteristiske impedansen for en tapsfri linje. I praksis må transmisjonslinjer ofte matches til kildens og lastens impedans for å minimere refleksjoner som gir stående bølger. Refleksjones koffesienten ved en last er gitt ved:
+Dette er den ideelle karakteristiske impedansen for en tapsfri linje. I praksis må transmisjonslinjer ofte matches til kildens og lastens impedans for å minimere refleksjoner som gir stående bølger. Refleksjonskoeffisienten ved en last er gitt ved:
 \[
     \Gamma = \frac{Z_L - Z_0}{Z_L + Z_0}, \quad hvor \quad Z_L \quad er \quad lastimpedansen.
 \]
@@ -331,11 +331,11 @@ Dette er den ideelle karakteristiske impedansen for en tapsfri linje. I praksis 
 \]
 Om vi har en mismatch, vil vi få en løsning som er en superposisjon av frem- og tilbakegående bølger gitt ved:
 \[
-    V(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}, \quad hvor \quad U_- = \Gamma U_+
+    v(x,t) = \Re\!\left\{ U_+ e^{j\omega t - \gamma x} + U_- e^{j\omega t + \gamma x} \right\}, \quad hvor \quad U_- = \Gamma U_+
 \]
 \clearpage
 \noindent Noe som kan føre til interferens og forvrengning av signalet. Dette er spesielt kritisk i høyfrekvente applikasjoner som RF- og mikrobølgekommunikasjon, hvor selv små refleksjoner kan ha betydelig innvirkning på signalintegriteten. Derfor er det viktig å designe transmisjonslinjer med riktig karakteristisk impedans og å bruke passende termineringer for å sikre optimal ytelse.
-Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$. I modellering antar vi at kabelen er korrekt terminert med sin karakteristiske impedans for å unngå refleksjoner og stående bølger.
+Ulike typer kabler, som koaksialkabler og tvinnede par, har forskjellige karakteristiske impedanser basert på deres fysiske konstruksjon og materialegenskaper. Ethernet-kabler har typisk en karakteristisk impedans på 100\(\Omega\), mens koaksialkabler ofte har $50\Omega$ eller $75\Omega$. I modellering antar vi at kabelen er korrekt terminert med sin karakteristiske impedans for å unngå refleksjoner og stående bølger.
 
 
 \subsection{Kobling til pulstog}
@@ -353,4 +353,4 @@ En koaksialkabel er en praktisk realisering av transmisjonslinjemodellen. Den be
 
 \subsection{Oppsummering og kobling til prosjektet}
 
-Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan koaxialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at vi kan modellerer effekten av demping og dispersjon på signaler i kabler numerisk og bruke måledata til å validere prinsippene.
+Teorien over forklarer hvorfor signaler i lange kabler dempes og forvrenges, og gir oss verktøyene til å analysere dette både analytisk og numerisk. Dette kan gi oss innsikt i hvorfor det er en anbefalt grense på 100m for Ethernet-kabler og hvordan koaxialkabler av forskjellige lengder påvirker signalet i frekvensdomenet. I det videre arbeidet skal vi gjennomføre numeriske simuleringer og praktiske målinger, slik at vi kan modellere effekten av demping og dispersjon på signaler i kabler numerisk og bruke måledata til å validere prinsippene.
